@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MIPChat.DAL
 {
-    interface IRepository<TEntity>
+    public interface IRepository<TEntity>
     {
         Task<IEnumerable<TEntity>> FindAll();
         Task<TEntity> FindById(Guid Id);

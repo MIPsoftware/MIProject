@@ -129,11 +129,16 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="DAL\Repository\UserRepository.cs" />
+    <Compile Include="DAL\Repository\IUsersRepository.cs" />
     <Compile Include="DAL\Repository\BaseRepository.cs" />
     <Compile Include="DAL\ChatDBContext.cs" />
     <Compile Include="DAL\Domain\FileModel.cs" />
     <Compile Include="DAL\Repository\IRepository.cs" />
-    <Compile Include="DAL\Repository\IUserRepository.cs" />
+    <Compile Include="DAL\Repository\ChatRepository.cs" />
+    <Compile Include="DAL\Repository\IChatRepository.cs" />
+    <Compile Include="DAL\UnitOfWork\IChatUnitOfWork.cs" />
+    <Compile Include="DAL\UnitOfWork\ChatUnitOfWork.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
