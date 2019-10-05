@@ -21,6 +21,7 @@ namespace MIPChat.DAL.UnitOfWork
         }
 
         public IUsersRepository Users => _users.Value;
+        public IChatRepository Chats => _chat.Value;
 
         public int CommitChanges()
         {
