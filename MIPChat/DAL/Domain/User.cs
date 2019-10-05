@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using MIPChat.DAL.Domain;
@@ -7,9 +8,11 @@ using MIPChat.DAL.Domain;
 namespace MIPChat.Models
 {
     public class User
-    {
+    {   [Key]
         public Guid UserId { get; set; }
-        public string Login { get; set; }
+        [EmailAddress]
+        [Required]
+        [Key]
         public string Email { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }

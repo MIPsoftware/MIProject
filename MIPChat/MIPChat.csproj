@@ -144,6 +144,8 @@
     </Compile>
     <Compile Include="DAL\Domain\User.cs" />
     <Compile Include="Helpers\Mapper.cs" />
+    <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\MessageModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

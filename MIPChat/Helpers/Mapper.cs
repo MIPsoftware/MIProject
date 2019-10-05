@@ -8,31 +8,22 @@ namespace MIPChat.Helpers
 {
     public static class Mapper
     {
-        public static User Map(UserViewModel User)
+        public static UserViewModel Map(User User)
         {
-            return new User
+            return new UserViewModel
             {
-                UserId = User.UserId,
-                Email = User.Email,
                 Icon = User.Icon,
-                Login = User.Login,
                 Name = User.Name,
                 LastLogOut = User.LastLogOut,
                 Surname = User.Name
             };
         }
 
-        public static UserViewModel Map(User User)
+        public static User Map(LoginModel User)
         {
-            return new UserViewModel
+            return new User
             {
-                UserId = User.UserId,
-                Email = User.Email,
-                Icon = User.Icon,
-                Login = User.Login,
-                Name = User.Name,
-                LastLogOut = User.LastLogOut,
-                Surname = User.Name
+                Email = User.Email
             };
         }
     }
