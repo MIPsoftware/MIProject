@@ -8,7 +8,7 @@ using System.Web;
 
 namespace MIPChat.Models
 {
-    public class MessageModel
+    public class Message
     {
         [Key]
         public int Id { get; set; }
@@ -16,9 +16,6 @@ namespace MIPChat.Models
         public Guid AuthorId { get; set; }
         [Required]
         public string Content { get; set; }
-        [Required]
-        public int Id { get; set; }
-        
         public DateTime TheTimeOfSending { get; set; }
     }
 }

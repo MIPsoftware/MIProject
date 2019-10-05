@@ -8,8 +8,11 @@ namespace MIPChat.Models
 {
     public class ChatModel
     {
+        [Key]
         public int Id { get; set; }
-        public virtual ICollection<MessageModel> Messages { get; set; }
-        public virtual ICollection<UserViewModel> Users { get; set; }
+        [Required(ErrorMessage = "У чата должно быть имя")]
+        public string Name { get; set; }
+        public virtual ICollection<Message> Messages { get; set; }
+        public virtual ICollection<User> Users { get; set; }
     }
 }

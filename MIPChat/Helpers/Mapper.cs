@@ -8,23 +8,46 @@ namespace MIPChat.Helpers
 {
     public static class Mapper
     {
-        public static UserViewModel Map(User User)
+        public static UserViewModel ToView(User User)
         {
             return new UserViewModel
             {
+                UserId = User.UserId,
+                Email = User.Email,
                 Icon = User.Icon,
                 Name = User.Name,
-                LastLogOut = User.LastLogOut,
-                Surname = User.Name
+                Surname = User.Surname
+            };
+        }
+        public static User ToDomain(UserViewModel User)
+        {
+            return new User
+            {
+                UserId = User.UserId,
+                Email = User.Email,
+                Icon = User.Icon,
+                Name = User.Name,
+                Surname = User.Surname
+            };
+        }
+        public static User ToDomain(RegisterModel User)
+        {
+            return new User
+            {
+                Email = User.Email,
+                Icon = User.Icon,
+                Name = User.Name,
+                Surname = User.Surname
             };
         }
 
-        public static User Map(LoginModel User)
+        public static User ToDomain(LoginModel User)
         {
             return new User
             {
                 Email = User.Email
             };
         }
+        
     }
 }
