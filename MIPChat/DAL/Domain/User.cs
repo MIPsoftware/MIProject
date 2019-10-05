@@ -8,7 +8,7 @@ using MIPChat.DAL.Domain;
 namespace MIPChat.Models
 {
     public class User
-    {   [Key]
+    {  [Key]
         public Guid UserId { get; set; }
         [EmailAddress]
         [Required(ErrorMessage ="У пользователя должен быть Email")]
