@@ -11,7 +11,7 @@ namespace MIPChat.Models
     {   [Key]
         public Guid UserId { get; set; }
         [EmailAddress]
-        [Required]
+        [Required(ErrorMessage ="У пользователя должен быть Email")]
         [Key]
         public string Email { get; set; }
         public string Name { get; set; }

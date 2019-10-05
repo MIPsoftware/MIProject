@@ -10,6 +10,8 @@ namespace MIPChat.DAL.UnitOfWork
     {
         IUsersRepository Users { get; }
 
+        IChatRepository Chats { get; }
+
         int CommitChanges();
     }
 }
