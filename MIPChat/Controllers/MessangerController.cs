@@ -23,31 +23,48 @@ namespace MIPChat.Controllers
         public ActionResult UserMessAndChatsAsync(User user)
         {
             var chatRepository = new ChatRepository(new ChatDBContext());
-            var allChats = chatRepository.FindAllChatsForUser(user).Result;
+            var allExistingChats = chatRepository.FindAllChatsForUser(user).Result;
 
-            return PartialView(allChats);
+            return PartialView(allExistingChats);
         }
 
         [HttpPost]
-        public ActionResult AvailNewMessAndChats(Guid userID)
+        public ActionResult AvailNewMesssges(User user)
         {
-            var userRepository = new UserRepository(new ChatDBContext())
-            {
+            var chatRepository = new ChatRepository(new ChatDBContext());
+            var allExistingChats = chatRepository.FindAllChatsForUser(user).Result.ToList();
 
-            }
+            //var userRepository = new UserRepository(new ChatDBContext());
+            //var allAvailableUsers = userRepository.FindAllAvailable().Result;
+
+
+            return PartialView();//allAvailableUsers);
+        }
 
 
 
-            return PartialView();
+
+
+
+        [HttpPost]
+        public ActionResult UserConcreteChat(Guid ChatID)
+        {
+            var chatRepository = new ChatRepository(new ChatDBContext());
+            var chatInst = chatRepository.FindById(ChatID).Result;
+
+            return PartialView(ChatID);
         }
 
 
         [HttpPost]
-        public ActionResult UserConcreteChat(int ChatID)
+        public ActionResult FindChat(string name)
         {
+            var chatRepository = new ChatRepository(new ChatDBContext());
+            ChatModel chatModel = new ChatModel();// = chatRepository.FindByName(name);
 
-            return PartialView();
+            return PartialView(chatModel);
         }
+
 
 
     }
