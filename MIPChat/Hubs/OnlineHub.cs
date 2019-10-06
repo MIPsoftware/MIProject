@@ -9,28 +9,14 @@ using MIPChat.Models;
 
 namespace MIPChat.Hubs
 {
-    public class ChatHub : Hub
+    public class OnlineHub : Hub
     {
         private static List<User> Users { get; set; }
 
-        public ChatHub()
+        public OnlineHub()
         {
             Users = (new UserRepository(new DAL.ChatDBContext()).FindAll().Result.ToList());
         }
-
-
-
-
-        public void SendUserMessage(Guid userId, string messageValue)
-        {
-            Clients.User(userId.ToString()).addMessage(messageValue);
-        }
-
-        public void SendChatMessage(Guid chatID, string messageValue)
-        {
-            Clients.Group(chatID.ToString()).addMessage(messageValue);
-        }
-
 
 
 
