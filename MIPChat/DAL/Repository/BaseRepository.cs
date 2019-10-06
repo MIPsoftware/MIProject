@@ -19,42 +19,55 @@ namespace MIPChat.DAL
             _dbSet = _context.Set<TEntity>();
         }
 
-        public void Delete(TEntity entity)
+        public virtual void Delete(TEntity entity)
         {
+            if (_context.Entry(entity).State == EntityState.Detached)
+            {
+                _dbSet.Attach(entity);
+            }
+
             _dbSet.Remove(entity);
+            
         }
 
-        public void Delete(IEnumerable<TEntity> entities)
+        public virtual void Delete(IEnumerable<TEntity> entities)
         {
+            foreach(TEntity entity in entities){
+                 if (_context.Entry(entity).State == EntityState.Detached)
+                 {
+                    _dbSet.Attach(entity);
+                 }
+            }
+
             _dbSet.RemoveRange(entities);
         }
 
-        public async Task<IEnumerable<TEntity>> FindAll()
+        public virtual async Task<IEnumerable<TEntity>> FindAll()
         {
             return await _dbSet.ToListAsync();
         }
 
-        public async Task<TEntity> FindById(Guid Id)
+        public virtual async Task<TEntity> FindById(Guid Id)
         {
             return await _dbSet.FindAsync(Id);
         }
 
-        public void Insert(TEntity entity)
+        public virtual void Insert(TEntity entity)
         {
             _dbSet.Add(entity);
         }
 
-        public void Insert(IEnumerable<TEntity> entities)
+        public virtual void Insert(IEnumerable<TEntity> entities)
         {
              _dbSet.AddRange(entities);
         }
 
-        public void Update(TEntity entity)
+        public virtual void Update(TEntity entity)
         {
             _context.Entry(entity).State = EntityState.Modified;
         }
 
-        public void Update(IEnumerable<TEntity> entities)
+        public virtual void Update(IEnumerable<TEntity> entities)
         {
             foreach (TEntity entity in entities)
             {

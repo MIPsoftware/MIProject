@@ -1,6 +1,12 @@
-﻿namespace MIPChat.DAL.UnitOfWork
+﻿using MIPChat.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace MIPChat.DAL.UnitOfWork
 {
-    internal interface IChatRepository
+    public interface IChatRepository : IRepository<ChatModel>
     {
+        Task<IEnumerable<ChatModel>> FindAllChatsForUser(User user);
+        
     }
 }
