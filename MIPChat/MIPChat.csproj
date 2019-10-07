@@ -166,7 +166,9 @@
     </Compile>
     <Compile Include="DAL\Domain\User.cs" />
     <Compile Include="Helpers\Mapper.cs" />
-    <Compile Include="Hubs\ChatHub.cs" />
+    <Compile Include="Hubs\AlertHub.cs" />
+    <Compile Include="Hubs\OnlineHub.cs" />
+    <Compile Include="Hubs\MessagesHub.cs" />
     <Compile Include="Models\ChatModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="DAL\Domain\Message.cs" />
@@ -223,7 +225,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="ReposFactory\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
