@@ -9,14 +9,9 @@ namespace MIPChat.Models
     public class LoginModel
     {
 
-        [Key]
-        [Required]
-        [EmailAddress]
+        [Required(ErrorMessage = "Обязательное поле")]
         public string Email { get; set; }
-        [Required]
-
-        public string Email { get; set; }
-
+        [Required(ErrorMessage = "Обязательное поле")]
         public string Password { get; set; }
     }
 }
