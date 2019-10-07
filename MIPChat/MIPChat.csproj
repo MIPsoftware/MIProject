@@ -144,6 +144,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -163,9 +164,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="DAL\Domain\User.cs" />
+    <Compile Include="Helpers\Mapper.cs" />
+    <Compile Include="Hubs\ChatHub.cs" />
+    <Compile Include="Models\ChatModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
-    <Compile Include="Models\MessageModel.cs" />
-    <Compile Include="Models\UserModel.cs" />
+    <Compile Include="DAL\Domain\Message.cs" />
+    <Compile Include="Models\RegisterModel.cs" />
+    <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -174,10 +180,12 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\MessStyles\Style.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\AJAX Scripts\util.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
