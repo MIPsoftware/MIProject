@@ -17,5 +17,11 @@ namespace MIPChat.DAL.Repository
         {
             return _dbSet.FindAsync(Email); 
         }
+        public async Task<ICollection<User>> AllExcept(ICollection<Guid> guids)
+        {
+            return await _dbSet
+                .Where(user => !guids.Contains(user.Id))
+                .ToListAsync();
+        }
     }
 }
