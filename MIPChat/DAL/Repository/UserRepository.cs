@@ -23,5 +23,12 @@ namespace MIPChat.DAL.Repository
                 .Where(user => !guids.Contains(user.Id))
                 .ToListAsync();
         }
+        public async Task<ICollection<Message>> LoadLastMessages(Guid userId, Guid chatId, int numOfMessages)
+        {
+            return await _conext.Chats
+                .Where(chat => chat.Id == chatId)
+                .Include(chat => chat.Messages)
+                .ToListAsync();
+        }
     }
 }
