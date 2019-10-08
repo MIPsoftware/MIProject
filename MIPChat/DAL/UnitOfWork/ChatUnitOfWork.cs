@@ -12,12 +12,12 @@ namespace MIPChat.DAL.UnitOfWork
         private readonly Lazy<IUsersRepository> _users;
         private readonly Lazy<IChatRepository> _chat;
 
-        public ChatUnitOfWork(ChatDBContext context)
+        public ChatUnitOfWork()
         {
-            _context = context;
+            _context = new ChatDBContext();
 
-            _users = new Lazy<IUsersRepository>(() => new UserRepository(_context));
-            _chat = new Lazy<IChatRepository>(() => new ChatRepository(_context));
+            _users = new Lazy<IUsersRepository>(() => new UserRepository());
+            _chat = new Lazy<IChatRepository>(() => new ChatRepository());
         }
 
         public IUsersRepository Users => _users.Value;

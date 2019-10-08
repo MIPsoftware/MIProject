@@ -19,5 +19,7 @@ namespace MIPChat.Models
         public DateTime LastLogIn { get; set; }
         public DateTime LastLogOut { get; set; }
         public byte[] Icon { get; set; }
+
+        public ICollection<ChatModel> Chats;
     }
 }
