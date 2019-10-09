@@ -228,8 +228,8 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Messanger\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />

@@ -23,7 +23,6 @@ namespace MIPChat.Controllers
             db = new ChatDBContext();
         }
 
-
         [HttpGet]
         public ActionResult Index()
         {
@@ -46,7 +45,7 @@ namespace MIPChat.Controllers
         [HttpPost]
         public ActionResult AvailNewMesssges(User user)
         {
-           
+          
             var NewExChats = messangerData.Chats.FindAllChatsByName(user.Name).Result.ToList();
 
             //var userRepository = new UserRepository(new ChatDBContext());
