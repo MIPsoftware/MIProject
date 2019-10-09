@@ -15,7 +15,7 @@ namespace MIPChat.Hubs
 
         public OnlineHub()
         {
-            Users = (new UserRepository(new DAL.ChatDBContext()).FindAll().Result.ToList());
+            //Users = new UserRepository(new DAL.ChatDBContext()).FindAll().Result.ToList();
         }
 
 
@@ -25,16 +25,6 @@ namespace MIPChat.Hubs
             var id = Context.ConnectionId;
 
 
-            if (!Users.Any(x => x.UserId.ToString() == id))
-            {
-                Users.Add(new User { UserId = Guid.Parse(id), Name = userName });
-
-                // Посылаем сообщение текущему пользователю
-                Clients.Caller.onConnected(id, userName, Users);
-
-                // Посылаем сообщение всем пользователям, кроме текущего
-                Clients.AllExcept(id).onNewUserConnected(id, userName);
-            }
         }
 
         // Отключение пользователя

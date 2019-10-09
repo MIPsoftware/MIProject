@@ -13,17 +13,32 @@ namespace MIPChat.Controllers
 {
     public class MessangerController : Controller
     {
+
+        private ChatUnitOfWork messangerData;
+        private ChatDBContext db;
+
+        public MessangerController()
+        {
+            messangerData = new ChatUnitOfWork();
+            db = new ChatDBContext();
+        }
+
+
         [HttpGet]
         public ActionResult Index()
         {
+            /*Data stub*/
+            ViewBag.Chats = db.Chats.AsEnumerable();
+            ViewBag.Messages = db.Messages.AsEnumerable();
+            ViewBag.Users = db.Users.AsEnumerable();
+            ViewBag.CurrentUser = db.Users.First();
             return View();
         }
 
         [HttpPost]
         public ActionResult UserMessAndChatsAsync(User user)
         {
-            var chatRepository = new ChatRepository(new ChatDBContext());
-            var allExistingChats = chatRepository.FindAllChatsForUser(user).Result;
+            var allExistingChats = messangerData.Chats.FindAllChatsByName(user.Name).Result;
 
             return PartialView(allExistingChats);
         }
@@ -31,8 +46,8 @@ namespace MIPChat.Controllers
         [HttpPost]
         public ActionResult AvailNewMesssges(User user)
         {
-            var chatRepository = new ChatRepository(new ChatDBContext());
-            var allExistingChats = chatRepository.FindAllChatsForUser(user).Result.ToList();
+           
+            var NewExChats = messangerData.Chats.FindAllChatsByName(user.Name).Result.ToList();
 
             //var userRepository = new UserRepository(new ChatDBContext());
             //var allAvailableUsers = userRepository.FindAllAvailable().Result;
@@ -49,8 +64,7 @@ namespace MIPChat.Controllers
         [HttpPost]
         public ActionResult UserConcreteChat(Guid ChatID)
         {
-            var chatRepository = new ChatRepository(new ChatDBContext());
-            var chatInst = chatRepository.FindById(ChatID).Result;
+            var chatInst = messangerData.Chats.FindById(ChatID).Result;
 
             return PartialView(ChatID);
         }
@@ -59,7 +73,6 @@ namespace MIPChat.Controllers
         [HttpPost]
         public ActionResult FindChat(string name)
         {
-            var chatRepository = new ChatRepository(new ChatDBContext());
             ChatModel chatModel = new ChatModel();// = chatRepository.FindByName(name);
 
             return PartialView(chatModel);

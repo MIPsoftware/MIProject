@@ -16,6 +16,7 @@ namespace MIPChat.Models
         public Guid AuthorId { get; set; }
         [Required]
         public string Content { get; set; }
+        [Required]
         public DateTime TheTimeOfSending { get; set; }
     }
 }
