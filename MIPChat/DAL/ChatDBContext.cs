@@ -3,6 +3,7 @@ using MIPChat.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
 using System.Web;
 
@@ -18,6 +19,11 @@ namespace MIPChat.DAL
         static ChatDBContext()
         {
             Database.SetInitializer(new ChatInitializer());
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
 
         public ChatDBContext(): base("ChatDBContext")

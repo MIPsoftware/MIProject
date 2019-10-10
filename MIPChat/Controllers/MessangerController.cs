@@ -37,7 +37,7 @@ namespace MIPChat.Controllers
         [HttpPost]
         public ActionResult UserMessAndChatsAsync(User user)
         {
-            var allExistingChats = messangerData.Chats.FindAllChatsByName(user.Name).Result;
+            var allExistingChats = messangerData.Chats.FindAllChatsByNameQuery(user.Name).Result;
 
             return PartialView(allExistingChats);
         }
@@ -46,7 +46,7 @@ namespace MIPChat.Controllers
         public ActionResult AvailNewMesssges(User user)
         {
           
-            var NewExChats = messangerData.Chats.FindAllChatsByName(user.Name).Result.ToList();
+            var NewExChats = messangerData.Chats.FindAllChatsByNameQuery(user.Name).Result.ToList();
 
             //var userRepository = new UserRepository(new ChatDBContext());
             //var allAvailableUsers = userRepository.FindAllAvailable().Result;

@@ -150,6 +150,8 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MessangerController.cs" />
+    <Compile Include="DAL\Repository\IMessageRepository.cs" />
+    <Compile Include="DAL\Repository\MessageRepository.cs" />
     <Compile Include="DAL\Repository\UserRepository.cs" />
     <Compile Include="DAL\Repository\IUsersRepository.cs" />
     <Compile Include="DAL\Repository\BaseRepository.cs" />
@@ -177,10 +179,6 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\ChatDBContext.mdf" />
-    <Content Include="App_Data\ChatDBContext_log.ldf">
-      <DependentUpon>ChatDBContext.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -224,12 +222,9 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Messanger\Index.cshtml" />
   </ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
