@@ -12,6 +12,7 @@ namespace MIPChat.Models
         public int Id { get; set; }
         [Required(ErrorMessage = "У чата должно быть имя")]
         public string Name { get; set; }
+        public byte[] Icon { get; set; }
         public virtual ICollection<Message> Messages { get; set; }
         public virtual ICollection<User> Users { get; set; }
         public ChatModel()
@@ -19,5 +20,6 @@ namespace MIPChat.Models
             Messages = new List<Message>();
             Users = new List<User>();
         }
+
     }
 }

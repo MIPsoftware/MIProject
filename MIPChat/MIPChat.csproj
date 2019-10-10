@@ -150,6 +150,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MessangerController.cs" />
+    <Compile Include="DAL\ChatInitializer.cs" />
     <Compile Include="DAL\Repository\IMessageRepository.cs" />
     <Compile Include="DAL\Repository\MessageRepository.cs" />
     <Compile Include="DAL\Repository\UserRepository.cs" />
@@ -173,6 +174,7 @@
     <Compile Include="Models\ChatModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="DAL\Domain\Message.cs" />
+    <Compile Include="Models\MessageModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -236,6 +238,9 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
