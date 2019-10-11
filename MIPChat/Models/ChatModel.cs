@@ -9,7 +9,7 @@ namespace MIPChat.Models
     public class ChatModel
     {
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         [Required(ErrorMessage = "У чата должно быть имя")]
         public string Name { get; set; }
         public virtual ICollection<Message> Messages { get; set; }

@@ -15,9 +15,11 @@ namespace MIPChat.DAL.Repository
         {
         }
 
+        public UserRepository(ChatDBContext context) : base(context) { }
+
         public async Task<User> FindUserByEmail(string Email)
         {
-           return await _dbSet.FindAsync(Email); 
+            return await _dbSet.FindAsync(Email);
         }
 
         public async Task<IEnumerable<User>> FindAvailableUsersForLocalChat(Guid UserId)
@@ -25,27 +27,38 @@ namespace MIPChat.DAL.Repository
 
             User user = FindById(UserId).Result;
             List<User> ChattedUsers = new List<User>();
-           
-            foreach(var item in user.Chats.Where(chat => chat.Users.Count == 2).Select(chat => chat.Users))
+
+            foreach (var item in user.Chats.Where(chat => chat.Users.Count == 2).Select(chat => chat.Users))
             {
-               
+
                 ChattedUsers.AddRange(item);
             }
 
             return await _dbSet.Where(u => !ChattedUsers.Contains(u)).ToListAsync();
         }
-        public async Task<ICollection<User>> AllExcept(ICollection<Guid> guids)
+        public async Task<ICollection<User>> GetAllUsersExcept(ICollection<Guid> guids)
         {
             return await _dbSet
-                .Where(user => !guids.Contains(user.Id))
+                .Where(user => !guids.Contains(user.UserId))
                 .ToListAsync();
         }
-        public async Task<ICollection<Message>> LoadLastMessages(Guid userId, Guid chatId, int numOfMessages)
+        public async Task<ICollection<Message>> GetNewMessages(Guid userId, Guid chatId)
         {
-            return await _conext.Chats
-                .Where(chat => chat.Id == chatId)
-                .Include(chat => chat.Messages)
-                .ToListAsync();
+            User TheUser = await FindById(userId);
+
+            DateTime lastLogoutDate = TheUser.LastLogOut;
+            DateTime lastLoginDate = TheUser.LastLogIn;
+
+            if (lastLoginDate > lastLogoutDate)
+                return await Task.Run( () => new List<Message>());
+
+            return await Task.Run(()=> _context.Chats
+                .Where(c => c.Id == chatId)
+                .Include(c => c.Messages)
+                .First()
+                .Messages
+                .Where(m => m.TheTimeOfSending >= lastLogoutDate)
+                .ToList());
         }
     }
 }
