@@ -46,10 +46,9 @@ namespace MIPChat.DAL.Repository
         {
             User TheUser = await FindById(userId);
 
-            DateTime lastLogoutDate = TheUser.LastLogOut;
-            DateTime lastLoginDate = TheUser.LastLogIn;
+            DateTime lastLogout = TheUser.LastLogOut;
 
-            if (lastLoginDate > lastLogoutDate)
+            if (TheUser.LastLogIn > lastLogout)
                 return await Task.Run( () => new List<Message>());
 
             return await Task.Run(()=> _context.Chats
@@ -57,7 +56,7 @@ namespace MIPChat.DAL.Repository
                 .Include(c => c.Messages)
                 .First()
                 .Messages
-                .Where(m => m.TheTimeOfSending >= lastLogoutDate)
+                .Where(m => m.TheTimeOfSending >= lastLogout)
                 .ToList());
         }
     }
