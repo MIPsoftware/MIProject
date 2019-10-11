@@ -15,7 +15,7 @@ namespace MIPChat.Hubs
 
         public OnlineHub()
         {
-            //Users = new UserRepository(new DAL.ChatDBContext()).FindAll().Result.ToList();
+            Users = (new UserRepository(new DAL.ChatDBContext()).FindAll().Result.ToList());
         }
 
 

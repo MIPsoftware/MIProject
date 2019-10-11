@@ -14,7 +14,7 @@ namespace MIPChat.DAL.UnitOfWork
 
         }
 
-        public async Task<IEnumerable<ChatModel>> FindAllChatsByNameQuery(string Name)
+        public async Task<IEnumerable<ChatModel>> FindAllChatsByName(string Name)
         {
             return await _dbSet.Where(c => c.Name.Contains(Name)).ToListAsync();
         }

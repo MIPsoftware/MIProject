@@ -18,7 +18,5 @@ namespace MIPChat.Models
         public string Name { get; set; }
         public string Surname { get; set; }
         public byte[] Icon { get; set; }
-        
-        public string OnlineStatus { get; set; }
     }
 }

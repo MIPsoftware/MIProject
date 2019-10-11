@@ -6,6 +6,6 @@ namespace MIPChat.DAL.UnitOfWork
 {
     public interface IChatRepository : IRepository<ChatModel>
     {
-        Task<IEnumerable<ChatModel>> FindAllChatsByNameQuery(string queryChatName);
+        Task<IEnumerable<ChatModel>> FindAllChatsByName(string Name);
     }
 }
