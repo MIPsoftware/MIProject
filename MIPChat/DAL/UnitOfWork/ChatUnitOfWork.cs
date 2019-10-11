@@ -11,6 +11,7 @@ namespace MIPChat.DAL.UnitOfWork
         private readonly ChatDBContext _context;
         private readonly Lazy<IUsersRepository> _users;
         private readonly Lazy<IChatRepository> _chat;
+        private readonly Lazy<IMessageRepository> _message;
 
         public ChatUnitOfWork()
         {
@@ -18,10 +19,12 @@ namespace MIPChat.DAL.UnitOfWork
 
             _users = new Lazy<IUsersRepository>(() => new UserRepository());
             _chat = new Lazy<IChatRepository>(() => new ChatRepository());
+            _message = new Lazy<IMessageRepository>(() => new MessageRepository());
         }
 
         public IUsersRepository Users => _users.Value;
         public IChatRepository Chats => _chat.Value;
+        public IMessageRepository Messages => _message.Value;
 
         public int CommitChanges()
         {
