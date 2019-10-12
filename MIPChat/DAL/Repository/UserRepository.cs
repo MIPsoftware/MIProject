@@ -68,5 +68,20 @@ namespace MIPChat.DAL.Repository
                 .Where(m => m.TheTimeOfSending >= lastLogout)
                 .ToList());   
         }
+
+        public async Task<Dictionary<ChatModel, ICollection<Message>>> GetAllNewMessagesAsync(Guid userId)
+        {
+            User TheUser = await _dbSet.
+                Where(user => user.UserId == userId).
+                Include(user => user.Chats).
+                FirstOrDefaultAsync();
+
+            Dictionary<ChatModel,ICollection<Message>> allMessages = new Dictionary<ChatModel,ICollection<Message>>();
+
+            foreach (var chat in TheUser.Chats)
+                allMessages.Add(chat, await GetNewMessagesAsync(userId, chat.Id));
+
+            return allMessages;
+        }
     }
 }
