@@ -15,22 +15,22 @@ namespace MIPChat.Controllers
     {
 
         private ChatUnitOfWork messangerData;
-        private ChatDBContext db;
+        //private ChatDBContext db;
 
         public MessangerController()
         {
             messangerData = new ChatUnitOfWork();
-            db = new ChatDBContext();
+            //db = new ChatDBContext();
         }
 
         [HttpGet]
         public ActionResult Index()
         {
             /*Data stub*/
-            ViewBag.Chats = db.Chats.AsEnumerable();
-            ViewBag.Messages = db.Messages.AsEnumerable();
-            ViewBag.Users = db.Users.AsEnumerable();
-            ViewBag.CurrentUser = db.Users.First();
+            //ViewBag.Chats = db.Chats.AsEnumerable();
+            //ViewBag.Messages = db.Messages.AsEnumerable();
+            //ViewBag.Users = db.Users.AsEnumerable();
+            //ViewBag.CurrentUser = db.Users.First();
             return View();
         }
 
@@ -42,35 +42,16 @@ namespace MIPChat.Controllers
             return PartialView(allExistingChatsForUser);
         }
 
-        [HttpPost]
-        public ActionResult GetAllMessagesForUser(Guid userId)
-        {
-            var allExistingMessages = messangerData.Users.FindById(userId).Result.ChatMessages;
-
-            return PartialView(allExistingMessages);
-        }
-
-
-
 
 
         [HttpPost]
-        public ActionResult GetChat(Guid ChatID)
+        public ActionResult GetChats(Guid ChatID)
         {
             var chatInst = messangerData.Chats.FindById(ChatID).Result;
 
             return PartialView(chatInst);
         }
 
-
-
-        [HttpPost]
-        public ActionResult GetMessage(Guid MessageID)
-        {
-            var msgInst = messangerData.Messages.FindById(MessageID).Result;
-
-            return PartialView(msgInst);
-        }
 
 
         [HttpPost]
@@ -83,24 +64,52 @@ namespace MIPChat.Controllers
 
 
         [HttpPost]
-        public ActionResult GetAllUsersToMessage(Guid UserId)
+        public ActionResult GetAllUsersToMessage(Guid userId)
         {
-            dynamic existingMessagesForUser = messangerData.Messages.FindAllToUser(UserId).Result();
+            dynamic existingMessagesForUser = messangerData.Users.FindById(userId).Result.Chats.Where(u => u.Users.Count == 2);
 
-            ICollection<UserViewModel> userList = new List<UserViewModel>();
+            ICollection<User> userList = new List<User>();
 
-            foreach(var user in messangerData.Users.FindAll().Result)
+            foreach (var user in messangerData.Users.FindAll().Result)
             {
-                if(!existingMessagesForUser.Contains(user))
+                if (!existingMessagesForUser.Contains(user))
                 {
                     userList.Add(user);
                 }
             }
 
-            var allusers = messangerData.Users.FindAll();
-
-
             return PartialView(userList);
+        }
+
+
+
+
+
+
+
+        [HttpPost]
+        public ActionResult CreateMessageOrChat(string name, ICollection<User> users, byte[] icon = null)
+        {
+            if (users.Count == 2)
+            {
+                //create messagechat
+                messangerData.Chats.Insert(new ChatModel() { Icon = icon, Name = name, Users = users });
+            }
+            else if (users.Count > 2)
+            {
+                //create chat
+                messangerData.Chats.Insert(new ChatModel() { Icon = icon, Name = name, Users = users });
+
+            }
+            //132
+            return PartialView();
+        }
+        [HttpPost]
+        public ActionResult SendMessage(string message, Guid chatId, Guid UserSenderId)
+        {
+            messangerData.Chats.FindById(chatId).Result.Messages.Add(new Message() { Content = message, AuthorId = UserSenderId, TheTimeOfSending = DateTime.Now });
+
+            return PartialView();
         }
     }
 }
