@@ -15,23 +15,29 @@ namespace MIPChat.Controllers
     {
 
         private ChatUnitOfWork messangerData;
+        private ChatDBContext db;
 
         public MessangerController()
         {
-            messangerData = new ChatUnitOfWork(new ChatDBContext());
+            messangerData = new ChatUnitOfWork();
+            db = new ChatDBContext();
         }
-
 
         [HttpGet]
         public ActionResult Index()
         {
+            /*Data stub*/
+            ViewBag.Chats = db.Chats.AsEnumerable();
+            ViewBag.Messages = db.Messages.AsEnumerable();
+            ViewBag.Users = db.Users.AsEnumerable();
+            ViewBag.CurrentUser = db.Users.First();
             return View();
         }
 
         [HttpPost]
         public ActionResult UserMessAndChatsAsync(User user)
         {
-            var allExistingChats = messangerData.Chats.FindAllChatsForUser(user).Result;
+            var allExistingChats = messangerData.Chats.FindAllChatsByNameQuery(user.Name).Result;
 
             return PartialView(allExistingChats);
         }
@@ -39,8 +45,8 @@ namespace MIPChat.Controllers
         [HttpPost]
         public ActionResult AvailNewMesssges(User user)
         {
-           
-            var NewExChats = messangerData.Chats.FindAllChatsForUser(user).Result.ToList();
+          
+            var NewExChats = messangerData.Chats.FindAllChatsByNameQuery(user.Name).Result.ToList();
 
             //var userRepository = new UserRepository(new ChatDBContext());
             //var allAvailableUsers = userRepository.FindAllAvailable().Result;
