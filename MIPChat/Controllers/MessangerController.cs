@@ -35,49 +35,72 @@ namespace MIPChat.Controllers
         }
 
         [HttpPost]
-        public ActionResult UserMessAndChatsAsync(User user)
+        public ActionResult GetAllChatsForUser(Guid userId)
         {
-            var allExistingChats = messangerData.Chats.FindAllChatsByNameQuery(user.Name).Result;
+            var allExistingChatsForUser = messangerData.Users.FindById(userId).Result.Chats;
 
-            return PartialView(allExistingChats);
+            return PartialView(allExistingChatsForUser);
         }
 
         [HttpPost]
-        public ActionResult AvailNewMesssges(User user)
+        public ActionResult GetAllMessagesForUser(Guid userId)
         {
-          
-            var NewExChats = messangerData.Chats.FindAllChatsByNameQuery(user.Name).Result.ToList();
+            var allExistingMessages = messangerData.Users.FindById(userId).Result.ChatMessages;
 
-            //var userRepository = new UserRepository(new ChatDBContext());
-            //var allAvailableUsers = userRepository.FindAllAvailable().Result;
-
-
-            return PartialView();//allAvailableUsers);
+            return PartialView(allExistingMessages);
         }
 
 
 
 
 
-
         [HttpPost]
-        public ActionResult UserConcreteChat(Guid ChatID)
+        public ActionResult GetChat(Guid ChatID)
         {
             var chatInst = messangerData.Chats.FindById(ChatID).Result;
 
-            return PartialView(ChatID);
+            return PartialView(chatInst);
+        }
+
+
+
+        [HttpPost]
+        public ActionResult GetMessage(Guid MessageID)
+        {
+            var msgInst = messangerData.Messages.FindById(MessageID).Result;
+
+            return PartialView(msgInst);
         }
 
 
         [HttpPost]
-        public ActionResult FindChat(string name)
+        public ActionResult GetAllUsersToChat(Guid UserId)
         {
-            ChatModel chatModel = new ChatModel();// = chatRepository.FindByName(name);
+            var userList = messangerData.Users.FindAll().Result;
 
-            return PartialView(chatModel);
+            return PartialView(userList);
         }
 
 
+        [HttpPost]
+        public ActionResult GetAllUsersToMessage(Guid UserId)
+        {
+            dynamic existingMessagesForUser = messangerData.Messages.FindAllToUser(UserId).Result();
 
+            ICollection<UserViewModel> userList = new List<UserViewModel>();
+
+            foreach(var user in messangerData.Users.FindAll().Result)
+            {
+                if(!existingMessagesForUser.Contains(user))
+                {
+                    userList.Add(user);
+                }
+            }
+
+            var allusers = messangerData.Users.FindAll();
+
+
+            return PartialView(userList);
+        }
     }
 }
