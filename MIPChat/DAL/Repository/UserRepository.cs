@@ -20,9 +20,18 @@ namespace MIPChat.DAL.Repository
            return await _dbSet.FindAsync(Email); 
         }
 
+        public override async Task<IEnumerable<User>> FindAll()
+        {
+            return await _dbSet.Include(u => u.Chats).ToListAsync();
+        }
+
+        public override async Task<User> FindById(Guid Id)
+        {
+            return await _dbSet.FindAsync(Id);
+        }
+
         public async Task<IEnumerable<User>> FindAvailableUsersForLocalChat(Guid UserId)
         {
-
             User user = FindById(UserId).Result;
             List<User> ChattedUsers = new List<User>();
            
