@@ -22,9 +22,18 @@ namespace MIPChat.DAL.Repository
             return await _dbSet.FindAsync(Email);
         }
 
+        public override async Task<IEnumerable<User>> FindAll()
+        {
+            return await _dbSet.Include(u => u.Chats).ToListAsync();
+        }
+
+        public override async Task<User> FindById(Guid Id)
+        {
+            return await _dbSet.FindAsync(Id);
+        }
+
         public async Task<IEnumerable<User>> FindAvailableUsersForLocalChat(Guid UserId)
         {
-
             User user = FindById(UserId).Result;
             List<User> ChattedUsers = new List<User>();
 
@@ -58,6 +67,21 @@ namespace MIPChat.DAL.Repository
                 .Messages
                 .Where(m => m.TheTimeOfSending >= lastLogout)
                 .ToList());   
+        }
+
+        public async Task<Dictionary<ChatModel, ICollection<Message>>> GetAllNewMessagesAsync(Guid userId)
+        {
+            User TheUser = await _dbSet.
+                Where(user => user.UserId == userId).
+                Include(user => user.Chats).
+                FirstOrDefaultAsync();
+
+            Dictionary<ChatModel,ICollection<Message>> allMessages = new Dictionary<ChatModel,ICollection<Message>>();
+
+            foreach (var chat in TheUser.Chats)
+                allMessages.Add(chat, await GetNewMessagesAsync(userId, chat.Id));
+
+            return allMessages;
         }
     }
 }

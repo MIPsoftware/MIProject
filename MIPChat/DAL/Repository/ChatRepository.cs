@@ -14,9 +14,9 @@ namespace MIPChat.DAL.UnitOfWork
 
         }
 
-        public async Task<IEnumerable<ChatModel>> FindAllChatsByNameQuery(string Name)
+        public async Task<IEnumerable<ChatModel>> FindAllChatsByNameQuery(string ChatName)
         {
-            return await _dbSet.Where(c => c.Name.Contains(Name)).ToListAsync();
+            return await _dbSet.Where(c => c.Name.Contains(ChatName)).Include(c => c.Messages).ToListAsync();
         }
 
         public override void Insert(ChatModel entity)
