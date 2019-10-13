@@ -35,13 +35,9 @@ namespace MIPChat.DAL.Repository
         public async Task<IEnumerable<User>> FindAvailableUsersForLocalChat(Guid UserId)
         {
             User user = FindById(UserId).Result;
-            List<User> ChattedUsers = new List<User>();
-
-            foreach (var item in user.Chats.Where(chat => chat.Users.Count == 2).Select(chat => chat.Users))
-            {
-
-                ChattedUsers.AddRange(item);
-            }
+            List<User> ChattedUsers = 
+                user.Chats.Where(chat => chat.IsLocal)
+                .SelectMany(chat => chat.Users).ToList();
 
             return await _dbSet.Where(u => !ChattedUsers.Contains(u)).ToListAsync();
         }

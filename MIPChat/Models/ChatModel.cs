@@ -12,6 +12,7 @@ namespace MIPChat.Models
         public Guid Id { get; set; }
         [Required(ErrorMessage = "У чата должно быть имя")]
         public string Name { get; set; }
+        public bool IsLocal { get { return (Users.Count == 2); } set {;} }
         public byte[] Icon { get; set; }
         public virtual ICollection<Message> Messages { get; set; }
         public virtual ICollection<User> Users { get; set; }
