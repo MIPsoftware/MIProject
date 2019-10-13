@@ -12,8 +12,5 @@ namespace MIPChat.DAL
     {
         Task<User> FindUserByEmail(string Email);
         Task<bool> PasswordCheck(LoginModel input);
-        Task<ICollection<User>> GetAllUsersExceptAsync(ICollection<Guid> guids);
-        Task<ICollection<Message>> GetNewMessagesAsync(Guid userId, Guid chatId);
-        Task<Dictionary<Guid, ICollection<Message>>> GetAllNewMessagesAsync(Guid userId);
     }
 }
