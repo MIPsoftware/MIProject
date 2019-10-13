@@ -54,7 +54,7 @@ namespace MIPChat.DAL.Repository
             return await Task.Run(() => _context.Chats
                 .Where(c => c.Id == chatId)
                 .Include(c => c.Messages)
-                .First()
+                .FirstOrDefault()
                 .Messages
                 .Where(m => m.TheTimeOfSending >= lastLogout)
                 .ToList());   
