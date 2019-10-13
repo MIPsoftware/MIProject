@@ -15,6 +15,8 @@ namespace MIPChat.Models
         [Required]
         public Guid AuthorId { get; set; }
         [Required]
+        public Guid ChatId { get; set; }
+        [Required]
         public string Content { get; set; }
         [Required]
         public DateTime TheTimeOfSending { get; set; }
@@ -30,6 +32,17 @@ namespace MIPChat.Models
         {
             if (other == null) return false;
             return (this.MessageId.Equals(other.MessageId));
+        }
+
+        public override int GetHashCode()
+        {
+            var hashCode = 869073862;
+            hashCode = hashCode * -1521134295 + EqualityComparer<Guid>.Default.GetHashCode(MessageId);
+            hashCode = hashCode * -1521134295 + EqualityComparer<Guid>.Default.GetHashCode(AuthorId);
+            hashCode = hashCode * -1521134295 + EqualityComparer<Guid>.Default.GetHashCode(ChatId);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Content);
+            hashCode = hashCode * -1521134295 + TheTimeOfSending.GetHashCode();
+            return hashCode;
         }
     }
 }

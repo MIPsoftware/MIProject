@@ -15,7 +15,10 @@ namespace MIPChat.DAL.Repository
         {
         }
 
-        public UserRepository(ChatDBContext context) : base(context) { }
+        public UserRepository(ChatDBContext Context) : base(Context)
+        {
+
+        }
 
         public async Task<User> FindUserByEmail(string Email)
         {
@@ -39,7 +42,7 @@ namespace MIPChat.DAL.Repository
 
         public override async Task<User> FindById(Guid Id)
         {
-            return await _dbSet.FindAsync(Id);
+            return await _dbSet.Include(u => u.Chats).FirstOrDefaultAsync(user => user.UserId == Id);
         }
 
         public async Task<IEnumerable<User>> FindAvailableUsersForLocalChat(Guid UserId)
@@ -57,38 +60,7 @@ namespace MIPChat.DAL.Repository
                 .Where(user => !guids.Contains(user.UserId))
                 .ToListAsync();
         }
-        public async Task<ICollection<Message>> GetNewMessagesAsync(Guid userId, Guid chatId)
-        {
-            User TheUser = await FindById(userId);
 
-            DateTime lastLogout = TheUser.LastLogOut;
-
-            if (TheUser.LastLogIn > lastLogout)
-                return new List<Message>();
-
-            return await Task.Run(() => _context.Chats
-                .Where(c => c.ChatId == chatId)
-                .Include(c => c.Messages)
-                .First()
-                .Messages
-                .Where(m => m.TheTimeOfSending >= lastLogout)
-                .ToList());   
-        }
-
-        public async Task<Dictionary<ChatModel, ICollection<Message>>> GetAllNewMessagesAsync(Guid userId)
-        {
-            User TheUser = await _dbSet.
-                Where(user => user.UserId == userId).
-                Include(user => user.Chats).
-                FirstOrDefaultAsync();
-
-            Dictionary<ChatModel,ICollection<Message>> allMessages = new Dictionary<ChatModel,ICollection<Message>>();
-
-            foreach (var chat in TheUser.Chats)
-                allMessages.Add(chat, await GetNewMessagesAsync(userId, chat.ChatId));
-
-            return allMessages;
-        }
 
         
     }

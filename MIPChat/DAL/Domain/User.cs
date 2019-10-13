@@ -46,5 +46,20 @@ namespace MIPChat.Models
             else
                 return false;
         }
+
+        public override int GetHashCode()
+        {
+            var hashCode = 1141116631;
+            hashCode = hashCode * -1521134295 + EqualityComparer<Guid>.Default.GetHashCode(UserId);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Email);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Password);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Name);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Surname);
+            hashCode = hashCode * -1521134295 + LastLogIn.GetHashCode();
+            hashCode = hashCode * -1521134295 + LastLogOut.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<byte[]>.Default.GetHashCode(Icon);
+            hashCode = hashCode * -1521134295 + EqualityComparer<ICollection<ChatModel>>.Default.GetHashCode(Chats);
+            return hashCode;
+        }
     }
 }
