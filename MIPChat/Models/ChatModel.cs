@@ -35,5 +35,17 @@ namespace MIPChat.Models
             return (this.ChatId.Equals(other.ChatId));
         }
 
+        public override int GetHashCode()
+        {
+            var hashCode = 869073862;
+            hashCode = hashCode * -1521134295 + EqualityComparer<Guid>.Default.GetHashCode(ChatId);
+            hashCode = hashCode * -1521134295 + EqualityComparer<String>.Default.GetHashCode(Name);
+            hashCode = hashCode * -1521134295 + EqualityComparer<bool>.Default.GetHashCode(IsLocal);
+            hashCode = hashCode * -1521134295 + EqualityComparer<byte[]>.Default.GetHashCode(Icon);
+            hashCode = hashCode * -1521134295 + Messages.GetHashCode();
+            hashCode = hashCode * -1521134295 + Users.GetHashCode();
+            return hashCode;
+        }
+
     }
 }

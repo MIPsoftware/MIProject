@@ -15,7 +15,10 @@ namespace MIPChat.DAL.Repository
         {
         }
 
-        public UserRepository(ChatDBContext context) : base(context) { }
+        public UserRepository(ChatDBContext Context) : base(Context)
+        {
+
+        }
 
         public async Task<User> FindUserByEmail(string Email)
         {
@@ -39,7 +42,7 @@ namespace MIPChat.DAL.Repository
 
         public override async Task<User> FindById(Guid Id)
         {
-            return await _dbSet.FindAsync(Id);
+            return await _dbSet.Include(u => u.Chats).FirstOrDefaultAsync(user => user.UserId == Id);
         }
 
         public async Task<IEnumerable<User>> FindAvailableUsersForLocalChat(Guid UserId)
@@ -57,9 +60,6 @@ namespace MIPChat.DAL.Repository
                 .Where(user => !guids.Contains(user.UserId))
                 .ToListAsync();
         }
-        public async Task<ICollection<Message>> GetNewMessagesAsync(Guid userId, Guid chatId)
-        {
-            User TheUser = await FindById(userId);
 
             DateTime lastLogout = TheUser.LastLogOut;
 

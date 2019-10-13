@@ -9,5 +9,7 @@ namespace MIPChat.DAL.Repository
 {
     public interface IMessageRepository:IRepository<Message>
     {
+       Task<ICollection<Message>> GetNewMessagesAsync(Guid userId, Guid chatId);
+       Task<Dictionary<ChatModel, ICollection<Message>>> GetAllNewMessagesAsync(Guid userId)
     }
 }
