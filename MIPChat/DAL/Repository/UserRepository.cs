@@ -54,5 +54,11 @@ namespace MIPChat.DAL.Repository
 
             return await _dbSet.Where(u => !ChattedUsers.Contains(u)).ToListAsync();
         }
+        public async Task<ICollection<User>> GetAllUsersExceptAsync(ICollection<Guid> guids)
+        {
+            return await _dbSet
+                .Where(user => !guids.Contains(user.UserId))
+                .ToListAsync();
+        }
     }
 }
