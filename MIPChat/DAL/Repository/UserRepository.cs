@@ -22,6 +22,16 @@ namespace MIPChat.DAL.Repository
             return await _dbSet.FindAsync(Email);
         }
 
+        public async Task<bool> PasswordCheck(LoginModel input)
+        {
+            User check = await FindUserByEmail(input.Email);
+
+            if (check.Password == input.Password)
+                return true;
+          
+            return false;
+        }
+
         public override async Task<IEnumerable<User>> FindAll()
         {
             return await _dbSet.Include(u => u.Chats).ToListAsync();
@@ -79,5 +89,7 @@ namespace MIPChat.DAL.Repository
 
             return allMessages;
         }
+
+        
     }
 }

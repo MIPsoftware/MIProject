@@ -11,5 +11,7 @@ namespace MIPChat.DAL
     public interface IUsersRepository : IRepository<User>
     {
         Task<User> FindUserByEmail(string Email);
+        Task<bool> PasswordCheck(LoginModel input);
+
     }
 }

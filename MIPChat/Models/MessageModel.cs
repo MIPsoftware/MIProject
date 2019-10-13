@@ -9,7 +9,7 @@ namespace MIPChat.Models
     public class MessageModel
     {
         [Key]
-        public int Id { get; set; }
+        public Guid MessageId { get; set; }
         [Required]
         public Guid AuthorId { get; set; }
         [Required]
