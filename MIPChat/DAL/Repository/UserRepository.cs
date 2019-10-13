@@ -54,42 +54,5 @@ namespace MIPChat.DAL.Repository
 
             return await _dbSet.Where(u => !ChattedUsers.Contains(u)).ToListAsync();
         }
-        public async Task<ICollection<User>> GetAllUsersExceptAsync(ICollection<Guid> guids)
-        {
-            return await _dbSet
-                .Where(user => !guids.Contains(user.UserId))
-                .ToListAsync();
-        }
-
-            DateTime lastLogout = TheUser.LastLogOut;
-
-            if (TheUser.LastLogIn > lastLogout)
-                return new List<Message>();
-
-            return await Task.Run(() => _context.Chats
-                .Where(c => c.ChatId == chatId)
-                .Include(c => c.Messages)
-                .FirstOrDefault()
-                .Messages
-                .Where(m => m.TheTimeOfSending >= lastLogout)
-                .ToList());   
-        }
-
-        public async Task<Dictionary<ChatModel, ICollection<Message>>> GetAllNewMessagesAsync(Guid userId)
-        {
-            User TheUser = await _dbSet.
-                Where(user => user.UserId == userId).
-                Include(user => user.Chats).
-                FirstOrDefaultAsync();
-
-            Dictionary<ChatModel,ICollection<Message>> allMessages = new Dictionary<ChatModel,ICollection<Message>>();
-
-            foreach (var chat in TheUser.Chats)
-                allMessages.Add(chat, await GetNewMessagesAsync(userId, chat.ChatId));
-
-            return allMessages;
-        }
-
-        
     }
 }
