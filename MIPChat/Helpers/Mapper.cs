@@ -52,6 +52,7 @@ namespace MIPChat.Helpers
             return new User
             { 
                 Email = User.Email,
+                Password = User.Password,
                 Icon = User.Icon,
                 Name = User.Name,
                 Surname = User.Surname
@@ -62,7 +63,8 @@ namespace MIPChat.Helpers
         {
             return new User
             {
-                Email = User.Email
+                Email = User.Email,
+                Password = User.Password
             };
         }
 
@@ -71,7 +73,7 @@ namespace MIPChat.Helpers
 
             return new MessageModel
             {
-                Id = message.Id,
+                MessageId = message.MessageId,
                 AuthorId = message.AuthorId,
                 Content = message.Content,
                 TheTimeOfSending = message.TheTimeOfSending.ToString("HH:mm tt")

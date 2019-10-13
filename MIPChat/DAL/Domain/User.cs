@@ -16,6 +16,7 @@ namespace MIPChat.Models
         [Required(ErrorMessage ="У пользователя должен быть Email")]
         /*[Key, Column(Order = 1)]*/
         public string Email { get; set; }
+        public string Password { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public DateTime LastLogIn { get; set; }
@@ -26,6 +27,24 @@ namespace MIPChat.Models
         public User()
         {
             Chats = new List<ChatModel>();
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null) return false;
+            if (!(obj is User objAsUser)) return false;
+            else return Equals(objAsUser);
+        }
+
+        public bool Equals(User other)
+        {
+            if (other == null) return false;
+            if (this.UserId.Equals(other.UserId))
+                return true;
+            else if (this.Email.Equals(other.Email))
+                return true;
+            else
+                return false;
         }
     }
 }

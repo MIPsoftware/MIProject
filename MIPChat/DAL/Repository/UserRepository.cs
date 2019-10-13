@@ -22,17 +22,32 @@ namespace MIPChat.DAL.Repository
             return await _dbSet.FindAsync(Email);
         }
 
+        public async Task<bool> PasswordCheck(LoginModel input)
+        {
+            User check = await FindUserByEmail(input.Email);
+
+            if (check.Password == input.Password)
+                return true;
+          
+            return false;
+        }
+
+        public override async Task<IEnumerable<User>> FindAll()
+        {
+            return await _dbSet.Include(u => u.Chats).ToListAsync();
+        }
+
+        public override async Task<User> FindById(Guid Id)
+        {
+            return await _dbSet.FindAsync(Id);
+        }
+
         public async Task<IEnumerable<User>> FindAvailableUsersForLocalChat(Guid UserId)
         {
-
             User user = FindById(UserId).Result;
-            List<User> ChattedUsers = new List<User>();
-
-            foreach (var item in user.Chats.Where(chat => chat.Users.Count == 2).Select(chat => chat.Users))
-            {
-
-                ChattedUsers.AddRange(item);
-            }
+            List<User> ChattedUsers = 
+                user.Chats.Where(chat => chat.IsLocal)
+                .SelectMany(chat => chat.Users).ToList();
 
             return await _dbSet.Where(u => !ChattedUsers.Contains(u)).ToListAsync();
         }
@@ -52,7 +67,7 @@ namespace MIPChat.DAL.Repository
                 return new List<Message>();
 
             return await Task.Run(() => _context.Chats
-                .Where(c => c.Id == chatId)
+                .Where(c => c.ChatId == chatId)
                 .Include(c => c.Messages)
                 .FirstOrDefault()
                 .Messages
@@ -70,9 +85,11 @@ namespace MIPChat.DAL.Repository
             Dictionary<ChatModel,ICollection<Message>> allMessages = new Dictionary<ChatModel,ICollection<Message>>();
 
             foreach (var chat in TheUser.Chats)
-                allMessages.Add(chat, await GetNewMessagesAsync(userId, chat.Id));
+                allMessages.Add(chat, await GetNewMessagesAsync(userId, chat.ChatId));
 
             return allMessages;
         }
+
+        
     }
 }

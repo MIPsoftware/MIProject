@@ -15,69 +15,101 @@ namespace MIPChat.Controllers
     {
 
         private ChatUnitOfWork messangerData;
-        private ChatDBContext db;
+        //private ChatDBContext db;
 
         public MessangerController()
         {
             messangerData = new ChatUnitOfWork();
-            db = new ChatDBContext();
+            //db = new ChatDBContext();
         }
 
         [HttpGet]
         public ActionResult Index()
         {
             /*Data stub*/
-            ViewBag.Chats = db.Chats.AsEnumerable();
-            ViewBag.Messages = db.Messages.AsEnumerable();
-            ViewBag.Users = db.Users.AsEnumerable();
-            ViewBag.CurrentUser = db.Users.First();
+            //ViewBag.Chats = db.Chats.AsEnumerable();
+            //ViewBag.Messages = db.Messages.AsEnumerable();
+            //ViewBag.Users = db.Users.AsEnumerable();
+            //ViewBag.CurrentUser = db.Users.First();
             return View();
         }
 
         [HttpPost]
-        public ActionResult UserMessAndChatsAsync(User user)
+        public ActionResult GetAllChatsForUser(Guid userId)
         {
-            var allExistingChats = messangerData.Chats.FindAllChatsByNameQuery(user.Name).Result;
+            var allExistingChatsForUser = messangerData.Users.FindById(userId).Result.Chats;
 
-            return PartialView(allExistingChats);
-        }
-
-        [HttpPost]
-        public ActionResult AvailNewMesssges(User user)
-        {
-          
-            var NewExChats = messangerData.Chats.FindAllChatsByNameQuery(user.Name).Result.ToList();
-
-            //var userRepository = new UserRepository(new ChatDBContext());
-            //var allAvailableUsers = userRepository.FindAllAvailable().Result;
-
-
-            return PartialView();//allAvailableUsers);
+            return PartialView(allExistingChatsForUser);
         }
 
 
 
-
-
-
         [HttpPost]
-        public ActionResult UserConcreteChat(Guid ChatID)
+        public ActionResult GetChats(Guid ChatID)
         {
             var chatInst = messangerData.Chats.FindById(ChatID).Result;
 
-            return PartialView(ChatID);
+            return PartialView(chatInst);
+        }
+
+
+
+        [HttpPost]
+        public ActionResult GetAllUsersToChat(Guid UserId)
+        {
+            var userList = messangerData.Users.FindAll().Result;
+
+            return PartialView(userList);
         }
 
 
         [HttpPost]
-        public ActionResult FindChat(string name)
+        public ActionResult GetAllUsersToMessage(Guid userId)
         {
-            ChatModel chatModel = new ChatModel();// = chatRepository.FindByName(name);
+            dynamic existingMessagesForUser = messangerData.Users.FindById(userId).Result.Chats.Where(u => u.Users.Count == 2);
 
-            return PartialView(chatModel);
+            ICollection<User> userList = new List<User>();
+
+            foreach (var user in messangerData.Users.FindAll().Result)
+            {
+                if (!existingMessagesForUser.Contains(user))
+                {
+                    userList.Add(user);
+                }
+            }
+
+            return PartialView(userList);
         }
 
 
 
+
+
+
+
+        [HttpPost]
+        public ActionResult CreateMessageOrChat(string name, ICollection<User> users, byte[] icon = null)
+        {
+            if (users.Count == 2)
+            {
+                //create messagechat
+                messangerData.Chats.Insert(new ChatModel() { Icon = icon, Name = name, Users = users });
+            }
+            else if (users.Count > 2)
+            {
+                //create chat
+                messangerData.Chats.Insert(new ChatModel() { Icon = icon, Name = name, Users = users });
+
+            }
+            //132
+            return PartialView();
+        }
+        [HttpPost]
+        public ActionResult SendMessage(string message, Guid chatId, Guid UserSenderId)
+        {
+            messangerData.Chats.FindById(chatId).Result.Messages.Add(new Message() { Content = message, AuthorId = UserSenderId, TheTimeOfSending = DateTime.Now });
+
+            return PartialView();
+        }
     }
 }
