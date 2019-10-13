@@ -57,7 +57,7 @@ namespace MIPChat.DAL.Repository
                 return new List<Message>();
 
             return await Task.Run(() => _context.Chats
-                .Where(c => c.Id == chatId)
+                .Where(c => c.ChatId == chatId)
                 .Include(c => c.Messages)
                 .First()
                 .Messages
@@ -75,7 +75,7 @@ namespace MIPChat.DAL.Repository
             Dictionary<ChatModel,ICollection<Message>> allMessages = new Dictionary<ChatModel,ICollection<Message>>();
 
             foreach (var chat in TheUser.Chats)
-                allMessages.Add(chat, await GetNewMessagesAsync(userId, chat.Id));
+                allMessages.Add(chat, await GetNewMessagesAsync(userId, chat.ChatId));
 
             return allMessages;
         }

@@ -71,7 +71,7 @@ namespace MIPChat.Helpers
 
             return new MessageModel
             {
-                Id = message.Id,
+                Id = message.MessageId,
                 AuthorId = message.AuthorId,
                 Content = message.Content,
                 TheTimeOfSending = message.TheTimeOfSending.ToString("HH:mm tt")

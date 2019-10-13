@@ -27,5 +27,18 @@ namespace MIPChat.Models
         {
             Chats = new List<ChatModel>();
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null) return false;
+            if (!(obj is User objAsUser)) return false;
+            else return Equals(objAsUser);
+        }
+
+        public bool Equals(User other)
+        {
+            if (other == null) return false;
+            return (this.UserId.Equals(other.UserId));
+        }
     }
 }
