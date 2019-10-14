@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace MIPChat.DAL.Repository
 {
-    public interface IMessageRepository:IRepository<Message>
+    public interface IMessageRepository : IRepository<Message>
     {
-       Task<ICollection<Message>> GetNewMessagesAsync(Guid userId, Guid chatId);
-       Task<Dictionary<ChatModel, ICollection<Message>>> GetAllNewMessagesAsync(Guid userId)
+        Task<ICollection<Message>> GetNewMessagesAsync(Guid userId, Guid chatId);
+        Task<Dictionary<ChatModel, ICollection<Message>>> GetAllNewMessagesAsync(Guid userId);
+        Task<ICollection<Message>> GetAllMessagesInPeriod(Guid userId, DateTime firstDate, DateTime secondDate);
     }
 }

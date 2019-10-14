@@ -44,5 +44,10 @@ namespace MIPChat.DAL.Repository
 
             return allMessages;
         }
+
+        public async Task<ICollection<Message>> GetAllMessagesInPeriod(Guid chatId, DateTime firstDate, DateTime secondDate)
+        {
+            return await _dbSet.Where(mes => mes.ChatId == chatId && mes.TheTimeOfSending >= firstDate && mes.TheTimeOfSending <= secondDate).ToListAsync();
+        }
     }
 }

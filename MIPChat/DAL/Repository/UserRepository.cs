@@ -60,8 +60,5 @@ namespace MIPChat.DAL.Repository
                 .Where(user => !guids.Contains(user.UserId))
                 .ToListAsync();
         }
-
-
-        
     }
 }

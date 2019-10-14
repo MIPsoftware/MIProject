@@ -12,6 +12,5 @@ namespace MIPChat.DAL
     {
         Task<User> FindUserByEmail(string Email);
         Task<bool> PasswordCheck(LoginModel input);
-
     }
 }
