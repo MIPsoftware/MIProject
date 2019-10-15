@@ -49,5 +49,15 @@ namespace MIPChat.DAL.Repository
         {
             return await _dbSet.Where(mes => mes.ChatId == chatId && mes.TheTimeOfSending >= firstDate && mes.TheTimeOfSending <= secondDate).ToListAsync();
         }
+
+        public async Task<ICollection<Message>> GetLastRequiredMessages(Guid chatId,int I,int J)
+        {
+            List<Message> query = new List<Message>();
+            for(int i = I;i <= J; i++)
+            {
+               await query.Add(_dbSet[i]);
+            }
+            return query;
+        }
     }
 }
