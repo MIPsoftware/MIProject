@@ -50,6 +50,7 @@ namespace MIPChat.DAL.Repository
             return await _dbSet.Where(mes => mes.ChatId == chatId && mes.TheTimeOfSending >= firstDate && mes.TheTimeOfSending <= secondDate).ToListAsync();
         }
 
+
         public async Task<ICollection<Message>> GetNewMessagesAsync(Guid chatId,int FirstNumber,int LastNumber)
         {       
             List<Message> input = new List<Message>(_dbSet);
@@ -58,6 +59,11 @@ namespace MIPChat.DAL.Repository
 
             input.ForEach(i => i >= FirstNumber && i <= LastNumber){ query.Add(input[i]); }
             return query;
+        }
+        
+        public async Task<ICollection<Message>> GetAllMessagesSince(Guid chatId, DateTime date)
+        {
+            return await GetAllMessagesInPeriod(chatId, date, DateTime.Now);
         }
     }
 }

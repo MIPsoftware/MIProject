@@ -12,5 +12,6 @@ namespace MIPChat.DAL.Repository
         Task<ICollection<Message>> GetNewMessagesAsync(Guid userId, Guid chatId);
         Task<Dictionary<ChatModel, ICollection<Message>>> GetAllNewMessagesAsync(Guid userId);
         Task<ICollection<Message>> GetAllMessagesInPeriod(Guid userId, DateTime firstDate, DateTime secondDate);
+        Task<ICollection<Message>> GetAllMessagesSince(Guid userId, DateTime date);
     }
 }
