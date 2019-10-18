@@ -11,6 +11,7 @@ using System.Web.Mvc;
 
 namespace MIPChat.Controllers
 {
+    [Authorize]
     public class MessangerController : Controller
     {
 
@@ -45,7 +46,7 @@ namespace MIPChat.Controllers
 
 
         [HttpPost]
-        public ActionResult GetChats(Guid ChatID)
+        public ActionResult FindChat(Guid ChatID)
         {
             var chatInst = messangerData.Chats.FindById(ChatID).Result;
 

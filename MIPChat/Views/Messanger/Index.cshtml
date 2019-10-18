@@ -31,23 +31,7 @@
                     </div>
                     <div class="card-body contacts_body" id="groups">
                         <ui class="contacts">
-                            @foreach (var chat in (dynamic)ViewBag.Chats)
-                            {
-                                <li class="group">
-                                    <div class="d-flex bd-highlight" data-group_id="@chat.Id">
-                                        <div class="img_cont">
-                                            <!--Change to chat icon-->
-                                            <img src="https://cdn.pixabay.com/photo/2016/08/09/21/56/fire-1581888_1280.jpg" class="rounded-circle user_img">
-                                            <!--<span class="online_icon"></span>-->
-                                            <!--<span class="online_icon offline"></span>-->
-                                        </div>
-                                        <div class="user_info">
-                                            <span>@chat.Name</span>
-                                            <!--<p>Ivan is online</p>-->
-                                        </div>
-                                    </div>
-                                </li>
-                            }
+                            @{Html.RenderPartial("GetAllChatsForUser", new MIPChat.Models.User { UserId = Guid.Parse(HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName].Value) });}
                         </ui>
                     </div>
                     <div class="card-footer"></div>
@@ -84,45 +68,20 @@
                         </div>
                     </div>
                     <div class="card-body msg_card_body">
-                        @foreach (var message in (dynamic)ViewBag.Messages)
-                        {
-                            if (!message.AuthorId.Equals(ViewBag.CurrentUser.UserId))
-                            {
-                                <div class="d-flex justify-content-start mb-4">
-                                    <div class="img_cont_msg">
-                                        <!--Change to user icon-->
-                                        <img src="https://cdn.pixabay.com/photo/2016/08/09/21/56/fire-1581888_1280.jpg" class="rounded-circle user_img_msg">
-                                    </div>
-                                    <div class="msg_cotainer">
-                                        @message.Content
-                                        <span class="msg_time">@message.TheTimeOfSending.ToString()</span>
-                                    </div>
-                                </div>
-                            }
-                            if (message.AuthorId.Equals(ViewBag.CurrentUser.UserId))
-                            {
-                                <div class="d-flex justify-content-end mb-4">
-                                    <div class="msg_cotainer_send">
-                                        @message.Content
-                                        <span class="msg_time_send">@message.TheTimeOfSending.ToString()</span>
-                                    </div>
-                                    <div class="img_cont_msg">
-                                        <!--Change to user icon-->
-                                        <img src="https://cdn.pixabay.com/photo/2016/08/09/21/56/fire-1581888_1280.jpg" class="rounded-circle user_img_msg">
-                                    </div>
-                                </div>
-                            }
-                        }
+                        Выберети чат.....
                     </div>
                     <div class="card-footer">
                         <div class="input-group">
                             <div class="input-group-append">
                                 <span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
                             </div>
-                            <textarea name="" class="form-control type_msg" placeholder="Type your message..."></textarea>
-                            <div class="input-group-append">
-                                <a href="#SendMessage" class="input-group-text send_btn"><i class="fas fa-location-arrow"></i></a>
-                            </div>
+                            @using (Ajax.BeginForm("SendMessage", new AjaxOptions { UpdateTargetId = "results" }))
+                            {
+                                <textarea name="" class="form-control type_msg" placeholder="Type your message..."></textarea>
+                                <div class="input-group-append">
+                                    <a href="#SendMessage" class="input-group-text send_btn"><i class="fas fa-location-arrow"></i></a>
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>
