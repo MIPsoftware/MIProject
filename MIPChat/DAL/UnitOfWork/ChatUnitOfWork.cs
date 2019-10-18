@@ -17,9 +17,9 @@ namespace MIPChat.DAL.UnitOfWork
         {
             _context = new ChatDBContext();
 
-            _users = new Lazy<IUsersRepository>(() => new UserRepository());
-            _chat = new Lazy<IChatRepository>(() => new ChatRepository());
-            _message = new Lazy<IMessageRepository>(() => new MessageRepository());
+            _users = new Lazy<IUsersRepository>(() => new UserRepository(_context));
+            _chat = new Lazy<IChatRepository>(() => new ChatRepository(_context));
+            _message = new Lazy<IMessageRepository>(() => new MessageRepository(_context));
         }
 
         public IUsersRepository Users => _users.Value;

@@ -10,10 +10,6 @@ namespace MIPChat.DAL.Repository
 {
     public class MessageRepository:BaseRepository<ChatDBContext,Message>,IMessageRepository
     {
-        public MessageRepository():base(new ChatDBContext())
-        {
-
-        }
         public MessageRepository(ChatDBContext Context) : base(Context)
         {
 

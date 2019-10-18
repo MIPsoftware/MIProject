@@ -27,10 +27,10 @@ namespace MIPChat.Controllers
         public ActionResult Index()
         {
             /*Data stub*/
-            //ViewBag.Chats = db.Chats.AsEnumerable();
-            //ViewBag.Messages = db.Messages.AsEnumerable();
-            //ViewBag.Users = db.Users.AsEnumerable();
-            //ViewBag.CurrentUser = db.Users.First();
+            ViewBag.Chats = messangerData.Chats.FindAll().Result;
+            ViewBag.Messages = messangerData.Messages.FindAll().Result;
+            ViewBag.Users = messangerData.Users.FindAll().Result;
+            ViewBag.CurrentUser = messangerData.Chats.FindAll().Result.First();
             return View();
         }
 

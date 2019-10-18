@@ -11,10 +11,6 @@ namespace MIPChat.DAL.Repository
 {
     public class UserRepository : BaseRepository<ChatDBContext, User>, IUsersRepository
     {
-        public UserRepository() : base(new ChatDBContext())
-        {
-        }
-
         public UserRepository(ChatDBContext Context) : base(Context)
         {
 
@@ -23,6 +19,12 @@ namespace MIPChat.DAL.Repository
         public async Task<User> FindUserByEmail(string Email)
         {
             return await _dbSet.FindAsync(Email);
+        }
+
+        public async Task<User> FindUserByName(string UserName)
+        {
+            return await _dbSet.FirstOrDefaultAsync(user => 
+            user.Name.ToLower().Equals(UserName.ToLower()));
         }
 
         public async Task<bool> ValidatePassword(LoginModel input)
@@ -37,7 +39,7 @@ namespace MIPChat.DAL.Repository
 
         public override async Task<IEnumerable<User>> FindAll()
         {
-            return await _dbSet.Include(u => u.Chats).ToListAsync();
+           return await _dbSet.Include(u => u.Chats).ToListAsync(); 
         }
 
         public override async Task<User> FindById(Guid Id)

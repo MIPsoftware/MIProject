@@ -8,11 +8,7 @@ using MIPChat.Models;
 namespace MIPChat.DAL.UnitOfWork
 {
     public class ChatRepository : BaseRepository<ChatDBContext,ChatModel>,IChatRepository
-    {
-        public ChatRepository():base(new ChatDBContext())
-        {
-
-        }
+    { 
 
         public ChatRepository(ChatDBContext Context) : base(Context)
         {
@@ -26,7 +22,7 @@ namespace MIPChat.DAL.UnitOfWork
 
         public override void Insert(ChatModel entity)
         {
-            IUsersRepository Users = new UserRepository();
+            IUsersRepository Users = new UserRepository(_context);
             foreach (User user in entity.Users)
             {
                 user.Chats.Add(entity);
