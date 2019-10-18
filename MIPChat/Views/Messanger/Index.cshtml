@@ -31,13 +31,7 @@
                     </div>
                     <div class="card-body contacts_body" id="groups">
                         <ui class="contacts">
-                            @{Html.RenderPartial("GetAllChatsForUser", new MIPChat.Models.User() { UserId = Guid.Parse("1") });  }
-
-
-
-
-
-
+                            @{Html.RenderPartial("GetAllChatsForUser", new MIPChat.Models.User { UserId = Guid.Parse(HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName].Value) });}
                         </ui>
                     </div>
                     <div class="card-footer"></div>
@@ -81,10 +75,13 @@
                             <div class="input-group-append">
                                 <span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
                             </div>
-                            <textarea name="" class="form-control type_msg" placeholder="Type your message..."></textarea>
-                            <div class="input-group-append">
-                                <a href="#SendMessage" class="input-group-text send_btn"><i class="fas fa-location-arrow"></i></a>
-                            </div>
+                            @using (Ajax.BeginForm("SendMessage", new AjaxOptions { UpdateTargetId = "results" }))
+                            {
+                                <textarea name="" class="form-control type_msg" placeholder="Type your message..."></textarea>
+                                <div class="input-group-append">
+                                    <a href="#SendMessage" class="input-group-text send_btn"><i class="fas fa-location-arrow"></i></a>
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>

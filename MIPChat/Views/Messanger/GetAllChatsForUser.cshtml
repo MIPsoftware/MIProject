@@ -6,7 +6,7 @@
 
 @foreach (var chat in Model)
 {
-    @using (Ajax.BeginForm("FindChat", new AjaxOptions { UpdateTargetId = "msg_card_body" }))
+    using (Ajax.BeginForm("FindChat", new AjaxOptions { UpdateTargetId = "msg_card_body" }))
     {
         <li class="group">
             <div class="d-flex bd-highlight" data-group_id="@chat.ChatId">

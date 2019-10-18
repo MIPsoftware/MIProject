@@ -11,6 +11,7 @@ using System.Web.Mvc;
 
 namespace MIPChat.Controllers
 {
+    [Authorize]
     public class MessangerController : Controller
     {
 
