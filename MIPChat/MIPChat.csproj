@@ -150,7 +150,6 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MessangerController.cs" />
-    <Compile Include="DAL\ChatInitializer.cs" />
     <Compile Include="DAL\Repository\IMessageRepository.cs" />
     <Compile Include="DAL\Repository\MessageRepository.cs" />
     <Compile Include="DAL\Repository\UserRepository.cs" />

@@ -4,6 +4,7 @@ using MIPChat.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -12,16 +13,9 @@ using System.Web.Security;
 namespace MIPChat.Controllers
 {
 
+
     public class AccountController : Controller
     {
-        private ChatUnitOfWork ChatDatafWorker { get; set; }
-
-        public AccountController()
-        {
-            ChatDatafWorker = new ChatUnitOfWork();
-        }
-
-
 
         [HttpGet]
         public ActionResult Login()
@@ -35,7 +29,13 @@ namespace MIPChat.Controllers
         {
             User user = null;
 
-            user = ChatDatafWorker.Users.FindAll().Result.FirstOrDefault(u => u.Name == model.Name);
+
+
+            using (ChatDBContext context = new ChatDBContext())
+            {
+                user = context.Users.FirstOrDefault(u => u.Name == model.Name);
+            }
+
 
 
             if (user != null)
@@ -47,6 +47,7 @@ namespace MIPChat.Controllers
             {
                 ModelState.AddModelError("", "Username or password is incorrect!");
             }
+
             return View();
         }
 
@@ -75,7 +76,7 @@ namespace MIPChat.Controllers
             {
                 using (ChatDBContext context = new ChatDBContext())
                 {
-                    context.Users.Add(new User { Name = model.Name, Password = model.Password, Email = model.Email, LastLogIn = DateTime.Now, LastLogOut = DateTime.Now, Surname = model.Surname });
+                    context.Users.Add(new User {UserId = Guid.NewGuid(), Name = model.Name, Password = model.Password, Email = model.Email, LastLogIn = DateTime.Now, LastLogOut = DateTime.Now, Surname = model.Surname });
                     context.SaveChanges();
                 }
 
