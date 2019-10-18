@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewBag.Title = "FindChats";
+}
+
+@model IEnumerable<MIPChat.Models.MessageModel>
+
+@foreach (var message in Model)
+{
+    if (!message.AuthorId.Equals(ViewBag.CurrentUser.UserId))
+    {
+        <div class="d-flex justify-content-start mb-4">
+            <div class="img_cont_msg">
+                <!--TODO Change to user icon-->
+                <img src="https://cdn.pixabay.com/photo/2016/08/09/21/56/fire-1581888_1280.jpg" class="rounded-circle user_img_msg">
+            </div>
+            <div class="msg_cotainer">
+                @message.Content
+                <span class="msg_time">@message.TheTimeOfSending.ToString()</span>
+            </div>
+        </div>
+    }
+    if (message.AuthorId.Equals(ViewBag.CurrentUser.UserId))
+    {
+        <div class="d-flex justify-content-end mb-4">
+            <div class="msg_cotainer_send">
+                @message.Content
+                <span class="msg_time_send">@message.TheTimeOfSending.ToString()</span>
+            </div>
+            <div class="img_cont_msg">
+                <!--TODO Change to user icon-->
+                <img src="https://cdn.pixabay.com/photo/2016/08/09/21/56/fire-1581888_1280.jpg" class="rounded-circle user_img_msg">
+            </div>
+        </div>
+    }
+}

@@ -45,7 +45,7 @@ namespace MIPChat.Controllers
 
 
         [HttpPost]
-        public ActionResult FindChats(Guid ChatID)
+        public ActionResult FindChat(Guid ChatID)
         {
             var chatInst = messangerData.Chats.FindById(ChatID).Result;
 

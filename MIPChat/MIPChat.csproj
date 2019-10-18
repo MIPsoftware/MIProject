@@ -226,7 +226,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Messanger\Index.cshtml" />
     <Content Include="Views\Messanger\GetAllChatsForUser.cshtml" />
-    <Content Include="Views\Messanger\FindChats.cshtml" />
+    <Content Include="Views\Messanger\FindChat.cshtml" />
     <Content Include="Views\Messanger\GetAllUsersToChat.cshtml" />
     <Content Include="Views\Messanger\GetAllUsersToMessage.cshtml" />
     <Content Include="Views\Messanger\CreateMessageOrChat.cshtml" />
