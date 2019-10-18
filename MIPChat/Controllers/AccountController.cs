@@ -1,4 +1,5 @@
-﻿using MIPChat.DAL.UnitOfWork;
+﻿using MIPChat.DAL;
+using MIPChat.DAL.UnitOfWork;
 using MIPChat.Models;
 using System;
 using System.Collections.Generic;
@@ -56,22 +57,32 @@ namespace MIPChat.Controllers
             return View();
         }
 
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Registration(RegisterModel model)
         {
             User user = null;
 
-            user = ChatDatafWorker.Users.FindAll().Result.FirstOrDefault(u => u.Name == model.Name);
+
+            using (ChatDBContext context = new ChatDBContext())
+            {
+                user = context.Users.FirstOrDefault(u => u.Name == model.Name);
+            }
+
 
             if (user == null)
             {
+                using (ChatDBContext context = new ChatDBContext())
+                {
+                    context.Users.Add(new User { Name = model.Name, Password = model.Password, Email = model.Email, LastLogIn = DateTime.Now, LastLogOut = DateTime.Now, Surname = model.Surname });
+                    context.SaveChanges();
+                }
 
-                ChatDatafWorker.Users.Insert(new User { Name = model.Name, Password = model.Password, Email = model.Email });
-                ChatDatafWorker.CommitChanges();
-
-
-                user = ChatDatafWorker.Users.FindAll().Result.Where(u => u.Name == model.Name && u.Password == model.Password).FirstOrDefault();
+                using (ChatDBContext context = new ChatDBContext())
+                {
+                    user = context.Users.Where(u => u.Name == model.Name && u.Password == model.Password).FirstOrDefault();
+                }
             }
             if (user != null)
             {
@@ -84,8 +95,6 @@ namespace MIPChat.Controllers
             }
             return View();
         }
-
-
     }
 }
     

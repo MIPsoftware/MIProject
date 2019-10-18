@@ -39,7 +39,8 @@ namespace MIPChat.DAL.Repository
 
         public override async Task<IEnumerable<User>> FindAll()
         {
-           return await _dbSet.Include(u => u.Chats).ToListAsync(); 
+            // deleted .Include(u => u.Chats)
+            return await _dbSet.ToListAsync(); 
         }
 
         public override async Task<User> FindById(Guid Id)
