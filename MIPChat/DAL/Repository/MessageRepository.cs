@@ -28,6 +28,13 @@ namespace MIPChat.DAL.Repository
             if (TheUser.LastLogIn > TheUser.LastLogOut)
                 return new List<Message>();
 
+            List<Message> messagesInChat = await _dbSet.Where(message => message.ChatId == chatId
+             && message.TheTimeOfSending > TheUser.LastLogOut).ToListAsync();
+
+
+            if (messagesInChat.Count < 20)
+                return await GetNewMessagesInIntervalAsync(chatId, 20, _dbSet.Where(message => message.ChatId == chatId).ToListAsync().Result.Count);
+
             return await _dbSet.Where(message => message.ChatId == chatId && message.TheTimeOfSending > TheUser.LastLogOut).ToListAsync();
         }
 
@@ -45,25 +52,29 @@ namespace MIPChat.DAL.Repository
             return allMessages;
         }
 
-        public async Task<ICollection<Message>> GetAllMessagesInPeriod(Guid chatId, DateTime firstDate, DateTime secondDate)
+        public async Task<ICollection<Message>> GetAllMessagesInPeriodAsync(Guid chatId, DateTime firstDate, DateTime secondDate)
         {
             return await _dbSet.Where(mes => mes.ChatId == chatId && mes.TheTimeOfSending >= firstDate && mes.TheTimeOfSending <= secondDate).ToListAsync();
         }
 
 
-        public async Task<ICollection<Message>> GetNewMessagesAsync(Guid chatId,int FirstNumber,int LastNumber)
-        {       
-            List<Message> input = new List<Message>(_dbSet);
+        public async Task<ICollection<Message>> GetNewMessagesInIntervalAsync(Guid chatId,int FirstIndex,int LastIndex)
+        {
+            List<Message> input = await _dbSet.Where(message => message.ChatId == chatId).ToListAsync();
 
             List<Message> query = new List<Message>();
 
-            input.ForEach(i => i >= FirstNumber && i <= LastNumber){ query.Add(input[i]); }
+            for(int i = input.Count-1-FirstIndex; i < input.Count-LastIndex; i++)
+            {
+                query.Add(input[i]);
+            }
+
             return query;
         }
         
-        public async Task<ICollection<Message>> GetAllMessagesSince(Guid chatId, DateTime date)
+        public async Task<ICollection<Message>> GetAllMessagesSinceAcync(Guid chatId, DateTime date)
         {
-            return await GetAllMessagesInPeriod(chatId, date, DateTime.Now);
+            return await GetAllMessagesInPeriodAsync(chatId, date, DateTime.Now);
         }
     }
 }

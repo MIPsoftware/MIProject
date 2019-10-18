@@ -25,7 +25,7 @@ namespace MIPChat.DAL.Repository
             return await _dbSet.FindAsync(Email);
         }
 
-        public async Task<bool> PasswordCheck(LoginModel input)
+        public async Task<bool> ValidatePassword(LoginModel input)
         {
             User check = await FindUserByEmail(input.Email);
 
@@ -45,7 +45,7 @@ namespace MIPChat.DAL.Repository
             return await _dbSet.Include(u => u.Chats).FirstOrDefaultAsync(user => user.UserId == Id);
         }
 
-        public async Task<IEnumerable<User>> FindAvailableUsersForLocalChat(Guid UserId)
+        public async Task<IEnumerable<User>> FindAvailableUsersForLocalChatAcync(Guid UserId)
         {
             User user = FindById(UserId).Result;
             List<User> ChattedUsers = 
