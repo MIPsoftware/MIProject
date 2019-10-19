@@ -9,9 +9,10 @@ namespace MIPChat.DAL.Repository
 {
     public interface IMessageRepository : IRepository<Message>
     {
-        Task<ICollection<Message>> GetNewMessagesAsync(Guid userId, Guid chatId);
-        Task<Dictionary<ChatModel, ICollection<Message>>> GetAllNewMessagesAsync(Guid userId);
-        Task<ICollection<Message>> GetAllMessagesInPeriodAsync(Guid userId, DateTime firstDate, DateTime secondDate);
-        Task<ICollection<Message>> GetAllMessagesSinceAcync(Guid userId, DateTime date);
+        ICollection<Message> GetNewMessages(Guid userId, Guid chatId);
+        Dictionary<ChatModel, ICollection<Message>> GetAllNewMessages(Guid userId);
+        ICollection<Message> GetAllMessagesInPeriod(Guid userId, DateTime firstDate, DateTime secondDate);
+        ICollection<Message> GetNewMessagesInInterval(Guid chatId, int FirstIndex, int LastIndex);
+        ICollection<Message> GetAllMessagesSince(Guid userId, DateTime date);
     }
 }

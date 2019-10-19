@@ -27,19 +27,19 @@ namespace MIPChat.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            /*Data stub*/
-            ViewBag.Chats = messangerData.Chats.FindAll().Result;
-            ViewBag.Messages = messangerData.Messages.FindAll().Result;
-            ViewBag.Users = messangerData.Users.FindAll().Result;
-            ViewBag.CurrentUser = messangerData.Chats.FindAll().Result.First();
+          // /*Data stub*/
+         // ViewBag.Chats = messangerData.Chats.FindAll();
+         // ViewBag.Messages = messangerData.Messages.FindAll();
+         // ViewBag.Users = messangerData.Users.FindAll();
+         // ViewBag.CurrentUser = messangerData.Chats.FindAll().First();
             return View();
         }
 
         [HttpPost]
         public ActionResult GetAllChatsForUser(Guid userId)
         {
-            var allExistingChatsForUser = messangerData.Users.FindById(userId).Result.Chats;
-
+           var allExistingChatsForUser = messangerData.Users.FindById(userId).Chats;
+           
             return PartialView(allExistingChatsForUser);
         }
 
@@ -48,8 +48,8 @@ namespace MIPChat.Controllers
         [HttpPost]
         public ActionResult FindChat(Guid ChatID)
         {
-            var chatInst = messangerData.Chats.FindById(ChatID).Result;
-
+            var chatInst = messangerData.Chats.FindById(ChatID);
+            
             return PartialView(chatInst);
         }
 
@@ -58,8 +58,7 @@ namespace MIPChat.Controllers
         [HttpPost]
         public ActionResult GetAllUsersToChat(Guid UserId)
         {
-            var userList = messangerData.Users.FindAll().Result;
-
+            var userList = messangerData.Users.FindAll();
             return PartialView(userList);
         }
 
@@ -67,26 +66,20 @@ namespace MIPChat.Controllers
         [HttpPost]
         public ActionResult GetAllUsersToMessage(Guid userId)
         {
-            dynamic existingMessagesForUser = messangerData.Users.FindById(userId).Result.Chats.Where(u => u.Users.Count == 2);
+           dynamic existingMessagesForUser = messangerData.Users.FindById(userId).Chats.Where(u => u.Users.Count == 2);
 
-            ICollection<User> userList = new List<User>();
-
-            foreach (var user in messangerData.Users.FindAll().Result)
-            {
-                if (!existingMessagesForUser.Contains(user))
-                {
-                    userList.Add(user);
-                }
-            }
+             ICollection<User> userList = new List<User>();
+           
+             foreach (var user in messangerData.Users.FindAll())
+             {
+                 if (!existingMessagesForUser.Contains(user))
+                 {
+                     userList.Add(user);
+                 }
+             }
 
             return PartialView(userList);
         }
-
-
-
-
-
-
 
         [HttpPost]
         public ActionResult CreateMessageOrChat(string name, ICollection<User> users, byte[] icon = null)
@@ -108,7 +101,7 @@ namespace MIPChat.Controllers
         [HttpPost]
         public ActionResult SendMessage(string message, Guid chatId, Guid UserSenderId)
         {
-            messangerData.Chats.FindById(chatId).Result.Messages.Add(new Message() { Content = message, AuthorId = UserSenderId, TheTimeOfSending = DateTime.Now });
+            messangerData.Chats.FindById(chatId).Messages.Add(new Message() { Content = message, AuthorId = UserSenderId, TheTimeOfSending = DateTime.Now });
 
             return PartialView();
         }

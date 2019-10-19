@@ -8,69 +8,72 @@ using System.Web;
 
 namespace MIPChat.DAL.Repository
 {
-    public class MessageRepository:BaseRepository<ChatDBContext,Message>,IMessageRepository
-    {
-        public MessageRepository(ChatDBContext Context) : base(Context)
-        {
+ public class MessageRepository:BaseRepository<Message>,IMessageRepository
+ {
+     public MessageRepository(ChatDBContext Context) : base(Context)
+     {
 
-        }
+     }
 
-        public async Task<ICollection<Message>> GetNewMessagesAsync(Guid userId, Guid chatId)
-        {
-            UserRepository userRepository = new UserRepository(_context);
+     public ICollection<Message> GetNewMessages(Guid userId, Guid chatId)
+     {
+         UserRepository userRepository = new UserRepository(context);
 
-            User TheUser = await userRepository.FindById(userId);
+         User TheUser =  userRepository.FindById(userId);
 
-            if (TheUser.LastLogIn > TheUser.LastLogOut)
-                return new List<Message>();
+         if (TheUser.LastLogIn > TheUser.LastLogOut)
+             return new List<Message>();
 
-            List<Message> messagesInChat = await _dbSet.Where(message => message.ChatId == chatId
-             && message.TheTimeOfSending > TheUser.LastLogOut).ToListAsync();
-
-
-            if (messagesInChat.Count < 20)
-                return await GetNewMessagesInIntervalAsync(chatId, 20, _dbSet.Where(message => message.ChatId == chatId).ToListAsync().Result.Count);
-
-            return await _dbSet.Where(message => message.ChatId == chatId && message.TheTimeOfSending > TheUser.LastLogOut).ToListAsync();
-        }
-
-        public async Task<Dictionary<ChatModel, ICollection<Message>>> GetAllNewMessagesAsync(Guid userId)
-        {
-            UserRepository userRepository = new UserRepository(_context);
-
-            User TheUser = await userRepository.FindById(userId);
-
-            Dictionary<ChatModel, ICollection<Message>> allMessages = new Dictionary<ChatModel, ICollection<Message>>();
-
-            foreach (var chat in TheUser.Chats)
-                allMessages.Add(chat, await GetNewMessagesAsync(userId, chat.ChatId));
-
-            return allMessages;
-        }
-
-        public async Task<ICollection<Message>> GetAllMessagesInPeriodAsync(Guid chatId, DateTime firstDate, DateTime secondDate)
-        {
-            return await _dbSet.Where(mes => mes.ChatId == chatId && mes.TheTimeOfSending >= firstDate && mes.TheTimeOfSending <= secondDate).ToListAsync();
-        }
+            List<Message> messagesInChat = dbSet.Where(message => message.ChatId == chatId
+            && message.TheTimeOfSending > TheUser.LastLogOut).ToList();
 
 
-        public async Task<ICollection<Message>> GetNewMessagesInIntervalAsync(Guid chatId,int FirstIndex,int LastIndex)
-        {
-            List<Message> input = await _dbSet.Where(message => message.ChatId == chatId).ToListAsync();
+         if (messagesInChat.Count < 20)
+             return GetNewMessagesInInterval(chatId, 20, dbSet.Where(message => message.ChatId == chatId).ToList().Count);
 
-            List<Message> query = new List<Message>();
+         return dbSet.Where(message => message.ChatId == chatId && message.TheTimeOfSending > TheUser.LastLogOut).ToList();
+     }
 
-            for(int i = input.Count-1-FirstIndex; i < input.Count-LastIndex; i++)
-            {
-                query.Add(input[i]);
-            }
+     public  Dictionary<ChatModel, ICollection<Message>> GetAllNewMessages(Guid userId)
+     {
+         UserRepository userRepository = new UserRepository(context);
 
-            return query;
-        }
-        
-        public async Task<ICollection<Message>> GetAllMessagesSinceAcync(Guid chatId, DateTime date)
-        {
-            return await GetAllMessagesInPeriodAsync(chatId, date, DateTime.Now);
-        }
-    }
+         User TheUser = userRepository.FindById(userId);
+
+         Dictionary<ChatModel, ICollection<Message>> allMessages = new Dictionary<ChatModel, ICollection<Message>>();
+
+         foreach (var chat in TheUser.Chats)
+             allMessages.Add(chat, GetNewMessages(userId, chat.ChatId));
+
+         return allMessages;
+     }
+
+     public ICollection<Message> GetAllMessagesInPeriod(Guid chatId, DateTime firstDate, DateTime secondDate)
+     {
+         return dbSet.
+                Where(mes => mes.ChatId == chatId && 
+                mes.TheTimeOfSending >= firstDate && 
+                mes.TheTimeOfSending <= secondDate).ToList();
+     }
+
+
+     public ICollection<Message> GetNewMessagesInInterval(Guid chatId,int FirstIndex,int LastIndex)
+     {
+         List<Message> input = dbSet.Where(message => message.ChatId == chatId).ToList();
+
+         List<Message> query = new List<Message>();
+
+         for(int i = input.Count-1-FirstIndex; i < input.Count-LastIndex; i++)
+         {
+             query.Add(input[i]);
+         }
+
+         return query;
+     }
+     
+     public ICollection<Message> GetAllMessagesSince(Guid chatId, DateTime date)
+     {
+         return GetAllMessagesInPeriod(chatId, date, DateTime.Now);
+     }
+ }
 }

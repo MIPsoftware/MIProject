@@ -7,30 +7,36 @@ using MIPChat.Models;
 
 namespace MIPChat.DAL.UnitOfWork
 {
-    public class ChatRepository : BaseRepository<ChatDBContext,ChatModel>,IChatRepository
-    { 
+  public class ChatRepository : BaseRepository<ChatModel>,IChatRepository
+  { 
 
-        public ChatRepository(ChatDBContext Context) : base(Context)
+      public ChatRepository(ChatDBContext Context) : base(Context)
+      {
+
+      }
+
+        public IEnumerable<ChatModel> FindAllChatsByNameQueryWithoutMessagesAndUsers(string ChatName)
         {
-
+            return dbSet.Where(c => c.Name.Contains(ChatName));
         }
 
-        public async Task<IEnumerable<ChatModel>> FindAllChatsByNameQuery(string ChatName)
+        public IEnumerable<ChatModel> FindAllChatsByNameQueryWithMessagesAndUsers(string ChatName)
+      {
+          return dbSet.Where(c => c.Name.Contains(ChatName))
+                .Include(c => c.Messages)
+                .Include(c => c.Users);
+      }
+
+      public IEnumerable<ChatModel> FindAllChatsIncludeMessagesAndUsers()
+      {
+            return dbSet
+                    .Include(c => c.Messages)
+                    .Include(c => c.Users);
+      }
+
+        public IEnumerable<ChatModel> FindAllChatsByNameQueryIncludeMessagesAndUsers(string ChatName)
         {
-            return await _dbSet.Where(c => c.Name.Contains(ChatName)).Include(c => c.Messages).ToListAsync();
+            throw new System.NotImplementedException();
         }
-
-        public override void Insert(ChatModel entity)
-        {
-            IUsersRepository Users = new UserRepository(_context);
-            foreach (User user in entity.Users)
-            {
-                user.Chats.Add(entity);
-            }
-
-            Users.Update(entity.Users);
-            base.Insert(entity);
-        }
-
     }
 }

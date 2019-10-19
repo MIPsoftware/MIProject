@@ -2,76 +2,91 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Web;
 
 namespace MIPChat.DAL
 {
-    public class BaseRepository<TDBContext, TEntity> : IRepository<TEntity>
-        where TDBContext : DbContext
+    public class BaseRepository<TEntity> : IRepository<TEntity>
         where TEntity : class
     {
-        protected readonly TDBContext _context;
-        protected readonly DbSet<TEntity> _dbSet;
-        public BaseRepository(TDBContext context)
+        internal ChatDBContext context;
+        internal DbSet<TEntity> dbSet;
+        public BaseRepository(ChatDBContext context)
         {
-            _context = context;
-            _dbSet = _context.Set<TEntity>();
+            this.context = context;
+            this.dbSet = context.Set<TEntity>();
         }
-
-        public virtual void Delete(TEntity entity)
+        public virtual IEnumerable<TEntity> FindAll(
+            Expression<Func<TEntity, bool>> filter = null,
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+            string includeProperties = "")
         {
-            if (_context.Entry(entity).State == EntityState.Detached)
+            IQueryable<TEntity> query = dbSet;
+            if (filter != null)
             {
-                _dbSet.Attach(entity);
+                query = query.Where(filter);
             }
-
-            _dbSet.Remove(entity);
-            
-        }
-
-        public virtual void Delete(IEnumerable<TEntity> entities)
-        {
-            foreach(TEntity entity in entities){
-                 if (_context.Entry(entity).State == EntityState.Detached)
-                 {
-                    _dbSet.Attach(entity);
-                 }
+            foreach (var includeProperty in includeProperties.Split
+                (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProperty);
             }
-
-            _dbSet.RemoveRange(entities);
+            if (orderBy != null)
+            {
+                return orderBy(query).ToList();
+            }
+            else
+            {
+                return query.ToList();
+            }
         }
-
-        public virtual async Task<IEnumerable<TEntity>> FindAll()
+        public virtual TEntity FindById(Guid Id)
         {
-            return await _dbSet.ToListAsync();
+            return dbSet.Find(Id);
         }
-
-        public virtual async Task<TEntity> FindById(Guid Id)
-        {
-            return await _dbSet.FindAsync(Id);
-        }
-
         public virtual void Insert(TEntity entity)
         {
-            _dbSet.Add(entity);
+            dbSet.Add(entity);
         }
-
         public virtual void Insert(IEnumerable<TEntity> entities)
         {
-             _dbSet.AddRange(entities);
+            dbSet.AddRange(entities);
+        }
+        public virtual void Delete(Guid id)
+        {
+            TEntity entityToDelete = dbSet.Find(id);
+            Delete(entityToDelete);
+        }
+        public virtual void Delete(TEntity entityToDelete)
+        {
+            if (context.Entry(entityToDelete).State == EntityState.Detached)
+            {
+                dbSet.Attach(entityToDelete);
+            }
+            dbSet.Remove(entityToDelete);
         }
 
-        public virtual void Update(TEntity entity)
+        public virtual void Update(TEntity entityToUpdate)
         {
-            _context.Entry(entity).State = EntityState.Modified;
+            dbSet.Attach(entityToUpdate);
+            context.Entry(entityToUpdate).State = EntityState.Modified;
         }
 
         public virtual void Update(IEnumerable<TEntity> entities)
         {
             foreach (TEntity entity in entities)
             {
-                _context.Entry(entity).State = EntityState.Modified;
+                Update(entity);
+            }
+        }
+
+        public virtual void Delete(IEnumerable<TEntity> entities)
+        {
+            foreach (TEntity entity in entities)
+            {
+                Delete(entity);
             }
         }
     }

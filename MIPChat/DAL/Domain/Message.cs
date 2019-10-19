@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 using System.ComponentModel.DataAnnotations;
-
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -12,10 +12,16 @@ namespace MIPChat.Models
     {
         [Key]
         public Guid MessageId { get; set; }
+        [ForeignKey("Author")]
         [Required]
         public Guid AuthorId { get; set; }
+        [ForeignKey("Chat")]
         [Required]
         public Guid ChatId { get; set; }
+        [Required]
+        public User Author { get; set; }
+        [Required]
+        public ChatModel Chat { get; set; }
         [Required]
         public string Content { get; set; }
         [Required]

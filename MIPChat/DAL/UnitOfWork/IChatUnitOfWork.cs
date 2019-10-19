@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MIPChat.DAL.Repository;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,8 @@ namespace MIPChat.DAL.UnitOfWork
         IUsersRepository Users { get; }
 
         IChatRepository Chats { get; }
+
+        IMessageRepository Messages { get; }
 
         int CommitChanges();
     }

@@ -16,6 +16,12 @@ namespace MIPChat.Controllers
 
     public class AccountController : Controller
     {
+        private readonly ChatUnitOfWork uof;
+
+        public AccountController()
+        {
+            uof = new ChatUnitOfWork();
+        }
 
         [HttpGet]
         public ActionResult Login()
@@ -29,14 +35,7 @@ namespace MIPChat.Controllers
         {
             User user = null;
 
-
-
-            using (ChatDBContext context = new ChatDBContext())
-            {
-                user = context.Users.FirstOrDefault(u => u.Name == model.Name);
-            }
-
-
+            user = uof.Users.FindAll().FirstOrDefault();
 
             if (user != null)
             {
@@ -65,12 +64,13 @@ namespace MIPChat.Controllers
         {
             User user = null;
 
-
-            using (ChatDBContext context = new ChatDBContext())
-            {
-                user = context.Users.FirstOrDefault(u => u.Name == model.Name);
-            }
-
+         
+            user = uof.Users.FindAll().FirstOrDefault();
+          // using (ChatDBContext context = new ChatDBContext())
+          // {
+          //     user = context.Users.FirstOrDefault(u => u.Name == model.Name);
+          // }
+          //
 
             if (user == null)
             {

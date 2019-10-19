@@ -1,4 +1,5 @@
 ﻿using MIPChat.DAL.Repository;
+using MIPChat.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,32 +9,59 @@ namespace MIPChat.DAL.UnitOfWork
 {
     public class ChatUnitOfWork : IChatUnitOfWork
     {
-        private readonly ChatDBContext _context;
-        private readonly Lazy<IUsersRepository> _users;
-        private readonly Lazy<IChatRepository> _chat;
-        private readonly Lazy<IMessageRepository> _message;
-
-        public ChatUnitOfWork()
+        private ChatDBContext context = new ChatDBContext();
+        private IUsersRepository users;
+        public IUsersRepository Users
         {
-            _context = new ChatDBContext();
-
-            _users = new Lazy<IUsersRepository>(() => new UserRepository(_context));
-            _chat = new Lazy<IChatRepository>(() => new ChatRepository(_context));
-            _message = new Lazy<IMessageRepository>(() => new MessageRepository(_context));
+            get
+            {
+                return this.users ?? new UserRepository(context);
+            }
+        }
+        
+        private IChatRepository chats;
+        public IChatRepository Chats
+        {
+            get
+            {
+                return this.chats ?? new ChatRepository(context);
+            }
         }
 
-        public IUsersRepository Users => _users.Value;
-        public IChatRepository Chats => _chat.Value;
-        public IMessageRepository Messages => _message.Value;
+        private IMessageRepository messages;
+        public IMessageRepository Messages
+        {
+            get
+            {
+                return this.messages ?? new MessageRepository(context);
+            }
+        }
+
+        public void Save()
+        {
+            context.SaveChanges();
+        }
+        private bool disposed = false;
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    context.Dispose();
+                }
+            }
+            this.disposed = true;
+        }
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
 
         public int CommitChanges()
         {
-            return _context.SaveChanges();
-        }
-
-        public void Dispose()
-        {
-            _context?.Dispose();
+            throw new NotImplementedException();
         }
     }
 }

@@ -10,7 +10,10 @@ namespace MIPChat.DAL
 {
     public interface IUsersRepository : IRepository<User>
     {
-        Task<User> FindUserByEmail(string Email);
-        Task<bool> ValidatePassword(LoginModel input);
+        User FindUserByEmail(string Email);
+        User FindUserByName(string UserName);
+        bool ValidatePassword(LoginModel input);
+        IEnumerable<User> FindAvailableUsersForLocalChatAcync(Guid UserId);
+        IEnumerable<User> GetAllUsersExceptAsync(ICollection<Guid> guids);
     }
 }
