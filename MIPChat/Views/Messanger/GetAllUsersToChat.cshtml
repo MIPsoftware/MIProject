@@ -3,5 +3,18 @@
     ViewBag.Title = "GetAllUsersToChat";
 }
 
-<h2>GetAllUsersToChat</h2>
 
+
+@model IEnumerable<MIPChat.Models.User>
+
+@foreach (var user in Model)
+{
+    <div class="col-8 p-1">
+        <div class="form-check">
+            <input type="checkbox" value="@user.UserId" name="UserName[]">
+            <!--Change to user.Icon-->
+            <img src=@user.Email class="rounded-circle user_img_msg">
+            <label class="form-check-label" for="Users">@user.Name @user.Surname</label>
+        </div>
+    </div>
+}

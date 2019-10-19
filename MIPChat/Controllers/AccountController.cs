@@ -77,7 +77,7 @@ namespace MIPChat.Controllers
                 using (ChatDBContext context = new ChatDBContext())
                 {
                     context.Users.Add(new User {UserId = Guid.NewGuid(), Name = model.Name, Password = model.Password, Email = model.Email, LastLogIn = DateTime.Now, LastLogOut = DateTime.Now, Surname = model.Surname });
-                    context.SaveChanges();
+                    context.SaveChanges();  
                 }
 
                 using (ChatDBContext context = new ChatDBContext())

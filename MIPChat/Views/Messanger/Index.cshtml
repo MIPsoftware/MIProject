@@ -107,17 +107,9 @@
                         </div>
                         <label for="User">Add Users <br></label> <br>
                         <div class="row users_list">
-                            @foreach (var user in (dynamic)ViewBag.Users)
-                            {
-                                <div class="col-8 p-1">
-                                    <div class="form-check">
-                                        <input type="checkbox" value="@user.UserId" name="UserName[]">
-                                        <!--Change to user.Icon-->
-                                        <img src=@user.Email class="rounded-circle user_img_msg">
-                                        <label class="form-check-label" for="Users">@user.Name @user.Surname</label>
-                                    </div>
-                                </div>
-                            }
+
+                            USER LIST
+
                         </div>
                     </form>
                 </div>
