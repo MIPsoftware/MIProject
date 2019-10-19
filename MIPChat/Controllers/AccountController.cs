@@ -18,12 +18,22 @@ namespace MIPChat.Controllers
     {
         private readonly ChatUnitOfWork uof;
 
+
         public AccountController()
         {
             uof = new ChatUnitOfWork();
         }
 
-        [HttpGet]
+        [HttpPost]
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Login", "Account");
+        }
+
+
+
+    [HttpGet]
         public ActionResult Login()
         {
             return View();
@@ -35,7 +45,7 @@ namespace MIPChat.Controllers
         {
             User user = null;
 
-            user = uof.Users.FindAll().FirstOrDefault();
+            user = uof.Users.FindAll().FirstOrDefault(u => u.Name == model.Name);
 
             if (user != null)
             {
@@ -65,7 +75,7 @@ namespace MIPChat.Controllers
             User user = null;
 
          
-            user = uof.Users.FindAll().FirstOrDefault();
+            user = uof.Users.FindAll().FirstOrDefault(u => u.Name == model.Name);
           // using (ChatDBContext context = new ChatDBContext())
           // {
           //     user = context.Users.FirstOrDefault(u => u.Name == model.Name);
