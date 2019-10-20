@@ -5,19 +5,10 @@
 @model MIPChat.Models.User
 
 @{
-    var chatsAtuser = (new MIPChat.DAL.UnitOfWork.ChatUnitOfWork()).Users.FindUserByName(Model.Name).Chats;
-    /*
+    //var chatsAtuser = (new MIPChat.DAL.UnitOfWork.ChatUnitOfWork()).Users.FindUserByName(Model.Name).Chats;
+    
 
-    var Messages4 = new List<MIPChat.Models.Message>();
-    var Messages1 = new List<MIPChat.Models.Message>();
-
-    Messages4.Add(new MIPChat.Models.Message() { Content = "хуй соси", MessageId = Guid.NewGuid() });
-    Messages4.Add(new MIPChat.Models.Message() { Content = "нет ты соси", MessageId = Guid.NewGuid() });
-    Messages4.Add(new MIPChat.Models.Message() { Content = "ты соси", MessageId = Guid.NewGuid() });
-
-    Messages1.Add(new MIPChat.Models.Message() { Content = "110010101", MessageId = Guid.NewGuid() });
-    Messages1.Add(new MIPChat.Models.Message() { Content = "1111111", MessageId = Guid.NewGuid() });
-    Messages1.Add(new MIPChat.Models.Message() { Content = "000000", MessageId = Guid.NewGuid() });
+   
 
 
     var chatsAtuser = new List<MIPChat.Models.ChatModel>();
@@ -25,9 +16,9 @@
     chatsAtuser.Add(new MIPChat.Models.ChatModel() { Name = "ыфвыфвыфвывыфвыф3dsfds213", ChatId = Guid.NewGuid() });
     chatsAtuser.Add(new MIPChat.Models.ChatModel() { Name = "32dfdsfdssdsfdsfdsf13", ChatId = Guid.NewGuid() });
     chatsAtuser.Add(new MIPChat.Models.ChatModel() { Name = "32dsdsf3212132113", ChatId = Guid.NewGuid() });
-    chatsAtuser.Add(new MIPChat.Models.ChatModel() { Name = "dsfdsf3213", ChatId = Guid.NewGuid(), Messages = Messages4});
+    chatsAtuser.Add(new MIPChat.Models.ChatModel() { Name = "dsfdsf3213", ChatId = Guid.NewGuid()});
 
-        */
+        
 
 
     if (chatsAtuser != null)

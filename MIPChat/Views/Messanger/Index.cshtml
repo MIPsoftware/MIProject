@@ -25,16 +25,15 @@
                                 <span class="input-group-text search_btn"><i class="fas fa-search"></i></span>
                             </div>
                             <div class="input-group-prepend">
-                                @using (Ajax.BeginForm("GetAllUsersToChat", new AjaxOptions { UpdateTargetId = "users_list_row" }))
-                                {
-                                <a href="#CreateNewGroup" class="btn input-group-text add_btn" data-toggle="modal"><i class="fas fa-plus"></i></a>
-                                }
+                                <form action="/Messanger/GetAllUsersToChat" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#users_list_row" id="form0" method="post">
+                                    <a href="#CreateNewGroup" class="btn input-group-text add_btn" data-toggle="modal"><i class="fas fa-plus"></i></a>
+                                </form>
                             </div>
                         </div>
                     </div>
                     <div class="card-body contacts_body" id="groups">
                         <ui class="contacts">
-                             @{Html.RenderPartial("GetAllChatsForUser", new MIPChat.Models.User { Name = Request.Cookies.Get("AuthCookie").Value });} 
+                            @{Html.RenderPartial("GetAllChatsForUser", new MIPChat.Models.User { Name = Request.Cookies.Get("AuthCookie").Value });}
                         </ui>
                     </div>
                     <div class="card-footer"></div>
@@ -109,18 +108,17 @@
                             <input type="text" class="form-control group_name_input" name="GroupName" id="GroupName" aria-describedby="emailHelp" placeholder="Group Name">
                         </div>
                         <label for="User">Add Users <br></label> <br>
-                        <div class="row users_list" id="users_list_row">
-                            
+                        <div id="users_list_row" class="row users_list">
+                            321312
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    @using (Ajax.BeginForm("GetAllUsersToChat", new AjaxOptions { UpdateTargetId = "users_list_row" }))
-                    {
+                    <form action="/Messanger/GetAllUsersToChat" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#users_list_row" id="form0" method="post">
                         <button type="button" class="btn btn-primary" id="CreateNewGroupButton">Create Group</button>
-                    }
-                    </div>
+                    </form>
+</div>
             </div>
         </div>
     </div>
@@ -131,5 +129,9 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
             integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
     <script src="~/Content/MessangerStaticFiles/Messanger.js" asp-append-version="true"></script>
+
+
+    @Scripts.Render("~/scripts/jquery-3.3.1.js")
+    @Scripts.Render("~/scripts/jquery.unobtrusive-ajax.js")
 </body>
 </html>

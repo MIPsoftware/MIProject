@@ -3,34 +3,51 @@
     ViewBag.Title = "FindChats";
 }
 
-@model IEnumerable<MIPChat.Models.MessageModel>
+model IEnumerable<MIPChat.Models.MessageModel>
 
-@foreach (var message in Model)
-{
-    if (!message.AuthorId.Equals(ViewBag.CurrentUser.UserId))
+
+@{
+
+    var Messages4 = new List<MIPChat.Models.Message>();
+    var Messages1 = new List<MIPChat.Models.Message>();
+
+    Messages4.Add(new MIPChat.Models.Message() { Content = "хуй соси", MessageId = Guid.NewGuid() });
+    Messages4.Add(new MIPChat.Models.Message() { Content = "нет ты соси", MessageId = Guid.NewGuid() });
+    Messages4.Add(new MIPChat.Models.Message() { Content = "ты соси", MessageId = Guid.NewGuid() });
+
+    Messages1.Add(new MIPChat.Models.Message() { Content = "110010101", MessageId = Guid.NewGuid() });
+    Messages1.Add(new MIPChat.Models.Message() { Content = "1111111", MessageId = Guid.NewGuid() });
+    Messages1.Add(new MIPChat.Models.Message() { Content = "000000", MessageId = Guid.NewGuid() });
+
+
+   foreach (var message in Messages4)
     {
-        <div class="d-flex justify-content-start mb-4">
-            <div class="img_cont_msg">
-                <!--TODO Change to user icon-->
-                <img src="https://cdn.pixabay.com/photo/2016/08/09/21/56/fire-1581888_1280.jpg" class="rounded-circle user_img_msg">
+        //if (!message.AuthorId.Equals(ViewBag.CurrentUser.UserId))
+       // {
+            <div class="d-flex justify-content-start mb-4">
+                <div class="img_cont_msg">
+                    <!--TODO Change to user icon-->
+                    <img src="https://cdn.pixabay.com/photo/2016/08/09/21/56/fire-1581888_1280.jpg" class="rounded-circle user_img_msg">
+                </div>
+                <div class="msg_cotainer">
+                    @message.Content
+                    <span class="msg_time">@message.TheTimeOfSending.ToString()</span>
+                </div>
             </div>
-            <div class="msg_cotainer">
-                @message.Content
-                <span class="msg_time">@message.TheTimeOfSending.ToString()</span>
+       // }
+        if (message.AuthorId.Equals(ViewBag.CurrentUser.UserId))
+        {
+            <div class="d-flex justify-content-end mb-4">
+                <div class="msg_cotainer_send">
+                    @message.Content
+                    <span class="msg_time_send">@message.TheTimeOfSending.ToString()</span>
+                </div>
+                <div class="img_cont_msg">
+                    <!--TODO Change to user icon-->
+                    <img src="https://cdn.pixabay.com/photo/2016/08/09/21/56/fire-1581888_1280.jpg" class="rounded-circle user_img_msg">
+                </div>
             </div>
-        </div>
+        }
     }
-    if (message.AuthorId.Equals(ViewBag.CurrentUser.UserId))
-    {
-        <div class="d-flex justify-content-end mb-4">
-            <div class="msg_cotainer_send">
-                @message.Content
-                <span class="msg_time_send">@message.TheTimeOfSending.ToString()</span>
-            </div>
-            <div class="img_cont_msg">
-                <!--TODO Change to user icon-->
-                <img src="https://cdn.pixabay.com/photo/2016/08/09/21/56/fire-1581888_1280.jpg" class="rounded-circle user_img_msg">
-            </div>
-        </div>
-    }
+
 }
