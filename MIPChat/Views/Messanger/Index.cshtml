@@ -25,7 +25,10 @@
                                 <span class="input-group-text search_btn"><i class="fas fa-search"></i></span>
                             </div>
                             <div class="input-group-prepend">
+                                @using (Ajax.BeginForm("GetAllUsersToChat", new AjaxOptions { UpdateTargetId = "users_list_row" }))
+                                {
                                 <a href="#CreateNewGroup" class="btn input-group-text add_btn" data-toggle="modal"><i class="fas fa-plus"></i></a>
+                                }
                             </div>
                         </div>
                     </div>
@@ -106,15 +109,18 @@
                             <input type="text" class="form-control group_name_input" name="GroupName" id="GroupName" aria-describedby="emailHelp" placeholder="Group Name">
                         </div>
                         <label for="User">Add Users <br></label> <br>
-                        <div class="row users_list">
+                        <div class="row users_list" id="users_list_row">
                             
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="CreateNewGroupButton">Create Group</button>
-                </div>
+                    @using (Ajax.BeginForm("GetAllUsersToChat", new AjaxOptions { UpdateTargetId = "users_list_row" }))
+                    {
+                        <button type="button" class="btn btn-primary" id="CreateNewGroupButton">Create Group</button>
+                    }
+                    </div>
             </div>
         </div>
     </div>
