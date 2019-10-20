@@ -25,9 +25,17 @@
                                 <span class="input-group-text search_btn"><i class="fas fa-search"></i></span>
                             </div>
                             <div class="input-group-prepend">
-                                <form action="/Messanger/GetAllUsersToChat" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#users_list_row" id="form0" method="post">
-                                    <a href="#CreateNewGroup" class="btn input-group-text add_btn" data-toggle="modal"><i class="fas fa-plus"></i></a>
-                                </form>
+                                @using (Ajax.BeginForm("GetAllUsersToChat", new AjaxOptions { UpdateTargetId = "users_list_row" }))
+                                {
+                                    <input type="submit" value="load" />
+
+
+                                }
+                                <a href="#CreateNewGroup" class="btn input-group-text add_btn" data-toggle="modal">
+
+                                    <i class="fas fa-plus"></i>
+                                </a>
+                                <div id="results"></div>
                             </div>
                         </div>
                     </div>
@@ -71,6 +79,7 @@
                     </div>
                     <div class="card-body msg_card_body">
                         Выберети чат.....
+
                     </div>
                     <div class="card-footer">
                         <div class="input-group">
@@ -118,7 +127,7 @@
                     <form action="/Messanger/GetAllUsersToChat" data-ajax="true" data-ajax-mode="replace" data-ajax-update="#users_list_row" id="form0" method="post">
                         <button type="button" class="btn btn-primary" id="CreateNewGroupButton">Create Group</button>
                     </form>
-</div>
+                </div>
             </div>
         </div>
     </div>
