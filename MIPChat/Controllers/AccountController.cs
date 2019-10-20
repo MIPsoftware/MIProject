@@ -33,7 +33,7 @@ namespace MIPChat.Controllers
 
 
 
-    [HttpGet]
+        [HttpGet]
         public ActionResult Login()
         {
             return View();
@@ -50,6 +50,11 @@ namespace MIPChat.Controllers
             if (user != null)
             {
                 FormsAuthentication.SetAuthCookie(model.Name, true);
+
+                HttpCookie authCookie = new HttpCookie("AuthCookie");
+                authCookie.Values.Add("UserName", model.Name);
+                Response.Cookies.Add(authCookie);
+
                 return RedirectToAction("Index", "Messanger");
             }
             else
@@ -64,6 +69,7 @@ namespace MIPChat.Controllers
         [HttpGet]
         public ActionResult Registration()
         {
+           
             return View();
         }
 
@@ -73,32 +79,24 @@ namespace MIPChat.Controllers
         public ActionResult Registration(RegisterModel model)
         {
             User user = null;
-
-         
             user = uof.Users.FindAll().FirstOrDefault(u => u.Name == model.Name);
-          // using (ChatDBContext context = new ChatDBContext())
-          // {
-          //     user = context.Users.FirstOrDefault(u => u.Name == model.Name);
-          // }
-          //
 
             if (user == null)
             {
-                using (ChatDBContext context = new ChatDBContext())
-                {
-                    context.Users.Add(new User {UserId = Guid.NewGuid(), Name = model.Name, Password = model.Password, Email = model.Email, LastLogIn = DateTime.Now, LastLogOut = DateTime.Now, Surname = model.Surname });
-                    context.SaveChanges();  
-                }
 
-                using (ChatDBContext context = new ChatDBContext())
+                uof.Users.Insert(new User { UserId = Guid.NewGuid(), Name = model.Name, Password = model.Password, Email = model.Email, LastLogIn = DateTime.Now, LastLogOut = DateTime.Now, Surname = model.Surname });
+                uof.CommitChanges();
+                user = uof.Users.FindAll().Where(u => u.Name == model.Name && u.Password == model.Password).FirstOrDefault();
+                if (user != null)
                 {
-                    user = context.Users.Where(u => u.Name == model.Name && u.Password == model.Password).FirstOrDefault();
+                    FormsAuthentication.SetAuthCookie(model.Name, true);
+
+                    HttpCookie authCookie = new HttpCookie("AuthCookie");
+                    authCookie.Values.Add("UserName", model.Name);
+                    Response.Cookies.Add(authCookie);
+
+                    return RedirectToAction("Index", "Home");
                 }
-            }
-            if (user != null)
-            {
-                FormsAuthentication.SetAuthCookie(model.Name, true);
-                return RedirectToAction("Index", "Home");
             }
             else
             {
@@ -108,4 +106,3 @@ namespace MIPChat.Controllers
         }
     }
 }
-    

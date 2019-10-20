@@ -5,7 +5,7 @@
 <!doctype html>
 <html lang="ru">
 <head>
-    <title>Chat</title>
+    <title>Chat </title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
@@ -31,7 +31,7 @@
                     </div>
                     <div class="card-body contacts_body" id="groups">
                         <ui class="contacts">
-                            @{Html.RenderPartial("GetAllChatsForUser", new MIPChat.Models.User { UserId = Guid.Parse(HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName].Value) });}
+                             @{Html.RenderPartial("GetAllChatsForUser", new MIPChat.Models.User { Name = Request.Cookies.Get("AuthCookie").Value });} 
                         </ui>
                     </div>
                     <div class="card-footer"></div>
@@ -107,17 +107,7 @@
                         </div>
                         <label for="User">Add Users <br></label> <br>
                         <div class="row users_list">
-                            @foreach (var user in (dynamic)ViewBag.Users)
-                            {
-                                <div class="col-8 p-1">
-                                    <div class="form-check">
-                                        <input type="checkbox" value="@user.UserId" name="UserName[]">
-                                        <!--Change to user.Icon-->
-                                        <img src=@user.Email class="rounded-circle user_img_msg">
-                                        <label class="form-check-label" for="Users">@user.Name @user.Surname</label>
-                                    </div>
-                                </div>
-                            }
+                            
                         </div>
                     </form>
                 </div>

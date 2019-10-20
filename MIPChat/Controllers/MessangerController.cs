@@ -56,7 +56,7 @@ namespace MIPChat.Controllers
 
 
         [HttpPost]
-        public ActionResult GetAllUsersToChat(Guid UserId)
+        public ActionResult GetAllUsersToChat()
         {
             var userList = messangerData.Users.FindAll();
             return PartialView(userList);
