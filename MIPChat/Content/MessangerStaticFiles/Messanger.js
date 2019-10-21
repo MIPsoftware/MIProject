@@ -10,7 +10,7 @@ $("#on_create_chat").click(() => {
     $.ajax({
         url: "Messanger/GetAllUsersToChat",
         type: "POST",
-        success: (data) => { $('#users_list_row').html(data);},
+        success: (data) => { $('#users_list_row').html(data); },
         dataType: "html"
     });
 
@@ -22,7 +22,7 @@ $("#selected_msg_chat").click(() => {
 
     $.ajax({
         url: "Messanger/FindChat",
-        data: { ChatID : '40276596-f0df-479a-8e7e-25ecc714265d'},
+        data: { ChatID: '40276596-f0df-479a-8e7e-25ecc714265d' },
         type: "POST",
         success: (data) => { $('#msg_field').html(data); },
         dataType: "html"
@@ -30,7 +30,36 @@ $("#selected_msg_chat").click(() => {
 
 });
 
+$("#CreateNewGroupButton").click(() => {
 
+    toAddList = new Array();
+
+    $(".userinput").each((iter, item) => {
+        if (item.checked) {
+            toAddList.push((item.attributes[2].value));
+        }
+    });
+
+    var ChatName = $('#GroupName').value;
+
+
+    if (toAddList.lenght !== 0 && ChatName !== null) {
+        console.log(ChatName);
+        toAddList.forEach((value, index) => {
+            console.log("Челибос:" + value);
+        });
+
+        $.ajax({
+            url: "Messanger/FindChat",
+            data: { name: ChatName, users: toAddList },
+            type: "POST",
+            dataType: "html"
+        });
+    } else {
+        return;
+    }
+
+});
 
 
 

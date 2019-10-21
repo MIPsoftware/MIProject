@@ -6,15 +6,17 @@
 
 
 @{
-    foreach (var user in Model)
-    {
+
+        foreach (var user in Model)
+        {
         <div class="col-8 p-1">
             <div class="form-check">
-                <input type="checkbox" value="@user.UserId" name="UserName[]">
+                <input class="userinput" type="checkbox" value="@user.UserId" name="@user.Name">
                 <!--Change to user.Icon-->
                 <img src="0" class="rounded-circle user_img_msg">
                 <label class="form-check-label" for="Users">@user.Name @user.Surname</label>
             </div>
         </div>
+
     }
 }

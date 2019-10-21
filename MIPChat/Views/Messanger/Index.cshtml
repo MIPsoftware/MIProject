@@ -36,7 +36,7 @@
                     </div>
                     <div class="card-body contacts_body" id="groups">
                         <ui class="contacts">
-                            @{ if (Request.Cookies.Get("AuthCookie") != null) { Html.RenderPartial("GetAllChatsForUser", new MIPChat.Models.User { Name = Request.Cookies.Get("AuthCookie").Value.Split("=".ToCharArray())[1] }); }
+                            @{ if (Request.Cookies.Get("AuthCookie") != null) { Html.RenderPartial("GetAllChatsForUser"); }
                                 else { Response.Redirect("~/Account/Login"); }
                             }                        </ui>
                     </div>
