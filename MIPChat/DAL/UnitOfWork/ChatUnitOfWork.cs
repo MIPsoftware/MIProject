@@ -61,7 +61,7 @@ namespace MIPChat.DAL.UnitOfWork
 
         public int CommitChanges()
         {
-            throw new NotImplementedException();
+            return context.SaveChanges();
         }
     }
 }
