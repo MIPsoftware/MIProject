@@ -11,7 +11,7 @@ using System.Web.Mvc;
 
 namespace MIPChat.Controllers
 {
-
+    [Authorize]
     public class MessangerController : Controller
     {
 
@@ -27,19 +27,19 @@ namespace MIPChat.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-          // /*Data stub*/
-         // ViewBag.Chats = messangerData.Chats.FindAll();
-         // ViewBag.Messages = messangerData.Messages.FindAll();
-         // ViewBag.Users = messangerData.Users.FindAll();
-         // ViewBag.CurrentUser = messangerData.Chats.FindAll().First();
+            // /*Data stub*/
+            // ViewBag.Chats = messangerData.Chats.FindAll();
+            // ViewBag.Messages = messangerData.Messages.FindAll();
+            // ViewBag.Users = messangerData.Users.FindAll();
+            // ViewBag.CurrentUser = messangerData.Chats.FindAll().First();
             return View();
         }
 
         [HttpPost]
         public ActionResult GetAllChatsForUser(Guid userId)
         {
-           var allExistingChatsForUser = messangerData.Users.FindById(userId).Chats;
-           
+            var allExistingChatsForUser = messangerData.Users.FindById(userId).Chats;
+
             return PartialView(allExistingChatsForUser);
         }
 
@@ -49,7 +49,7 @@ namespace MIPChat.Controllers
         public ActionResult FindChat(Guid ChatID)
         {
             var chatInst = messangerData.Chats.FindById(ChatID);
-            
+
             return PartialView(chatInst);
         }
 
@@ -66,17 +66,17 @@ namespace MIPChat.Controllers
         [HttpPost]
         public ActionResult GetAllUsersToMessage(Guid userId)
         {
-           dynamic existingMessagesForUser = messangerData.Users.FindById(userId).Chats.Where(u => u.Users.Count == 2);
+            dynamic existingMessagesForUser = messangerData.Users.FindById(userId).Chats.Where(u => u.Users.Count == 2);
 
-             ICollection<User> userList = new List<User>();
-           
-             foreach (var user in messangerData.Users.FindAll())
-             {
-                 if (!existingMessagesForUser.Contains(user))
-                 {
-                     userList.Add(user);
-                 }
-             }
+            ICollection<User> userList = new List<User>();
+
+            foreach (var user in messangerData.Users.FindAll())
+            {
+                if (!existingMessagesForUser.Contains(user))
+                {
+                    userList.Add(user);
+                }
+            }
 
             return PartialView(userList);
         }

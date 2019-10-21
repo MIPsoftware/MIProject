@@ -19,8 +19,10 @@ $("#on_create_chat").click(() => {
 
 
 $("#selected_msg_chat").click(() => {
+
     $.ajax({
         url: "Messanger/FindChat",
+        data: { ChatID : '40276596-f0df-479a-8e7e-25ecc714265d'},
         type: "POST",
         success: (data) => { $('#msg_field').html(data); },
         dataType: "html"
