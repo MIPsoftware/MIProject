@@ -40,7 +40,7 @@ $("#CreateNewGroupButton").click(() => {
         }
     });
 
-    var ChatName = $('#GroupName').value;
+    var ChatName = $('#GroupName1').val();
 
 
     if (toAddList.lenght !== 0 && ChatName !== null) {
