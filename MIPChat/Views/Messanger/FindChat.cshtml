@@ -3,7 +3,7 @@
     ViewBag.Title = "FindChats";
 }
 
-model IEnumerable<MIPChat.Models.MessageModel>
+<!--model IEnumerable<MIPChat.Models.MessageModel>-->
 
 
 @{
@@ -11,19 +11,22 @@ model IEnumerable<MIPChat.Models.MessageModel>
     var Messages4 = new List<MIPChat.Models.Message>();
     var Messages1 = new List<MIPChat.Models.Message>();
 
-    Messages4.Add(new MIPChat.Models.Message() { Content = "хуй соси", MessageId = Guid.NewGuid() });
-    Messages4.Add(new MIPChat.Models.Message() { Content = "нет ты соси", MessageId = Guid.NewGuid() });
-    Messages4.Add(new MIPChat.Models.Message() { Content = "ты соси", MessageId = Guid.NewGuid() });
+    var id1 = Guid.NewGuid();
+    var id2 = Guid.NewGuid();
 
-    Messages1.Add(new MIPChat.Models.Message() { Content = "110010101", MessageId = Guid.NewGuid() });
-    Messages1.Add(new MIPChat.Models.Message() { Content = "1111111", MessageId = Guid.NewGuid() });
-    Messages1.Add(new MIPChat.Models.Message() { Content = "000000", MessageId = Guid.NewGuid() });
+    Messages4.Add(new MIPChat.Models.Message() { Content = "хуй соси", MessageId = Guid.NewGuid(), AuthorId = id1, TheTimeOfSending = DateTime.Now });
+    Messages4.Add(new MIPChat.Models.Message() { Content = "нет ты соси", MessageId = Guid.NewGuid(), AuthorId = id2 });
+    Messages4.Add(new MIPChat.Models.Message() { Content = "ты соси", MessageId = Guid.NewGuid(), AuthorId = id1 });
+
+    Messages1.Add(new MIPChat.Models.Message() { Content = "110010101", MessageId = Guid.NewGuid(), AuthorId = id1, TheTimeOfSending = DateTime.Now });
+    Messages1.Add(new MIPChat.Models.Message() { Content = "1111111", MessageId = Guid.NewGuid(), AuthorId = id2, TheTimeOfSending = DateTime.Now });
+    Messages1.Add(new MIPChat.Models.Message() { Content = "000000", MessageId = Guid.NewGuid(), AuthorId = id1, TheTimeOfSending = DateTime.Now });
 
 
-   foreach (var message in Messages4)
+    foreach (var message in Messages4)
     {
-        //if (!message.AuthorId.Equals(ViewBag.CurrentUser.UserId))
-       // {
+        if (message.AuthorId == id1)
+        {
             <div class="d-flex justify-content-start mb-4">
                 <div class="img_cont_msg">
                     <!--TODO Change to user icon-->
@@ -34,8 +37,8 @@ model IEnumerable<MIPChat.Models.MessageModel>
                     <span class="msg_time">@message.TheTimeOfSending.ToString()</span>
                 </div>
             </div>
-       // }
-        if (message.AuthorId.Equals(ViewBag.CurrentUser.UserId))
+        }
+        if (message.AuthorId == id2)
         {
             <div class="d-flex justify-content-end mb-4">
                 <div class="msg_cotainer_send">

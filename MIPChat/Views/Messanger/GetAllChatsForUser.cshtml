@@ -28,7 +28,7 @@
         {
             using (Ajax.BeginForm("FindChat", new AjaxOptions { UpdateTargetId = "msg_card_body" }))
             {
-                <li class="group">
+                <li class="group" id="selected_msg_chat">
                     <div class="d-flex bd-highlight" data-group_id="@chat.ChatId">
 
                         <div class="img_cont">

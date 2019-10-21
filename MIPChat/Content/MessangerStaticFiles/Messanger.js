@@ -18,6 +18,20 @@ $("#on_create_chat").click(() => {
 
 
 
+$("#selected_msg_chat").click(() => {
+    $.ajax({
+        url: "Messanger/FindChat",
+        type: "POST",
+        success: (data) => { $('#msg_field').html(data); },
+        dataType: "html"
+    });
+
+});
+
+
+
+
+
 $("#groups").on("click", ".group", function () {
     let group_id = $(this).attr("data-group_id");
 
@@ -30,13 +44,6 @@ $("#groups").on("click", ".group", function () {
     $.get("/api/message/" + group_id, function (data) {
         let message = "";
 
-        data.forEach(function (data) {
-            let position = (data.addedBy === $("#UserName").val()) ? " float-right" : "";
-
-            message += `<div class="row chat_message` + position + `">
-                             <b>` + data.addedBy + `: </b>` + data.message +
-                `</div>`;
-        });
 
         $(".chat_body").html(message);
     });
