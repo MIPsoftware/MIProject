@@ -97,14 +97,15 @@ namespace MIPChat.Controllers
             if (users.Count == 2)
             {
                 //create messagechat
-                messangerData.Chats.Insert(new ChatModel() {Name = name, Users = users });
+                messangerData.Chats.Insert(new ChatModel() {Name = name, Users = users , ChatId = Guid.NewGuid(), IsLocal = true});
             }
             else if (users.Count > 2)
             {
                 //create chat
-                messangerData.Chats.Insert(new ChatModel() {Name = name, Users = users, ChatId = Guid.NewGuid() });
+                messangerData.Chats.Insert(new ChatModel() {Name = name, Users = users, ChatId = Guid.NewGuid() , IsLocal = false});
 
             }
+            messangerData.CommitChanges();
             //132
             return PartialView();
         }

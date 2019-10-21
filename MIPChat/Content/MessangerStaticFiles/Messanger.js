@@ -50,10 +50,11 @@ $("#CreateNewGroupButton").click(() => {
         });
 
         $.ajax({
-            url: "Messanger/FindChat",
-            data: { name: ChatName, users: toAddList },
+            url: "Messanger/CreateMessageOrChat",
+            data: { name: ChatName, usersGuids: toAddList },
             type: "POST",
-            dataType: "html"
+            traditional: true,
+            dataType: "text"
         });
     } else {
         return;
