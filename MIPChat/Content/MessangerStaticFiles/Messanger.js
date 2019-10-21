@@ -4,51 +4,19 @@
     });
 });
 
-$("#CreateNewGroupButton").click(function () {
-    let UserNames = $("input[name='UserName[]']:checked")
-        .map(function () {
-            return $(this).val();
-        }).get();
 
-    let data = {
-        GroupName: $("#GroupName").val(),
-        UserNames: UserNames
-    };
 
+$("#on_create_chat").click(() => {
     $.ajax({
+        url: "Messanger/GetAllUsersToChat",
         type: "POST",
-        url: "/api/group",
-        data: JSON.stringify(data),
-        success: (data) => {
-            $('#CreateNewGroup').modal('hide');
-        },
-        dataType: 'json',
-        contentType: 'application/json'
+        success: (data) => { $('#users_list_row').html(data);},
+        dataType: "html"
     });
 
 });
 
-$("#SendMessage").click(function () {
-    $.ajax({
-        type: "POST",
-        url: "/api/message",
-        data: JSON.stringify({
-            AddedBy: $("#UserName").val(),
-            GroupId: $("#currentGroup").val(),
-            message: $("#Message").val(),
-            socketId: pusher.connection.socket_id
-        }),
-        success: (data) => {
-            $(".chat_body").append(`<div class="row chat_message float-right"><b>`
-                + data.data.addedBy + `: </b>` + $("#Message").val() + `</div>`
-            );
 
-            $("#Message").val('');
-        },
-        dataType: 'json',
-        contentType: 'application/json'
-    });
-});
 
 $("#groups").on("click", ".group", function () {
     let group_id = $(this).attr("data-group_id");
@@ -63,7 +31,7 @@ $("#groups").on("click", ".group", function () {
         let message = "";
 
         data.forEach(function (data) {
-            let position = (data.addedBy == $("#UserName").val()) ? " float-right" : "";
+            let position = (data.addedBy === $("#UserName").val()) ? " float-right" : "";
 
             message += `<div class="row chat_message` + position + `">
                              <b>` + data.addedBy + `: </b>` + data.message +
