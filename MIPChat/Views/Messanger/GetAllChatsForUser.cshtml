@@ -2,29 +2,20 @@
 @{
     ViewBag.Title = "GetAllChatsForUser";
 }
-@model MIPChat.Models.User
+@model IEnumerable<MIPChat.Models.ChatModel>
 
 @{
-    //var chatsAtuser = (new MIPChat.DAL.UnitOfWork.ChatUnitOfWork()).Users.FindUserByName(Model.Name).Chats;
-    
+    //var chatsAtuser = new List<MIPChat.Models.ChatModel>();
 
-   
+    //chatsAtuser.Add(new MIPChat.Models.ChatModel() { Name = "ыфвыфвыфвывыфвыф3dsfds213", ChatId = Guid.NewGuid() });
+    //chatsAtuser.Add(new MIPChat.Models.ChatModel() { Name = "32dfdsfdssdsfdsfdsf13", ChatId = Guid.NewGuid() });
+    //chatsAtuser.Add(new MIPChat.Models.ChatModel() { Name = "32dsdsf3212132113", ChatId = Guid.NewGuid() });
+    //chatsAtuser.Add(new MIPChat.Models.ChatModel() { Name = "dsfdsf3213", ChatId = Guid.NewGuid() });
 
-
-    var chatsAtuser = new List<MIPChat.Models.ChatModel>();
-
-    chatsAtuser.Add(new MIPChat.Models.ChatModel() { Name = "ыфвыфвыфвывыфвыф3dsfds213", ChatId = Guid.NewGuid() });
-    chatsAtuser.Add(new MIPChat.Models.ChatModel() { Name = "32dfdsfdssdsfdsfdsf13", ChatId = Guid.NewGuid() });
-    chatsAtuser.Add(new MIPChat.Models.ChatModel() { Name = "32dsdsf3212132113", ChatId = Guid.NewGuid() });
-    chatsAtuser.Add(new MIPChat.Models.ChatModel() { Name = "dsfdsf3213", ChatId = Guid.NewGuid()});
-
-        
-
-
-    if (chatsAtuser != null)
+    if (Model != null)
     {
 
-        foreach (var chat in chatsAtuser)
+        foreach (var chat in Model)
         {
             using (Ajax.BeginForm("FindChat", new AjaxOptions { UpdateTargetId = "msg_card_body" }))
             {

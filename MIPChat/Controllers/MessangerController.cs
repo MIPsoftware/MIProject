@@ -82,19 +82,30 @@ namespace MIPChat.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateMessageOrChat(string name, ICollection<User> users, byte[] icon = null)
+        public ActionResult CreateMessageOrChat(string name, ICollection<Guid> usersGuids)
         {
+
+            var users = new List<User>();
+            foreach(var guid in usersGuids)
+            {
+                users.Add(messangerData.Users.FindById(guid));
+            }
+
+
+
+
             if (users.Count == 2)
             {
                 //create messagechat
-                messangerData.Chats.Insert(new ChatModel() { Icon = icon, Name = name, Users = users });
+                messangerData.Chats.Insert(new ChatModel() {Name = name, Users = users , ChatId = Guid.NewGuid(), IsLocal = true});
             }
             else if (users.Count > 2)
             {
                 //create chat
-                messangerData.Chats.Insert(new ChatModel() { Icon = icon, Name = name, Users = users });
+                messangerData.Chats.Insert(new ChatModel() {Name = name, Users = users, ChatId = Guid.NewGuid() , IsLocal = false});
 
             }
+            messangerData.CommitChanges();
             //132
             return PartialView();
         }
