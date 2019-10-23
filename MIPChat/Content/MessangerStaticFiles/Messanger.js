@@ -17,17 +17,33 @@ $("#on_create_chat").click(() => {
 });
 
 
-
-$("#selected_msg_chat").click(() => {
-
+$('#chat_field').ready(() => {
     $.ajax({
-        url: "Messanger/FindChat",
-        data: { ChatID: '40276596-f0df-479a-8e7e-25ecc714265d' },
+        url: "Messanger/GetAllChatsForUser",
         type: "POST",
-        success: (data) => { $('#msg_field').html(data); },
+        data: { userId: '40276596-f0df-479a-8e7e-25ecc714265d' },
+        success: (data) => { $('#chat_field').html(data); },
         dataType: "html"
     });
 
+});
+
+
+
+$(".selected_msg_chat").each((index, element) => {
+    element.ready(() => console.log(element + "" + index));
+   
+
+    //element.click(() => {
+    //    console.log(123213);
+    //    $.ajax({
+    //        url: "Messanger/FindChat",
+    //        data: { ChatID: '40276596-f0df-479a-8e7e-25ecc714265d' },
+    //        type: "POST",
+    //        success: (data) => { $('#msg_field').html(data); },
+    //        dataType: "html"
+    //    });
+    //});
 });
 
 $("#CreateNewGroupButton").click(() => {
@@ -43,11 +59,8 @@ $("#CreateNewGroupButton").click(() => {
     var ChatName = $('#GroupName1').val();
 
 
-    if (toAddList.lenght !== 0 && ChatName !== null) {
-        console.log(ChatName);
-        toAddList.forEach((value, index) => {
-            console.log("Челибос:" + value);
-        });
+    if (toAddList.lenght > 2 && ChatName !== null) {
+
 
         $.ajax({
             url: "Messanger/CreateMessageOrChat",
@@ -56,7 +69,9 @@ $("#CreateNewGroupButton").click(() => {
             traditional: true,
             dataType: "text"
         });
-    } else {
+    }
+    else {
+        // НЕ УДАЛОСЬ СОЗДАТЬ ЧАТИК
         return;
     }
 

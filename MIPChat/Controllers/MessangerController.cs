@@ -40,6 +40,8 @@ namespace MIPChat.Controllers
         {
             var allExistingChatsForUser = messangerData.Users.FindById(userId).Chats;
 
+            allExistingChatsForUser = messangerData.Chats.FindAll().ToList();
+
             return PartialView(allExistingChatsForUser);
         }
 
@@ -84,30 +86,33 @@ namespace MIPChat.Controllers
         [HttpPost]
         public ActionResult CreateMessageOrChat(string name, ICollection<Guid> usersGuids)
         {
-
-            var users = new List<User>();
-            foreach(var guid in usersGuids)
+            if (usersGuids.Count >= 2)
             {
-                users.Add(messangerData.Users.FindById(guid));
+                var users = new List<User>();
+                foreach (var guid in usersGuids)
+                {
+                    users.Add(messangerData.Users.FindById(guid));
+                }
+
+                if (users.Count == 2)
+                {
+                    //create messagechat
+                    messangerData.Chats.Insert(new ChatModel() { Name = name, Users = users, ChatId = Guid.NewGuid(), IsLocal = true });
+                }
+                else if (users.Count > 2)
+                {
+                    //create chat
+                    messangerData.Chats.Insert(new ChatModel() { Name = name, Users = users, ChatId = Guid.NewGuid(), IsLocal = false });
+
+                }
+                messangerData.CommitChanges();
+                //132
+                return PartialView();
             }
-
-
-
-
-            if (users.Count == 2)
+            else
             {
-                //create messagechat
-                messangerData.Chats.Insert(new ChatModel() {Name = name, Users = users , ChatId = Guid.NewGuid(), IsLocal = true});
+                return HttpNotFound();
             }
-            else if (users.Count > 2)
-            {
-                //create chat
-                messangerData.Chats.Insert(new ChatModel() {Name = name, Users = users, ChatId = Guid.NewGuid() , IsLocal = false});
-
-            }
-            messangerData.CommitChanges();
-            //132
-            return PartialView();
         }
         [HttpPost]
         public ActionResult SendMessage(string message, Guid chatId, Guid UserSenderId)

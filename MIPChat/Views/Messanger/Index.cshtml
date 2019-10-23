@@ -35,9 +35,9 @@
                         </div>
                     </div>
                     <div class="card-body contacts_body" id="groups">
-                        <ui class="contacts">
-                            @{ if (Request.Cookies.Get("AuthCookie") != null) { Html.RenderPartial("GetAllChatsForUser"); }
-                                else { Response.Redirect("~/Account/Login"); }
+                        <ui class="contacts" id="chat_field">
+                            @{ if (Request.Cookies.Get("AuthCookie") == null) { Response.Redirect("~/Account/Login"); }
+                              
                             }                        </ui>
                     </div>
                     <div class="card-footer"></div>

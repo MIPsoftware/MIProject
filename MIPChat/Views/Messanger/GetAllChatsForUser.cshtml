@@ -5,37 +5,31 @@
 @model IEnumerable<MIPChat.Models.ChatModel>
 
 @{
-    //var chatsAtuser = new List<MIPChat.Models.ChatModel>();
 
-    //chatsAtuser.Add(new MIPChat.Models.ChatModel() { Name = "ыфвыфвыфвывыфвыф3dsfds213", ChatId = Guid.NewGuid() });
-    //chatsAtuser.Add(new MIPChat.Models.ChatModel() { Name = "32dfdsfdssdsfdsfdsf13", ChatId = Guid.NewGuid() });
-    //chatsAtuser.Add(new MIPChat.Models.ChatModel() { Name = "32dsdsf3212132113", ChatId = Guid.NewGuid() });
-    //chatsAtuser.Add(new MIPChat.Models.ChatModel() { Name = "dsfdsf3213", ChatId = Guid.NewGuid() });
 
     if (Model != null)
     {
 
         foreach (var chat in Model)
         {
-            using (Ajax.BeginForm("FindChat", new AjaxOptions { UpdateTargetId = "msg_card_body" }))
-            {
-                <li class="group" id="selected_msg_chat">
-                    <div class="d-flex bd-highlight" data-group_id="@chat.ChatId">
 
-                        <div class="img_cont">
-                            <!--Change to chat icon-->
-                            <!- TODO TRANSFORM BYTE ARRAY INTO ICON>
-                            <img src="https://cdn.pixabay.com/photo/2016/08/09/21/56/fire-1581888_1280.jpg" class="rounded-circle user_img">
-                            <!--<span class="online_icon"></span>-->
-                            <!--<span class="online_icon offline"></span>-->
-                        </div>
-                        <div class="user_info">
-                            <span>@chat.Name</span>
-                            <!--<p>Ivan is online</p>-->
-                        </div>
+            <li class="group selected_msg_chat" id="selected_msg_chat">
+                <div class="d-flex bd-highlight" data-group_id="@chat.ChatId">
+
+                    <div class="img_cont">
+                        <!--Change to chat icon-->
+                        <!- TODO TRANSFORM BYTE ARRAY INTO ICON>
+                        <img src="https://cdn.pixabay.com/photo/2016/08/09/21/56/fire-1581888_1280.jpg" class="rounded-circle user_img">
+                        <!--<span class="online_icon"></span>-->
+                        <!--<span class="online_icon offline"></span>-->
                     </div>
-                </li>
-            }
+                    <div class="user_info">
+                        <span>@chat.Name</span>
+                        <!--<p>Ivan is online</p>-->
+                    </div>
+                </div>
+            </li>
+
         }
     }
     else
