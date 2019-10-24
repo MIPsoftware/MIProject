@@ -1,4 +1,7 @@
 ﻿$(document).ready(function () {
+
+
+
     $('#action_menu_btn').click(function () {
         $('.action_menu').toggle();
     });
@@ -13,38 +16,46 @@ $("#on_create_chat").click(() => {
         success: (data) => { $('#users_list_row').html(data); },
         dataType: "html"
     });
-
 });
 
-
 $('#chat_field').ready(() => {
+    let user_guid = document.cookie.split('UserGuid=')[1];
+
     $.ajax({
         url: "Messanger/GetAllChatsForUser",
         type: "POST",
-        data: { userId: '40276596-f0df-479a-8e7e-25ecc714265d' },
+        data: { userId: user_guid },
         success: (data) => { $('#chat_field').html(data); },
         dataType: "html"
-    });
-
+    }, () => { console.log('ready'); });
 });
 
 
-
-$(".selected_msg_chat").each((index, element) => {
-    element.ready(() => console.log(element + "" + index));
-   
-
-    //element.click(() => {
-    //    console.log(123213);
-    //    $.ajax({
-    //        url: "Messanger/FindChat",
-    //        data: { ChatID: '40276596-f0df-479a-8e7e-25ecc714265d' },
-    //        type: "POST",
-    //        success: (data) => { $('#msg_field').html(data); },
-    //        dataType: "html"
-    //    });
-    //});
+$('.selected_msg_chat').each((index, element) => {
+    element.ready(() => console.log(3213));
 });
+
+
+//$("#chat_field").click(() => {
+//    $('.selected_msg_chat').each((index, element) => {
+//        element.click(() => console.log(312));
+//    });
+
+
+//});
+
+
+//element.click(() => {
+//    console.log(123213);
+//    $.ajax({
+//        url: "Messanger/FindChat",
+//        data: { ChatID: '40276596-f0df-479a-8e7e-25ecc714265d' },
+//        type: "POST",
+//        success: (data) => { $('#msg_field').html(data); },
+//        dataType: "html"
+//    });
+//});
+
 
 $("#CreateNewGroupButton").click(() => {
 
@@ -56,7 +67,7 @@ $("#CreateNewGroupButton").click(() => {
         }
     });
 
-    var ChatName = $('#GroupName1').val();
+    let ChatName = $('#GroupName1').val();
 
 
     if (toAddList.lenght > 2 && ChatName !== null) {

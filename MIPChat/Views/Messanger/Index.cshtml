@@ -14,6 +14,9 @@
 </head>
 
 <body>
+    @{ if (Request.Cookies.Get("AuthCookie") == null) { Response.Redirect("~/Account/Login"); }
+
+    }
     <div class="container-fluid h-100">
         <div class="row justify-content-center h-100">
             <div class="col-md-4 col-xl-3 chat">
@@ -36,9 +39,8 @@
                     </div>
                     <div class="card-body contacts_body" id="groups">
                         <ui class="contacts" id="chat_field">
-                            @{ if (Request.Cookies.Get("AuthCookie") == null) { Response.Redirect("~/Account/Login"); }
-                              
-                            }                        </ui>
+
+                        </ui>
                     </div>
                     <div class="card-footer"></div>
                 </div>
@@ -81,12 +83,12 @@
                             <div class="input-group-append">
                                 <span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
                             </div>
-                            
-                                <textarea name="" class="form-control type_msg" placeholder="Type your message..."></textarea>
-                                <div class="input-group-append">
-                                    <a href="#SendMessage" class="input-group-text send_btn"><i class="fas fa-location-arrow"></i></a>
-                                </div>
-                            
+
+                            <textarea name="" class="form-control type_msg" placeholder="Type your message..."></textarea>
+                            <div class="input-group-append">
+                                <a href="#SendMessage" class="input-group-text send_btn"><i class="fas fa-location-arrow"></i></a>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -133,7 +135,7 @@
             integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
     <script src="~/Content/MessangerStaticFiles/Messanger.js" asp-append-version="true"></script>
 
-
+    @Scripts.Render("~/scripts/jquery.cookie.js")
     @Scripts.Render("~/scripts/jquery-3.3.1.js")
     @Scripts.Render("~/scripts/jquery.unobtrusive-ajax.js")
 </body>

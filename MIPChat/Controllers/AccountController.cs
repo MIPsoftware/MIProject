@@ -47,22 +47,31 @@ namespace MIPChat.Controllers
 
             user = uof.Users.FindAll().FirstOrDefault(u => u.Name == model.Name);
 
-            if (user != null)
+            if (model.Password == user.Password && model.Surname == user.Surname)
             {
-                FormsAuthentication.SetAuthCookie(model.Name, true);
+                if (user != null)
+                {
+                    FormsAuthentication.SetAuthCookie(model.Name, true);
 
-                HttpCookie authCookie = new HttpCookie("AuthCookie");
-                authCookie.Values.Add("UserName", model.Name);
-                Response.Cookies.Add(authCookie);
+                    HttpCookie authCookie = new HttpCookie("AuthCookie");
+                    authCookie.Values.Add("UserName", model.Name);
+                    authCookie.Values.Add("UserGuid", user.UserId.ToString());
+                    Response.Cookies.Add(authCookie);
 
-                return RedirectToAction("Index", "Messanger");
+                    return RedirectToAction("Index", "Messanger");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Username or password is incorrect!");
+                }
+
+                return View();
             }
             else
             {
                 ModelState.AddModelError("", "Username or password is incorrect!");
+                return HttpNotFound();
             }
-
-            return View();
         }
 
         // GET: Account
@@ -93,6 +102,7 @@ namespace MIPChat.Controllers
 
                     HttpCookie authCookie = new HttpCookie("AuthCookie");
                     authCookie.Values.Add("UserName", model.Name);
+                    authCookie.Values.Add("UserGuid", user.UserId.ToString());
                     Response.Cookies.Add(authCookie);
 
                     return RedirectToAction("Index", "Home");
