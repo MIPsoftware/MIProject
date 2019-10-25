@@ -29,7 +29,7 @@ namespace MIPChat.DAL.Repository
 
 
          if (messagesInChat.Count < 20)
-             return GetNewMessagesInInterval(chatId, 20, dbSet.Where(message => message.ChatId == chatId).ToList().Count);
+             return GetNewMessagesInInterval(chatId, 20,0);
 
          return dbSet.Where(message => message.ChatId == chatId && message.TheTimeOfSending > TheUser.LastLogOut).ToList();
      }
@@ -60,6 +60,9 @@ namespace MIPChat.DAL.Repository
      public ICollection<Message> GetNewMessagesInInterval(Guid chatId,int FirstIndex,int LastIndex)
      {
          List<Message> input = dbSet.Where(message => message.ChatId == chatId).ToList();
+
+         if (input.Count <= FirstIndex)
+             return input;
 
          List<Message> query = new List<Message>();
 
