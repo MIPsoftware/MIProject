@@ -46,7 +46,6 @@ $("#CreateNewGroupButton").click(() => {
         }
     });
     let ChatName = $('#GroupName1').val();
-    console.log(ChatName);
 
     if (ChatName !== null) {
 
@@ -56,12 +55,23 @@ $("#CreateNewGroupButton").click(() => {
             data: { name: ChatName, usersGuids: toAddList },
             type: "POST",
             traditional: true,
-            dataType: "text"
+            dataType: "text",
+            success: () => {
+                let user_guid = document.cookie.split('UserGuid=')[1];
+
+                $.ajax({
+                    url: "Messanger/GetAllChatsForUser",
+                    type: "POST",
+                    data: { userId: user_guid },
+                    success: (data) => { $('#chat_field').html(data); },
+                    dataType: "html"
+                });
+            }
         });
+
     }
     else {
         // НЕ УДАЛОСЬ СОЗДАТЬ ЧАТИК
-        console.log(3213);
         return;
     }
 
@@ -74,7 +84,7 @@ $("#groups").on("click", ".group", function () {
 
     $('.group').css({ "background-color": "rgba(0,0,0,0)", cursor: "pointer" });
 
-    
+
     $(this).css({ "background-color": "rgba(0,0,0,0.3)", cursor: "default" });
 
     $("#currentGroup").val(chat_id);
@@ -96,12 +106,21 @@ $('#msg_send_button').click(() => {
     let user_guid = document.cookie.split('UserGuid=')[1];
     console.log(msg);
     if (msg !== null && chat_id !== null) {
-    $.ajax({
-        url: "Messanger/SendMessage",
-        type: "POST",
-        data: { message: msg, chatId: chat_id, UserSenderId: user_guid },
-    });
-        
+        $.ajax({
+            url: "Messanger/SendMessage",
+            type: "POST",
+            data: { message: msg, chatId: chat_id, UserSenderId: user_guid },
+            success: () => {
+                $.ajax({
+                    url: "Messanger/FindChat",
+                    type: "POST",
+                    data: { ChatID: chat_id },
+                    success: (data) => { $('#msg_field').html(data); },
+                    dataType: "html"
+                });
+            }
+        });
+
     }
-   
+
 });
