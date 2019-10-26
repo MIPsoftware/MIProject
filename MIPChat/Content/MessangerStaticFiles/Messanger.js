@@ -39,14 +39,14 @@ $("#CreateNewGroupButton").click(() => {
 
     toAddList = new Array();
 
+
     $(".userinput").each((iter, item) => {
         if (item.checked) {
             toAddList.push(item.attributes[2].value);
         }
     });
-
-    let ChatName = $('#GroupName1').val;
-
+    let ChatName = $('#GroupName1').val();
+    console.log(ChatName);
 
     if (ChatName !== null) {
 
@@ -94,7 +94,7 @@ $("#groups").on("click", ".group", function () {
 $('#msg_send_button').click(() => {
     let msg = $('#msg_input').val();
     let user_guid = document.cookie.split('UserGuid=')[1];
-
+    console.log(msg);
     if (msg !== null && chat_id !== null) {
     $.ajax({
         url: "Messanger/SendMessage",

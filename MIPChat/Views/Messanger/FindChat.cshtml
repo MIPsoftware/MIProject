@@ -10,9 +10,9 @@
     
     if (Model != null)
     {
-        foreach (var message in Model)
+        foreach (var message in Model.Reverse())
         {
-            if (message.Author.Name == Request.Cookies.Get("AuthCookie").Value.Split("=".ToCharArray())[1])
+            if (message.AuthorId.ToString() == Request.Cookies.Get("AuthCookie").Value.Split("=".ToCharArray())[1])
             {
             <div id="selected_chat_message" class="d-flex justify-content-start mb-4" chat_id ="@message.ChatId">
                 <div class="img_cont_msg">
