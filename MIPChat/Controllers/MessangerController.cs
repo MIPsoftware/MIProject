@@ -50,7 +50,7 @@ namespace MIPChat.Controllers
         [HttpPost]
         public ActionResult FindChat(Guid ChatID)
         {
-            var chatInst = messangerData.Chats.FindById(ChatID);
+            var chatInst = messangerData.Chats.FindById(ChatID).Messages;
 
             return PartialView(chatInst);
         }
@@ -117,8 +117,11 @@ namespace MIPChat.Controllers
         [HttpPost]
         public ActionResult SendMessage(string message, Guid chatId, Guid UserSenderId)
         {
-            messangerData.Chats.FindById(chatId).Messages.Add(new Message() { Content = message, AuthorId = UserSenderId, TheTimeOfSending = DateTime.Now });
+            var correntChat = messangerData.Chats.FindById(chatId);
+            var correntUser = messangerData.Users.FindById(UserSenderId);
 
+            correntChat.Messages.Add(new Message() { Content = message, AuthorId = correntUser.UserId, TheTimeOfSending = DateTime.Now, ChatId = chatId, Chat = correntChat, Author = correntUser, MessageId = Guid.NewGuid() });
+            messangerData.CommitChanges();
             return PartialView();
         }
     }
