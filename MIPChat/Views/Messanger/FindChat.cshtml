@@ -7,20 +7,22 @@
 
 
 @{
-    
+
     if (Model != null)
     {
-        foreach (var message in Model.Reverse())
+        foreach (var message in Model.OrderBy(msg => msg.TheTimeOfSending))
         {
-            if (message.AuthorId.ToString() == Request.Cookies.Get("AuthCookie").Value.Split("=".ToCharArray())[1])
+            if (!message.AuthorId.ToString().Equals(Request.Cookies.Get("AuthCookie").Value.Split('=')[2]))
             {
+
             <div id="selected_chat_message" class="d-flex justify-content-start mb-4" chat_id ="@message.ChatId">
                 <div class="img_cont_msg">
                     <!--TODO Change to user icon-->
                     <img src="https://cdn.pixabay.com/photo/2016/08/09/21/56/fire-1581888_1280.jpg" class="rounded-circle user_img_msg">
                 </div>
                 <div class="msg_cotainer">
-                    @message.Content
+                    @message.Content 
+                    
                     <span class="msg_time">@message.TheTimeOfSending.ToString()</span>
                 </div>
             </div>
