@@ -3,6 +3,7 @@ using MIPChat.DAL.Repository;
 using MIPChat.DAL.UnitOfWork;
 using MIPChat.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -42,23 +43,9 @@ namespace MIPChat.Controllers
 
             var chats = messangerData.Chats.FindAll().ToList();
 
-            var allExistingChatsForUser = new List<ChatModel>();
-
-            var user = messangerData.Users.FindById(userId);
 
 
-            // ????????????????? NOT WORKING ????????????????????????????
-            foreach(var chat in chats)
-            {
-                if(chat.Users.Contains(user))
-                {
-                    allExistingChatsForUser.Add(chat);
-                }
-            }
-
-
-
-            return PartialView(allExistingChatsForUser);
+            return PartialView(chats);
         }
 
 
@@ -118,7 +105,7 @@ namespace MIPChat.Controllers
                 else if (users.Count > 2)
                 {
                     //create chat
-                    messangerData.Chats.Insert(new ChatModel() { Name = name, Users = new List<User>(users), ChatId = Guid.NewGuid(), IsLocal = false });
+                    messangerData.Chats.Insert(new ChatModel() { Name = name, ChatId = Guid.NewGuid(), IsLocal = false, Users = users });
 
                 }
                 messangerData.CommitChanges();
