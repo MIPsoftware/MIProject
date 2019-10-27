@@ -11,6 +11,7 @@ using System.Web.Mvc;
 
 namespace MIPChat.Controllers
 {
+
     [Authorize]
     public class MessangerController : Controller
     {
@@ -38,9 +39,24 @@ namespace MIPChat.Controllers
         [HttpPost]
         public ActionResult GetAllChatsForUser(Guid userId)
         {
-            var allExistingChatsForUser = messangerData.Users.FindById(userId).Chats;
 
-            allExistingChatsForUser = messangerData.Chats.FindAll().ToList();
+            var chats = messangerData.Chats.FindAll().ToList();
+
+            var allExistingChatsForUser = new List<ChatModel>();
+
+            var user = messangerData.Users.FindById(userId);
+
+
+            // ????????????????? NOT WORKING ????????????????????????????
+            foreach(var chat in chats)
+            {
+                if(chat.Users.Contains(user))
+                {
+                    allExistingChatsForUser.Add(chat);
+                }
+            }
+
+
 
             return PartialView(allExistingChatsForUser);
         }
@@ -97,12 +113,12 @@ namespace MIPChat.Controllers
                 if (users.Count == 2)
                 {
                     //create messagechat
-                    messangerData.Chats.Insert(new ChatModel() { Name = name, Users = users, ChatId = Guid.NewGuid(), IsLocal = true });
+                    messangerData.Chats.Insert(new ChatModel() { Name = name, Users = new List<User>(users), ChatId = Guid.NewGuid(), IsLocal = true });
                 }
                 else if (users.Count > 2)
                 {
                     //create chat
-                    messangerData.Chats.Insert(new ChatModel() { Name = name, Users = users, ChatId = Guid.NewGuid(), IsLocal = false });
+                    messangerData.Chats.Insert(new ChatModel() { Name = name, Users = new List<User>(users), ChatId = Guid.NewGuid(), IsLocal = false });
 
                 }
                 messangerData.CommitChanges();

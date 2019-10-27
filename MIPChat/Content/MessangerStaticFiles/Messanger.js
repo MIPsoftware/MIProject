@@ -1,4 +1,4 @@
-﻿let chat_id = null;
+﻿var chat_id = null;
 
 
 $(document).ready(function () {
@@ -36,6 +36,7 @@ $('#chat_field').ready(() => {
 
 
 $("#CreateNewGroupButton").click(() => {
+    var user_guid = document.cookie.split('UserGuid=')[1];
 
     toAddList = new Array();
 
@@ -45,6 +46,9 @@ $("#CreateNewGroupButton").click(() => {
             toAddList.push(item.attributes[2].value);
         }
     });
+    toAddList.push(user_guid);
+
+
     let ChatName = $('#GroupName1').val();
 
     if (ChatName !== null) {
@@ -57,7 +61,7 @@ $("#CreateNewGroupButton").click(() => {
             traditional: true,
             dataType: "text",
             success: () => {
-                let user_guid = document.cookie.split('UserGuid=')[1];
+                
 
                 $.ajax({
                     url: "Messanger/GetAllChatsForUser",
@@ -111,6 +115,7 @@ $('#msg_send_button').click(() => {
             type: "POST",
             data: { message: msg, chatId: chat_id, UserSenderId: user_guid },
             success: () => {
+                let msg = document.getElementById('msg_input').value = '';
                 $.ajax({
                     url: "Messanger/FindChat",
                     type: "POST",
@@ -118,6 +123,7 @@ $('#msg_send_button').click(() => {
                     success: (data) => { $('#msg_field').html(data); },
                     dataType: "html"
                 });
+                msg = "";
             }
         });
 

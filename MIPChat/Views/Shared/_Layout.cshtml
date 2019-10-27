@@ -25,10 +25,7 @@
                     <li>@Html.ActionLink("Информация?", "About", "Home")</li>
                     <li>@Html.ActionLink("Связаться?", "Contact", "Home")</li>
                     <li>
-                        @using (Html.BeginForm())
-                        {
-                            @Ajax.ActionLink("Log Out!", "Logout", "Account", new AjaxOptions { HttpMethod = "POST" })
-                        }
+                        @Ajax.ActionLink("LogOut", "Logout", "Account", new AjaxOptions { HttpMethod = "Webmethod"} )
                     </li>
                 </ul>
             </div>
