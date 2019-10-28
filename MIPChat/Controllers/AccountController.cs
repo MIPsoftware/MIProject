@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using System.Web.Services;
 
 namespace MIPChat.Controllers
 {
@@ -24,10 +25,11 @@ namespace MIPChat.Controllers
             uof = new ChatUnitOfWork();
         }
 
-        [HttpPost]
+        [WebMethod]
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
+            Session.Abandon();
             return RedirectToAction("Login", "Account");
         }
 

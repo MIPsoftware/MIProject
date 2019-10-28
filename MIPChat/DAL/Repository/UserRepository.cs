@@ -27,7 +27,13 @@ namespace MIPChat.DAL.Repository
           user.Name.ToLower().Equals(UserName.ToLower()));
       }
 
-      public bool ValidatePassword(LoginModel input)
+        public override User FindById(Guid Userid)
+        {
+            return dbSet.FirstOrDefault(user =>
+            user.UserId.Equals(Userid));
+        }
+
+        public bool ValidatePassword(LoginModel input)
       {
           User check =  FindUserByEmail(input.Email);
 
