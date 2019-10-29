@@ -18,6 +18,7 @@ namespace MIPChat.DAL
             this.context = context;
             this.dbSet = context.Set<TEntity>();
         }
+
         public virtual IEnumerable<TEntity> FindAll(
             Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
@@ -48,11 +49,18 @@ namespace MIPChat.DAL
         }
         public virtual void Insert(TEntity entity)
         {
-            dbSet.Add(entity);
+            context.Entry(entity).State = EntityState.Added;
         }
         public virtual void Insert(IEnumerable<TEntity> entities)
         {
-            dbSet.AddRange(entities);
+            context.Configuration.AutoDetectChangesEnabled = false;
+            context.Configuration.ValidateOnSaveEnabled = false;
+
+            foreach (TEntity entity in entities)
+                context.Entry(entity).State = EntityState.Added;
+
+            context.Configuration.AutoDetectChangesEnabled = true;
+            context.Configuration.ValidateOnSaveEnabled = true;
         }
         public virtual void Delete(Guid id)
         {
@@ -70,24 +78,40 @@ namespace MIPChat.DAL
 
         public virtual void Update(TEntity entityToUpdate)
         {
-            dbSet.Attach(entityToUpdate);
+            if (context.Entry(entityToUpdate).State == EntityState.Detached)
+            {
+                dbSet.Attach(entityToUpdate);
+            }
+          
+
             context.Entry(entityToUpdate).State = EntityState.Modified;
         }
 
         public virtual void Update(IEnumerable<TEntity> entities)
         {
+            context.Configuration.AutoDetectChangesEnabled = false;
+            context.Configuration.ValidateOnSaveEnabled = false;
+
             foreach (TEntity entity in entities)
             {
                 Update(entity);
             }
+            context.Configuration.AutoDetectChangesEnabled = true;
+            context.Configuration.ValidateOnSaveEnabled = true;
         }
 
         public virtual void Delete(IEnumerable<TEntity> entities)
         {
+            context.Configuration.AutoDetectChangesEnabled = false;
+            context.Configuration.ValidateOnSaveEnabled = false;
+
             foreach (TEntity entity in entities)
             {
                 Delete(entity);
             }
+
+            context.Configuration.AutoDetectChangesEnabled = true;
+            context.Configuration.ValidateOnSaveEnabled = true;
         }
     }
 }

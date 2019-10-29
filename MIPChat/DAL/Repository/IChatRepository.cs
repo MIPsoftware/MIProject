@@ -8,6 +8,12 @@ namespace MIPChat.DAL.UnitOfWork
     {
         IEnumerable<ChatModel> FindAllChatsByNameQueryIncludeMessagesAndUsers(string ChatName);
         IEnumerable<ChatModel> FindAllChatsByNameQueryWithoutMessagesAndUsers(string ChatName);
+        IEnumerable<ChatModel> FindAllChatsByNameQueryIncludeUsers(string ChatName);
+        IEnumerable<ChatModel> FindAllChatsByNameQueryIncludeMessages(string ChatName);
         IEnumerable<ChatModel> FindAllChatsIncludeMessagesAndUsers();
+        IEnumerable<ChatModel> FindAllChatsWithoutMessagesAndUsers();
+        IEnumerable<ChatModel> FindAllChatsIncludeUsers();
+        IEnumerable<ChatModel> FindAllChatsIncludeMessages();
+   
     }
 }

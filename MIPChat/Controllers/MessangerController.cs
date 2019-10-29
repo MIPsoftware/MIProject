@@ -117,7 +117,9 @@ namespace MIPChat.Controllers
         [HttpPost]
         public ActionResult SendMessage(string message, Guid chatId, Guid UserSenderId)
         {
-            messangerData.Chats.FindById(chatId).Messages.Add(new Message() { Content = message, AuthorId = UserSenderId, TheTimeOfSending = DateTime.Now });
+            messangerData.Chats.FindById(chatId).Messages.Add(new Message() { Content = message,
+                Author = messangerData.Users.FindById(UserSenderId), 
+                TheTimeOfSending = DateTime.Now });
 
             return PartialView();
         }

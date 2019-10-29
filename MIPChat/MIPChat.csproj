@@ -177,6 +177,10 @@
     <Compile Include="Migrations\201910191253110_sas.Designer.cs">
       <DependentUpon>201910191253110_sas.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910271258112_newMig.cs" />
+    <Compile Include="Migrations\201910271258112_newMig.Designer.cs">
+      <DependentUpon>201910271258112_newMig.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ChatModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
@@ -265,6 +269,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910191253110_sas.resx">
       <DependentUpon>201910191253110_sas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910271258112_newMig.resx">
+      <DependentUpon>201910271258112_newMig.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

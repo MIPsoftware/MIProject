@@ -37,10 +37,6 @@ namespace MIPChat.DAL.UnitOfWork
             }
         }
 
-        public void Save()
-        {
-            context.SaveChanges();
-        }
         private bool disposed = false;
         protected virtual void Dispose(bool disposing)
         {
@@ -59,9 +55,9 @@ namespace MIPChat.DAL.UnitOfWork
             GC.SuppressFinalize(this);
         }
 
-        public int CommitChanges()
+        public void CommitChanges()
         {
-            return context.SaveChanges();
+            context.SaveChanges();
         }
     }
 }

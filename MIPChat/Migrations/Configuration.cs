@@ -44,9 +44,7 @@ namespace MIPChat.Migrations
                 Content = "DIdasmdas",
                 TheTimeOfSending = DateTime.Now,
                 Author = user,
-                AuthorId = user.UserId,
-                Chat = chat,
-                ChatId = chat.ChatId
+                Chat = chat
             };
 
           
