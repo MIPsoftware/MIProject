@@ -13,7 +13,7 @@ namespace MIPChat.DAL
         User FindUserByEmail(string Email);
         User FindUserByName(string UserName);
         bool ValidatePassword(LoginModel input);
-        IEnumerable<User> FindAvailableUsersForLocalChatAcync(Guid UserId);
-        IEnumerable<User> GetAllUsersExceptAsync(ICollection<Guid> guids);
+        IEnumerable<User> FindAvailableUsersForLocalChat(Guid UserId);
+        IEnumerable<User> GetAllUsersExcept(ICollection<Guid> guids);
     }
 }
