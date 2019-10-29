@@ -27,7 +27,13 @@ namespace MIPChat.DAL.Repository
           user.Name.ToLower().Equals(UserName.ToLower()));
       }
 
-      public bool ValidatePassword(LoginModel input)
+        public override User FindById(Guid Userid)
+        {
+            return dbSet.FirstOrDefault(user =>
+            user.UserId.Equals(Userid));
+        }
+
+        public bool ValidatePassword(LoginModel input)
       {
           User check =  FindUserByEmail(input.Email);
 
@@ -37,7 +43,7 @@ namespace MIPChat.DAL.Repository
           return false;
       }
 
-      public IEnumerable<User> FindAvailableUsersForLocalChatAcync(Guid UserId)
+      public IEnumerable<User> FindAvailableUsersForLocalChat(Guid UserId)
       {
           User user = FindById(UserId);
           List<User> ChattedUsers = 
@@ -46,7 +52,7 @@ namespace MIPChat.DAL.Repository
 
           return dbSet.Where(u => !ChattedUsers.Contains(u));
       }
-      public IEnumerable<User> GetAllUsersExceptAsync(ICollection<Guid> guids)
+      public IEnumerable<User> GetAllUsersExcept(ICollection<Guid> guids)
       {
           return dbSet
               .Where(user => !guids.Contains(user.UserId));

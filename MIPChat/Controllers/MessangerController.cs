@@ -3,6 +3,7 @@ using MIPChat.DAL.Repository;
 using MIPChat.DAL.UnitOfWork;
 using MIPChat.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ using System.Web.Mvc;
 
 namespace MIPChat.Controllers
 {
+
     [Authorize]
     public class MessangerController : Controller
     {
@@ -38,11 +40,12 @@ namespace MIPChat.Controllers
         [HttpPost]
         public ActionResult GetAllChatsForUser(Guid userId)
         {
-            var allExistingChatsForUser = messangerData.Users.FindById(userId).Chats;
 
-            allExistingChatsForUser = messangerData.Chats.FindAll().ToList();
+            var chats = messangerData.Chats.FindAll().ToList();
 
-            return PartialView(allExistingChatsForUser);
+            //var chats1 = messangerData.Users.FindById(userId).Chats;
+
+            return PartialView(chats);
         }
 
 
@@ -50,7 +53,7 @@ namespace MIPChat.Controllers
         [HttpPost]
         public ActionResult FindChat(Guid ChatID)
         {
-            var chatInst = messangerData.Chats.FindById(ChatID);
+            var chatInst = messangerData.Chats.FindById(ChatID).Messages;
 
             return PartialView(chatInst);
         }
@@ -97,12 +100,12 @@ namespace MIPChat.Controllers
                 if (users.Count == 2)
                 {
                     //create messagechat
-                    messangerData.Chats.Insert(new ChatModel() { Name = name, Users = users, ChatId = Guid.NewGuid(), IsLocal = true });
+                    messangerData.Chats.Insert(new ChatModel() { Name = name, Users = new List<User>(users), ChatId = Guid.NewGuid(), IsLocal = true });
                 }
                 else if (users.Count > 2)
                 {
                     //create chat
-                    messangerData.Chats.Insert(new ChatModel() { Name = name, Users = users, ChatId = Guid.NewGuid(), IsLocal = false });
+                    messangerData.Chats.Insert(new ChatModel() { Name = name, ChatId = Guid.NewGuid(), IsLocal = false, Users = users });
 
                 }
                 messangerData.CommitChanges();
@@ -117,10 +120,11 @@ namespace MIPChat.Controllers
         [HttpPost]
         public ActionResult SendMessage(string message, Guid chatId, Guid UserSenderId)
         {
-            messangerData.Chats.FindById(chatId).Messages.Add(new Message() { Content = message,
-                Author = messangerData.Users.FindById(UserSenderId), 
-                TheTimeOfSending = DateTime.Now });
+            var correntChat = messangerData.Chats.FindById(chatId);
+            var correntUser = messangerData.Users.FindById(UserSenderId);
 
+            correntChat.Messages.Add(new Message() { Content = message, AuthorId = correntUser.UserId, TheTimeOfSending = DateTime.Now, ChatId = chatId, Chat = correntChat, Author = correntUser, MessageId = Guid.NewGuid() });
+            messangerData.CommitChanges();
             return PartialView();
         }
     }

@@ -12,9 +12,9 @@
 
         foreach (var chat in Model)
         {
-
-            <li class="group selected_msg_chat" id="selected_msg_chat">
-                <div class="d-flex bd-highlight" data-group_id="@chat.ChatId">
+             
+            <li class="group selected_msg_chat" id="selected_msg_chat"  data-group_id="@chat.ChatId">
+                <div class="d-flex bd-highlight">
 
                     <div class="img_cont">
                         <!--Change to chat icon-->
@@ -37,3 +37,4 @@
         <h1>Для вас пока что нету чатов. Создайте новый чат для общения!</h1>
     }
 }
+
