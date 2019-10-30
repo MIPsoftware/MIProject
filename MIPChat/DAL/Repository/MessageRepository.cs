@@ -24,14 +24,14 @@ namespace MIPChat.DAL.Repository
          if (TheUser.LastLogIn > TheUser.LastLogOut)
              return new List<Message>();
 
-            List<Message> messagesInChat = dbSet.Where(message => message.ChatId == chatId
+            List<Message> messagesInChat = dbSet.Where(message => message.Chat.ChatId == chatId
             && message.TheTimeOfSending > TheUser.LastLogOut).ToList();
 
 
          if (messagesInChat.Count < 20)
              return GetNewMessagesInInterval(chatId, 20,0);
 
-         return dbSet.Where(message => message.ChatId == chatId && message.TheTimeOfSending > TheUser.LastLogOut).ToList();
+         return dbSet.Where(message => message.Chat.ChatId == chatId && message.TheTimeOfSending > TheUser.LastLogOut).ToList();
      }
 
      public  Dictionary<ChatModel, ICollection<Message>> GetAllNewMessages(Guid userId)
@@ -51,7 +51,7 @@ namespace MIPChat.DAL.Repository
      public ICollection<Message> GetAllMessagesInPeriod(Guid chatId, DateTime firstDate, DateTime secondDate)
      {
          return dbSet.
-                Where(mes => mes.ChatId == chatId && 
+                Where(mes => mes.Chat.ChatId == chatId && 
                 mes.TheTimeOfSending >= firstDate && 
                 mes.TheTimeOfSending <= secondDate).ToList();
      }
@@ -59,7 +59,7 @@ namespace MIPChat.DAL.Repository
 
      public ICollection<Message> GetNewMessagesInInterval(Guid chatId,int FirstIndex,int LastIndex)
      {
-         List<Message> input = dbSet.Where(message => message.ChatId == chatId).ToList();
+         List<Message> input = dbSet.Where(message => message.Chat.ChatId == chatId).ToList();
 
          if (input.Count <= FirstIndex)
              return input;

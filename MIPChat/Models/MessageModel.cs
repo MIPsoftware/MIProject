@@ -11,7 +11,7 @@ namespace MIPChat.Models
         [Key]
         public Guid MessageId { get; set; }
         [Required]
-        public Guid AuthorId { get; set; }
+        public User Author { get; set; }
         [Required]
         public string Content { get; set; }
         [Required]
