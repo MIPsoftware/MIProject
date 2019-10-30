@@ -13,9 +13,9 @@ namespace MIPChat.Models
         [Key]
         public Guid MessageId { get; set; }
         [Required]
-        public User Author { get; set; }
+        public Guid AuthorId { get; set; }
         [Required]
-        public ChatModel Chat { get; set; }
+        public Guid ChatId { get; set; }
         [Required]
         public string Content { get; set; }
         [Required]
@@ -38,8 +38,8 @@ namespace MIPChat.Models
         {
             var hashCode = 869073862;
             hashCode = hashCode * -1521134295 + EqualityComparer<Guid>.Default.GetHashCode(MessageId);
-            hashCode = hashCode * -1521134295 + EqualityComparer<Object>.Default.GetHashCode(Author);
-            hashCode = hashCode * -1521134295 + EqualityComparer<Object>.Default.GetHashCode(Chat);
+            hashCode = hashCode * -1521134295 + EqualityComparer<Guid>.Default.GetHashCode(AuthorId);
+            hashCode = hashCode * -1521134295 + EqualityComparer<Guid>.Default.GetHashCode(ChatId);
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Content);
             hashCode = hashCode * -1521134295 + TheTimeOfSending.GetHashCode();
             return hashCode;

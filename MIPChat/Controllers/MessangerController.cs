@@ -123,7 +123,7 @@ namespace MIPChat.Controllers
             var correntChat = messangerData.Chats.FindById(chatId);
             var correntUser = messangerData.Users.FindById(UserSenderId);
 
-            correntChat.Messages.Add(new Message() { Content = message, TheTimeOfSending = DateTime.Now, Chat = correntChat, Author = correntUser, MessageId = Guid.NewGuid() });
+            correntChat.Messages.Add(new Message() { Content = message, TheTimeOfSending = DateTime.Now, ChatId = correntChat.ChatId, AuthorId = correntUser.UserId, MessageId = Guid.NewGuid() });
             messangerData.CommitChanges();
             return PartialView();
         }

@@ -169,17 +169,9 @@
     <Compile Include="Hubs\AlertHub.cs" />
     <Compile Include="Hubs\OnlineHub.cs" />
     <Compile Include="Hubs\MessagesHub.cs" />
-    <Compile Include="Migrations\201910191114324_InitialCreate.cs" />
-    <Compile Include="Migrations\201910191114324_InitialCreate.Designer.cs">
-      <DependentUpon>201910191114324_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201910191253110_sas.cs" />
-    <Compile Include="Migrations\201910191253110_sas.Designer.cs">
-      <DependentUpon>201910191253110_sas.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201910271258112_newMig.cs" />
-    <Compile Include="Migrations\201910271258112_newMig.Designer.cs">
-      <DependentUpon>201910271258112_newMig.cs</DependentUpon>
+    <Compile Include="Migrations\201910301858096_InitialMigration.cs" />
+    <Compile Include="Migrations\201910301858096_InitialMigration.Designer.cs">
+      <DependentUpon>201910301858096_InitialMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ChatModel.cs" />
@@ -263,14 +255,8 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201910191114324_InitialCreate.resx">
-      <DependentUpon>201910191114324_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201910191253110_sas.resx">
-      <DependentUpon>201910191253110_sas.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201910271258112_newMig.resx">
-      <DependentUpon>201910271258112_newMig.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201910301858096_InitialMigration.resx">
+      <DependentUpon>201910301858096_InitialMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

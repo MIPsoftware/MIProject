@@ -12,6 +12,7 @@ namespace MIPChat.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
+            AutomaticMigrationDataLossAllowed = true;
             ContextKey = "MIPChat.DAL.ChatDBContext";
         }
 
@@ -43,11 +44,9 @@ namespace MIPChat.Migrations
                 MessageId = Guid.NewGuid(),
                 Content = "DIdasmdas",
                 TheTimeOfSending = DateTime.Now,
-                Author = user,
-                Chat = chat
+                AuthorId = user.UserId,
+                ChatId = chat.ChatId
             };
-
-          
 
             context.Users.Add(user);
             context.Chats.Add(chat);

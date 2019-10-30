@@ -47,9 +47,10 @@ namespace MIPChat.Controllers
         {
             User user = null;
 
-            user = uof.Users.FindAll().FirstOrDefault(u => u.Name == model.Name);
+            user = uof.Users.FindUserByName(model.Name);
 
-            if (model.Password == user.Password && model.Surname == user.Surname)
+
+            if (user != null && model.Password == user.Password && model.Surname == user.Surname)
             {
                 if (user != null)
                 {
