@@ -40,12 +40,10 @@ namespace MIPChat.Controllers
         [HttpPost]
         public ActionResult GetAllChatsForUser(Guid userId)
         {
+            var chats = messangerData.Chats.FindAll().Where(u => u.UserIDs != null);
 
-            var chats = messangerData.Chats.FindAll().ToList();
-
-
-
-            return PartialView(chats);
+ 
+            return PartialView(chats.Where(u => u.UserIDs.Contains(userId)));
         }
 
 
@@ -61,9 +59,9 @@ namespace MIPChat.Controllers
 
 
         [HttpPost]
-        public ActionResult GetAllUsersToChat()
+        public ActionResult GetAllUsersToChat(Guid correntUser)
         {
-            var userList = messangerData.Users.FindAll();
+            var userList = messangerData.Users.FindAvailableUsersForChat(correntUser);
             return PartialView(userList);
         }
 
@@ -100,12 +98,12 @@ namespace MIPChat.Controllers
                 if (users.Count == 2)
                 {
                     //create messagechat
-                    messangerData.Chats.Insert(new ChatModel() { Name = name, Users = new List<User>(users), ChatId = Guid.NewGuid(), IsLocal = true });
+                    messangerData.Chats.Insert(new ChatModel() { Name = name, Users = new List<User>(users), ChatId = Guid.NewGuid(), IsLocal = true , UserIDs = usersGuids});
                 }
                 else if (users.Count > 2)
                 {
                     //create chat
-                    messangerData.Chats.Insert(new ChatModel() { Name = name, ChatId = Guid.NewGuid(), IsLocal = false, Users = users });
+                    messangerData.Chats.Insert(new ChatModel() { Name = name, ChatId = Guid.NewGuid(), IsLocal = false, Users = users, UserIDs = usersGuids });
 
                 }
                 messangerData.CommitChanges();

@@ -11,9 +11,11 @@ $(document).ready(function () {
 
 
 $("#on_create_chat").click(() => {
+    var user_guid = document.cookie.split('UserGuid=')[1];
     $.ajax({
         url: "Messanger/GetAllUsersToChat",
         type: "POST",
+        data: { correntUser: user_guid },
         success: (data) => { $('#users_list_row').html(data); },
         dataType: "html"
     });
