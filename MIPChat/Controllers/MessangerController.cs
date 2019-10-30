@@ -43,7 +43,7 @@ namespace MIPChat.Controllers
 
             var chats = messangerData.Chats.FindAll().ToList();
 
-            //var chats1 = messangerData.Users.FindById(userId).Chats;
+
 
             return PartialView(chats);
         }
