@@ -51,6 +51,10 @@ namespace MIPChat.DAL.Repository
               .SelectMany(chat => chat.Users).ToList();
 
           return dbSet.Where(u => !ChattedUsers.Contains(u));
+      } 
+      public IEnumerable<User> FindAvailableUsersForChat(Guid UserId)
+      { 
+          return dbSet.Where(u => u.UserId!=UserId);
       }
       public IEnumerable<User> GetAllUsersExcept(ICollection<Guid> guids)
       {

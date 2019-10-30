@@ -12,6 +12,7 @@ namespace MIPChat.DAL
     {
         User FindUserByEmail(string Email);
         User FindUserByName(string UserName);
+        IEnumerable<User> FindAvailableUsersForChat(Guid UserId);
         bool ValidatePassword(LoginModel input);
         IEnumerable<User> FindAvailableUsersForLocalChat(Guid UserId);
         IEnumerable<User> GetAllUsersExcept(ICollection<Guid> guids);
