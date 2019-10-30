@@ -16,8 +16,6 @@ namespace MIPChat.Models
         public byte[] Icon { get; set; }
         public virtual ICollection<Message> Messages { get; set; }
         public virtual ICollection<User> Users { get; set; }
-        public virtual ICollection<Guid> UserIDs { get; set; }
-
         public ChatModel()
         {
             Messages = new List<Message>();
