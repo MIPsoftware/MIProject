@@ -1,5 +1,5 @@
 ﻿var chat_id = null;
-
+var user_guid = document.cookie.split('UserGuid=')[1];
 
 $(document).ready(function () {
 
@@ -11,7 +11,6 @@ $(document).ready(function () {
 
 
 $("#on_create_chat").click(() => {
-    var user_guid = document.cookie.split('UserGuid=')[1];
     $.ajax({
         url: "Messanger/GetAllUsersToChat",
         type: "POST",
@@ -22,8 +21,6 @@ $("#on_create_chat").click(() => {
 });
 
 $('#chat_field').ready(() => {
-    let user_guid = document.cookie.split('UserGuid=')[1];
-
     $.ajax({
         url: "Messanger/GetAllChatsForUser",
         type: "POST",
@@ -38,8 +35,6 @@ $('#chat_field').ready(() => {
 
 
 $("#CreateNewGroupButton").click(() => {
-    var user_guid = document.cookie.split('UserGuid=')[1];
-
     toAddList = new Array();
 
 
@@ -102,15 +97,34 @@ $("#groups").on("click", ".group", function () {
         data: { ChatID: chat_id },
         success: (data) => { $('#msg_field').html(data); },
         dataType: "html"
-    });
+    }); 
+
+    // TODO REWRITE IT !!!!!!!!!
+
+    var OnUpdate = () => {
+        $.ajax({
+            url: "Messanger/FindChat",
+            type: "POST",
+            data: { ChatID: chat_id },
+            success: (data) => { $('#msg_field').html(data); },
+            dataType: "html"
+
+        });
+        setTimeout(OnUpdate, 5000);
+    };
+
+    
+    if (chat_id !== null) {
+        OnUpdate();
+    }
+
 
 });
 
 
 $('#msg_send_button').click(() => {
     let msg = $('#msg_input').val();
-    let user_guid = document.cookie.split('UserGuid=')[1];
-    console.log(msg);
+    
     if (msg !== null && chat_id !== null) {
         $.ajax({
             url: "Messanger/SendMessage",
@@ -128,6 +142,8 @@ $('#msg_send_button').click(() => {
                 msg = "";
             }
         });
+
+    
 
     }
 
