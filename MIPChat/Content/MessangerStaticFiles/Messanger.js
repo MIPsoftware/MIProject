@@ -1,6 +1,8 @@
 ﻿var chat_id = null;
 var user_guid = document.cookie.split('UserGuid=')[1];
 
+
+
 $(document).ready(function () {
 
     $('#action_menu_btn').click(function () {
@@ -58,7 +60,7 @@ $("#CreateNewGroupButton").click(() => {
             traditional: true,
             dataType: "text",
             success: () => {
-                
+
 
                 $.ajax({
                     url: "Messanger/GetAllChatsForUser",
@@ -97,34 +99,67 @@ $("#groups").on("click", ".group", function () {
         data: { ChatID: chat_id },
         success: (data) => { $('#msg_field').html(data); },
         dataType: "html"
-    }); 
+    });
 
     // TODO REWRITE IT !!!!!!!!!
 
-    var OnUpdate = () => {
-        $.ajax({
-            url: "Messanger/FindChat",
-            type: "POST",
-            data: { ChatID: chat_id },
-            success: (data) => { $('#msg_field').html(data); },
-            dataType: "html"
+    //var OnUpdate = () => {
+    //    $.ajax({
+    //        url: "Messanger/FindChat",
+    //        type: "POST",
+    //        data: { ChatID: chat_id },
+    //        success: (data) => { $('#msg_field').html(data); },
+    //        dataType: "html"
 
+    //    });
+    //    setTimeout(OnUpdate, 5000);
+    //};
+
+
+    //if (chat_id !== null) {
+    //    OnUpdate();
+    //}
+
+    $(function () {
+
+        // Ссылка на автоматически-сгенерированный прокси хаба
+        var chat = $.connection.messagesHub;
+        console.log(chat);
+        // Объявление функции, которая хаб вызывает при получении сообщений
+        chat.client.onChatUpdate = (chatId) => {
+
+            // Добавление сообщений на веб-страницу 
+            if (chatId === chat_id) {
+                console.log(3213123123123213123);
+                $.ajax({
+                    url: "Messanger/FindChat",
+                    type: "POST",
+                    data: { ChatID: chat_id },
+                    success: (data) => { $('#msg_field').html(data); },
+                    dataType: "html"
+
+                });
+            }
+
+        };
+
+        // Открываем соединение
+        $.connection.hub.start().done(() => {
+            $('#msg_send_button').click(() => {
+                let msg = $('#msg_input').val();
+                if (msg !== null && chat_id !== null) {
+                    setTimeout(500, chat.server.onChatUpdate(chat_id));
+                }
+            });
         });
-        setTimeout(OnUpdate, 5000);
-    };
-
-    
-    if (chat_id !== null) {
-        OnUpdate();
-    }
-
-
+    });
 });
 
-
+// TODO Fix only one update on msg send!
 $('#msg_send_button').click(() => {
     let msg = $('#msg_input').val();
-    
+
+
     if (msg !== null && chat_id !== null) {
         $.ajax({
             url: "Messanger/SendMessage",
@@ -140,11 +175,16 @@ $('#msg_send_button').click(() => {
                     dataType: "html"
                 });
                 msg = "";
+                //setTimeout(() => {
+                //    $(function () {
+                //        var chat = $.connection.messagesHub;
+                //        chat.server.onChatUpdate(chat_id);
+                //    });
+                //}, 500);
             }
         });
 
-    
-
     }
+
 
 });
