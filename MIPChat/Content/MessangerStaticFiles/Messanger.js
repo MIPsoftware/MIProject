@@ -4,7 +4,6 @@ var user_guid = document.cookie.split('UserGuid=')[1];
 
 
 $(document).ready(function () {
-
     $('#action_menu_btn').click(function () {
         $('.action_menu').toggle();
     });
@@ -101,34 +100,10 @@ $("#groups").on("click", ".group", function () {
         dataType: "html"
     });
 
-    // TODO REWRITE IT !!!!!!!!!
-
-    //var OnUpdate = () => {
-    //    $.ajax({
-    //        url: "Messanger/FindChat",
-    //        type: "POST",
-    //        data: { ChatID: chat_id },
-    //        success: (data) => { $('#msg_field').html(data); },
-    //        dataType: "html"
-
-    //    });
-    //    setTimeout(OnUpdate, 5000);
-    //};
-
-
-    //if (chat_id !== null) {
-    //    OnUpdate();
-    //}
-
     $(function () {
+        var messageHub = $.connection.messagesHub;
 
-        // Ссылка на автоматически-сгенерированный прокси хаба
-        var chat = $.connection.messagesHub;
-        console.log(chat);
-        // Объявление функции, которая хаб вызывает при получении сообщений
-        chat.client.onChatUpdate = (chatId) => {
-
-            // Добавление сообщений на веб-страницу 
+        messageHub.client.onChatUpdate = (chatId) => {
             if (chatId === chat_id) {
                 console.log(3213123123123213123);
                 $.ajax({
@@ -137,18 +112,32 @@ $("#groups").on("click", ".group", function () {
                     data: { ChatID: chat_id },
                     success: (data) => { $('#msg_field').html(data); },
                     dataType: "html"
-
                 });
             }
 
         };
+        //messageHub.client.SelectGroup = (chatId) => {
+        //    console.log(321);
+        //};
+        //messageHub.client.LeaveGroup = (chatId) => {
+        //    console.log(31121);
+        //};
 
-        // Открываем соединение
+
         $.connection.hub.start().done(() => {
+
+            //if (null !== chat_id) {
+            //    messageHub.server.LeaveGroup(chat_id);
+            //    messageHub.server.SelectGroup(chat_id);
+            //}
+            //else if (chat_id === null) {
+            //    SelectGroup(chat_id);
+            //}
+
             $('#msg_send_button').click(() => {
                 let msg = $('#msg_input').val();
                 if (msg !== null && chat_id !== null) {
-                    setTimeout(500, chat.server.onChatUpdate(chat_id));
+                    setTimeout(500, messageHub.server.onChatUpdate(chat_id));
                 }
             });
         });
