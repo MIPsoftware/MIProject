@@ -4,38 +4,34 @@ using MIPChat.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+<<<<<<< HEAD
+using System.Web;
+using Microsoft.AspNet.SignalR;
+using MIPChat.DAL.Repository;
+using MIPChat.DAL.UnitOfWork;
+using MIPChat.Models;
+=======
+>>>>>>> ee6694864790d7dfa1223a915ef6a88741873f23
 
 namespace MIPChat.Hubs
 {
     public class OnlineHub : Hub
     {
-        private static List<User> Users { get; set; }
+        private ChatUnitOfWork messangerData;
 
         public OnlineHub()
         {
-            //Users = new UserRepository(new DAL.ChatDBContext()).FindAll().Result.ToList();
+            messangerData = new ChatUnitOfWork();
         }
-
-
-
-        public void Connect(string userName)
+        public async Task Connect(Guid userId)
         {
-            var id = Context.ConnectionId;
-
-
+            await Groups.Add(Context.ConnectionId, "online");
         }
 
         // Отключение пользователя
         public override Task OnDisconnected(bool stopCalled)
         {
-            var item = Users.FirstOrDefault(x => x.UserId.ToString() == Context.ConnectionId);
-            if (item != null)
-            {
-                Users.Remove(item);
-                var id = Context.ConnectionId;
-                Clients.All.onUserDisconnected(id, item.Name);
-            }
-
+            
             return base.OnDisconnected(stopCalled);
         }
     }

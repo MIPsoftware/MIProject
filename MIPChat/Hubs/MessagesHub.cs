@@ -1,23 +1,29 @@
-﻿using Microsoft.AspNet.SignalR;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web;
+using Microsoft.AspNet.SignalR;
 
 namespace MIPChat.Hubs
 {
     public class MessagesHub : Hub
     {
-        public void SendUserMessage(Guid userId, string messageValue)
+        public async Task SelectGroup(Guid chatId)
         {
-            Clients.User(userId.ToString()).addMessage(messageValue);
+            await Groups.Add(Context.ConnectionId, chatId.ToString());
         }
-
-        public void SendChatMessage(Guid chatID, string messageValue)
+        public async Task LeaveGroup(Guid chatId)
         {
-            Clients.Group(chatID.ToString()).addMessage(messageValue);
+            await Groups.Remove(Context.ConnectionId, chatId.ToString());
         }
-
-        public void onChatUpdate(Guid chatId)
+        public async Task SendMessage(Guid userId, Guid chatId, string message, dynamic attachment=null)
         {
-            Clients.All.OnChatUpdate(chatId);
+            await Clients.Group(chatId.ToString()).OnSendMessage(userId, chatId, message);
+        }
+        public async Task onChatUpdate(Guid chatId)
+        {
+            await Clients.All.OnChatUpdate(chatId);
         }
 
     }
