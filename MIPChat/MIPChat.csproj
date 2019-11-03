@@ -149,13 +149,14 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MessangerController.cs" />
+    <Compile Include="DAL\Domain\Chat.cs" />
     <Compile Include="DAL\Repository\IMessageRepository.cs" />
     <Compile Include="DAL\Repository\MessageRepository.cs" />
     <Compile Include="DAL\Repository\UserRepository.cs" />
     <Compile Include="DAL\Repository\IUsersRepository.cs" />
     <Compile Include="DAL\Repository\BaseRepository.cs" />
     <Compile Include="DAL\ChatDBContext.cs" />
-    <Compile Include="DAL\Domain\FileModel.cs" />
+    <Compile Include="DAL\Domain\File.cs" />
     <Compile Include="DAL\Repository\IRepository.cs" />
     <Compile Include="DAL\Repository\ChatRepository.cs" />
     <Compile Include="DAL\Repository\IChatRepository.cs" />
@@ -169,12 +170,11 @@
     <Compile Include="Hubs\AlertHub.cs" />
     <Compile Include="Hubs\OnlineHub.cs" />
     <Compile Include="Hubs\MessagesHub.cs" />
-    <Compile Include="Migrations\201910301858096_InitialMigration.cs" />
-    <Compile Include="Migrations\201910301858096_InitialMigration.Designer.cs">
-      <DependentUpon>201910301858096_InitialMigration.cs</DependentUpon>
+    <Compile Include="Migrations\201911031932382_Initial.cs" />
+    <Compile Include="Migrations\201911031932382_Initial.Designer.cs">
+      <DependentUpon>201911031932382_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\ChatModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="DAL\Domain\Message.cs" />
     <Compile Include="Models\MessageModel.cs" />
@@ -255,8 +255,8 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201910301858096_InitialMigration.resx">
-      <DependentUpon>201910301858096_InitialMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201911031932382_Initial.resx">
+      <DependentUpon>201911031932382_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

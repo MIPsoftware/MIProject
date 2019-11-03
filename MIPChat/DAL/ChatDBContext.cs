@@ -7,11 +7,10 @@ namespace MIPChat.DAL
 {
     public class ChatDBContext : DbContext
     {
+        public DbSet<Chat> Chats { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<FileModel> Files { get; set; }
         public DbSet<Message> Messages { get; set; }
-        public DbSet<ChatModel> Chats { get; set; }
-
+        public DbSet<File> Files { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

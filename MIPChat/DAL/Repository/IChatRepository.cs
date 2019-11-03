@@ -1,18 +1,19 @@
-﻿using MIPChat.Models;
+﻿using MIPChat.DAL.Domain;
+using MIPChat.Models;
 using System.Collections.Generic;
 
 namespace MIPChat.DAL.UnitOfWork
 {
-    public interface IChatRepository : IRepository<ChatModel>
+    public interface IChatRepository : IRepository<Chat>
     {
-        IEnumerable<ChatModel> FindAllChatsByNameQueryIncludeMessagesAndUsers(string ChatName);
-        IEnumerable<ChatModel> FindAllChatsByNameQueryWithoutMessagesAndUsers(string ChatName);
-        IEnumerable<ChatModel> FindAllChatsByNameQueryIncludeUsers(string ChatName);
-        IEnumerable<ChatModel> FindAllChatsByNameQueryIncludeMessages(string ChatName);
-        IEnumerable<ChatModel> FindAllChatsIncludeMessagesAndUsers();
-        IEnumerable<ChatModel> FindAllChatsWithoutMessagesAndUsers();
-        IEnumerable<ChatModel> FindAllChatsIncludeUsers();
-        IEnumerable<ChatModel> FindAllChatsIncludeMessages();
+        IEnumerable<Chat> FindAllChatsByNameQueryIncludeMessagesAndUsers(string ChatName);
+        IEnumerable<Chat> FindAllChatsByNameQueryWithoutMessagesAndUsers(string ChatName);
+        IEnumerable<Chat> FindAllChatsByNameQueryIncludeUsers(string ChatName);
+        IEnumerable<Chat> FindAllChatsByNameQueryIncludeMessages(string ChatName);
+        IEnumerable<Chat> FindAllChatsIncludeMessagesAndUsers();
+        IEnumerable<Chat> FindAllChatsWithoutMessagesAndUsers();
+        IEnumerable<Chat> FindAllChatsIncludeUsers();
+        IEnumerable<Chat> FindAllChatsIncludeMessages();
 
     }
 }

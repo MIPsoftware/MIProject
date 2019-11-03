@@ -1,16 +1,15 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace MIPChat.Models
+namespace MIPChat.DAL.Domain
 {
     public class User
-    {   /*[Key, Column(Order = 0)]*/
+    { 
         [Key]
         public Guid UserId { get; set; }
-        /*[EmailAddress]*/
         [Required(ErrorMessage = "У пользователя должен быть Email")]
-        /*[Key, Column(Order = 1)]*/
         public string Email { get; set; }
         public string Password { get; set; }
         public string Name { get; set; }
@@ -18,11 +17,10 @@ namespace MIPChat.Models
         public DateTime LastLogIn { get; set; }
         public DateTime LastLogOut { get; set; }
         public byte[] Icon { get; set; }
-
-        public ICollection<ChatModel> Chats;
+        public virtual ICollection<Chat> Chats { get; set; }
         public User()
         {
-            Chats = new List<ChatModel>();
+            Chats = new List<Chat>();
         }
 
         public override bool Equals(object obj)
@@ -54,7 +52,7 @@ namespace MIPChat.Models
             hashCode = hashCode * -1521134295 + LastLogIn.GetHashCode();
             hashCode = hashCode * -1521134295 + LastLogOut.GetHashCode();
             hashCode = hashCode * -1521134295 + EqualityComparer<byte[]>.Default.GetHashCode(Icon);
-            hashCode = hashCode * -1521134295 + EqualityComparer<ICollection<ChatModel>>.Default.GetHashCode(Chats);
+            hashCode = hashCode * -1521134295 + EqualityComparer<ICollection<Chat>>.Default.GetHashCode(Chats);
             return hashCode;
         }
     }

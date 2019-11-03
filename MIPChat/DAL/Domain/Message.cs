@@ -2,15 +2,20 @@
 using System.Collections.Generic;
 
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MIPChat.Models
+namespace MIPChat.DAL.Domain
 {
     public class Message
     {
         [Key]
         public Guid MessageId { get; set; }
         [Required]
-        public Guid AuthorId { get; set; }
+        public Guid UserId { get; set; }
+        [Required]
+        public User User { get; set; }
+        [Required]
+        public Chat Chat { get; set; }
         [Required]
         public Guid ChatId { get; set; }
         [Required]
@@ -35,7 +40,7 @@ namespace MIPChat.Models
         {
             var hashCode = 869073862;
             hashCode = hashCode * -1521134295 + EqualityComparer<Guid>.Default.GetHashCode(MessageId);
-            hashCode = hashCode * -1521134295 + EqualityComparer<Guid>.Default.GetHashCode(AuthorId);
+            hashCode = hashCode * -1521134295 + EqualityComparer<Guid>.Default.GetHashCode(UserId);
             hashCode = hashCode * -1521134295 + EqualityComparer<Guid>.Default.GetHashCode(ChatId);
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Content);
             hashCode = hashCode * -1521134295 + TheTimeOfSending.GetHashCode();

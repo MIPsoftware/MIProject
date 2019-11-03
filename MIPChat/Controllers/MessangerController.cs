@@ -1,4 +1,5 @@
-﻿using MIPChat.DAL.UnitOfWork;
+﻿using MIPChat.DAL.Domain;
+using MIPChat.DAL.UnitOfWork;
 using MIPChat.Models;
 using System;
 using System.Collections.Generic;
@@ -84,7 +85,7 @@ namespace MIPChat.Controllers
                 if (users.Count == 2)
                 {
                     //create messagechat
-                    messangerData.Chats.Insert(new ChatModel() { Name = name, 
+                    messangerData.Chats.Insert(new Chat() { Name = name, 
                                                                  Users = new List<User>(users), 
                                                                  ChatId = Guid.NewGuid(), 
                                                                  IsLocal = true
@@ -93,7 +94,7 @@ namespace MIPChat.Controllers
                 else if (users.Count > 2)
                 {
                     //create chat
-                    messangerData.Chats.Insert(new ChatModel() {  Name = name, 
+                    messangerData.Chats.Insert(new Chat() {  Name = name, 
                                                                   ChatId = Guid.NewGuid(), 
                                                                   IsLocal = false, 
                                                                   Users = users
@@ -118,7 +119,7 @@ namespace MIPChat.Controllers
             correntChat.Messages.Add(new Message() { Content = message, 
                                                      TheTimeOfSending = DateTime.Now, 
                                                      ChatId = correntChat.ChatId, 
-                                                     AuthorId = correntUser.UserId, 
+                                                     UserId = correntUser.UserId, 
                                                      MessageId = Guid.NewGuid() 
                                                    });
             messangerData.CommitChanges();

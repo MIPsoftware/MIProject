@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MIPChat.DAL;
+using MIPChat.DAL.Domain;
 using MIPChat.DAL.Repository;
 using MIPChat.Models;
 using Moq;
@@ -103,9 +104,9 @@ namespace MIPChat.UnitTests
         [TestMethod]
         public void FindAvailableUsersForLocalChatTest_NotEmptyResult()
         {
-            ChatModel chat = new ChatModel() { ChatId = Guid.NewGuid(), IsLocal = true, Users = new List<User> { users[0], users[1] } };
-            users[0].Chats = new List<ChatModel> { chat };
-            users[1].Chats = new List<ChatModel> { chat };
+            Chat chat = new Chat() { ChatId = Guid.NewGuid(), IsLocal = true, Users = new List<User> { users[0], users[1] } };
+            users[0].Chats = new List<Chat> { chat };
+            users[1].Chats = new List<Chat> { chat };
 
             var mockSet = GetMockDbSet();
 
@@ -129,11 +130,11 @@ namespace MIPChat.UnitTests
         [TestMethod]
         public void FindAvailableUsersForLocalChatTest_EmptyResult()
         {
-            ChatModel chat0 = new ChatModel() { ChatId = Guid.NewGuid(), IsLocal = true, Users = new List<User> { users[0], users[1] } };
-            ChatModel chat1 = new ChatModel() { ChatId = Guid.NewGuid(), IsLocal = true, Users = new List<User> { users[0], users[2] } };
-            users[0].Chats = new List<ChatModel> { chat0, chat1 };
-            users[1].Chats = new List<ChatModel> { chat0 };
-            users[2].Chats = new List<ChatModel> { chat1 };
+            Chat chat0 = new Chat() { ChatId = Guid.NewGuid(), IsLocal = true, Users = new List<User> { users[0], users[1] } };
+            Chat chat1 = new Chat() { ChatId = Guid.NewGuid(), IsLocal = true, Users = new List<User> { users[0], users[2] } };
+            users[0].Chats = new List<Chat> { chat0, chat1 };
+            users[1].Chats = new List<Chat> { chat0 };
+            users[2].Chats = new List<Chat> { chat1 };
 
             var mockSet = GetMockDbSet();
 

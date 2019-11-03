@@ -1,8 +1,10 @@
-﻿using MIPChat.Models;
+﻿using MIPChat.DAL.Domain;
+
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+
 
 namespace MIPChat.DAL.Repository
 {
@@ -13,11 +15,11 @@ namespace MIPChat.DAL.Repository
 
         }
 
-        public Dictionary<ChatModel, ICollection<Message>> FindAllNewMessages(Guid userId)
+        public Dictionary<Chat, ICollection<Message>> FindAllNewMessages(Guid userId)
         {
             User TheUser = context.Set<User>().FirstOrDefault(user => user.UserId == userId);
 
-            Dictionary<ChatModel, ICollection<Message>> allMessages = new Dictionary<ChatModel, ICollection<Message>>();
+            Dictionary<Chat, ICollection<Message>> allMessages = new Dictionary<Chat, ICollection<Message>>();
 
             foreach (var chat in TheUser.Chats)
             {

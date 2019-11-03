@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.SignalR;
+using MIPChat.DAL.Domain;
 using MIPChat.Models;
 using System.Collections.Generic;
 using System.Linq;

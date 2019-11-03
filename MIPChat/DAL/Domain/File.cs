@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MIPChat.DAL.Domain
 {
-    public class FileModel
+    public class File
     {
         [Key]
         public Guid FileId { get; set; }

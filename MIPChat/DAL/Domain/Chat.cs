@@ -1,10 +1,13 @@
-﻿using System;
+﻿using MIPChat.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web;
 
-namespace MIPChat.Models
+namespace MIPChat.DAL.Domain
 {
-    public class ChatModel
+    public class Chat
     {
         [Key]
         public Guid ChatId { get; set; }
@@ -14,7 +17,7 @@ namespace MIPChat.Models
         public byte[] Icon { get; set; }
         public virtual ICollection<Message> Messages { get; set; }
         public virtual ICollection<User> Users { get; set; }
-        public ChatModel()
+        public Chat()
         {
             Messages = new List<Message>();
             Users = new List<User>();
@@ -23,11 +26,11 @@ namespace MIPChat.Models
         public override bool Equals(object obj)
         {
             if (obj == null) return false;
-            if (!(obj is ChatModel objAsChatModel)) return false;
+            if (!(obj is Chat objAsChatModel)) return false;
             else return Equals(objAsChatModel);
         }
 
-        public bool Equals(ChatModel other)
+        public bool Equals(Chat other)
         {
             if (other == null) return false;
             return (this.ChatId.Equals(other.ChatId));

@@ -1,4 +1,5 @@
-﻿using MIPChat.Models;
+﻿using MIPChat.DAL.Domain;
+using MIPChat.Models;
 using System;
 
 namespace MIPChat.Helpers
@@ -72,7 +73,7 @@ namespace MIPChat.Helpers
             return new MessageModel
             {
                 MessageId = message.MessageId,
-                AuthorId = message.AuthorId,
+                AuthorId = message.UserId,
                 Content = message.Content,
                 TheTimeOfSending = message.TheTimeOfSending.ToString("HH:mm tt")
             };

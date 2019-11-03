@@ -1,4 +1,5 @@
-﻿using MIPChat.DAL.UnitOfWork;
+﻿using MIPChat.DAL.Domain;
+using MIPChat.DAL.UnitOfWork;
 using MIPChat.Models;
 using System;
 using System.Linq;

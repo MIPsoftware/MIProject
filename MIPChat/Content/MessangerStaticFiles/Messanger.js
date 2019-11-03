@@ -61,7 +61,6 @@ $("#CreateNewGroupButton").click(() => {
             dataType: "text",
             success: () => {
 
-
                 $.ajax({
                     url: "Messanger/GetAllChatsForUser",
                     type: "POST",

@@ -1,4 +1,5 @@
-﻿using MIPChat.Models;
+﻿using MIPChat.DAL.Domain;
+using MIPChat.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
