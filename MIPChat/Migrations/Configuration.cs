@@ -2,10 +2,7 @@ namespace MIPChat.Migrations
 {
     using MIPChat.Models;
     using System;
-    using System.Collections.Generic;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
-    using System.Linq;
 
     internal sealed class Configuration : DbMigrationsConfiguration<MIPChat.DAL.ChatDBContext>
     {
@@ -37,7 +34,7 @@ namespace MIPChat.Migrations
                 Users = { user }
             };
 
-     
+
 
             Message message = new Message
             {

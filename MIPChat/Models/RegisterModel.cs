@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace MIPChat.Models
 {
@@ -17,6 +13,6 @@ namespace MIPChat.Models
         [Required(ErrorMessage = "Обязательное поле")]
         public string Surname { get; set; }
 
-        public byte[] Icon { get; set; } 
+        public byte[] Icon { get; set; }
     }
 }

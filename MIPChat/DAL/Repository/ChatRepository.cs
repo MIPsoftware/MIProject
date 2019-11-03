@@ -1,14 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using MIPChat.Models;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Threading.Tasks;
-using MIPChat.DAL.Repository;
-using MIPChat.Models;
 
 namespace MIPChat.DAL.UnitOfWork
 {
-  public class ChatRepository : BaseRepository<ChatModel>,IChatRepository
-  { 
+    public class ChatRepository : BaseRepository<ChatModel>, IChatRepository
+    {
 
         public ChatRepository(ChatDBContext Context) : base(Context)
         {
@@ -48,7 +46,7 @@ namespace MIPChat.DAL.UnitOfWork
 
         public IEnumerable<ChatModel> FindAllChatsWithoutMessagesAndUsers()
         {
-           return dbSet;
+            return dbSet;
         }
 
         public IEnumerable<ChatModel> FindAllChatsIncludeUsers()
@@ -63,4 +61,4 @@ namespace MIPChat.DAL.UnitOfWork
                 .Include(chat => chat.Messages);
         }
     }
-} 
+}

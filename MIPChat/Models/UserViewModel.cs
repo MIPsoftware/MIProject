@@ -1,9 +1,5 @@
-﻿using MIPChat.DAL.Domain;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace MIPChat.Models
 {
@@ -19,7 +15,7 @@ namespace MIPChat.Models
         public string Name { get; set; }
         public string Surname { get; set; }
         public byte[] Icon { get; set; }
-        
+
         public string OnlineStatus { get; set; }
     }
 }

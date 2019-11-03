@@ -1,11 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNet.SignalR;
+using MIPChat.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
-using Microsoft.AspNet.SignalR;
-using MIPChat.DAL.Repository;
-using MIPChat.Models;
 
 namespace MIPChat.Hubs
 {

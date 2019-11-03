@@ -1,11 +1,7 @@
-﻿using MIPChat.DAL;
-using MIPChat.DAL.UnitOfWork;
+﻿using MIPChat.DAL.UnitOfWork;
 using MIPChat.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -81,7 +77,7 @@ namespace MIPChat.Controllers
         [HttpGet]
         public ActionResult Registration()
         {
-           
+
             return View();
         }
 

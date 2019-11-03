@@ -1,6 +1,5 @@
 ﻿using MIPChat.Models;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace MIPChat.DAL.UnitOfWork
 {
@@ -14,6 +13,6 @@ namespace MIPChat.DAL.UnitOfWork
         IEnumerable<ChatModel> FindAllChatsWithoutMessagesAndUsers();
         IEnumerable<ChatModel> FindAllChatsIncludeUsers();
         IEnumerable<ChatModel> FindAllChatsIncludeMessages();
-   
+
     }
 }

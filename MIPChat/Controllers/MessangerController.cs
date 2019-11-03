@@ -1,13 +1,8 @@
-﻿using MIPChat.DAL;
-using MIPChat.DAL.Repository;
-using MIPChat.DAL.UnitOfWork;
+﻿using MIPChat.DAL.UnitOfWork;
 using MIPChat.Models;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 
 namespace MIPChat.Controllers

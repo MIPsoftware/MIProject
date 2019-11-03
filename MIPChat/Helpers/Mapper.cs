@@ -1,8 +1,5 @@
 ﻿using MIPChat.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace MIPChat.Helpers
 {
@@ -14,14 +11,15 @@ namespace MIPChat.Helpers
             DateTime lastLogIn = User.LastLogIn;
             String OnlineStatus;
 
-            if(lastLogIn.Millisecond > lastLogOut.Millisecond)
+            if (lastLogIn.Millisecond > lastLogOut.Millisecond)
             {
                 OnlineStatus = "Online";
             }
-            else if(lastLogOut.Date == DateTime.Today)
+            else if (lastLogOut.Date == DateTime.Today)
             {
                 OnlineStatus = lastLogOut.ToString("HH:mm tt");
-            }else
+            }
+            else
             {
                 OnlineStatus = lastLogOut.ToString("MM.dd.yyyy hh:mm tt");
             }
@@ -50,7 +48,7 @@ namespace MIPChat.Helpers
         public static User ToDomain(RegisterModel User)
         {
             return new User
-            { 
+            {
                 Email = User.Email,
                 Password = User.Password,
                 Icon = User.Icon,
@@ -79,6 +77,6 @@ namespace MIPChat.Helpers
                 TheTimeOfSending = message.TheTimeOfSending.ToString("HH:mm tt")
             };
         }
-        
+
     }
 }

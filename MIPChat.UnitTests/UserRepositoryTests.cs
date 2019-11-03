@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MIPChat.DAL;
 using MIPChat.DAL.Repository;
 using MIPChat.Models;
 using Moq;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 
 
 namespace MIPChat.UnitTests

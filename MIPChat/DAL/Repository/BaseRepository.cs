@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
-using System.Web;
 
 namespace MIPChat.DAL
 {
@@ -82,7 +80,7 @@ namespace MIPChat.DAL
             {
                 dbSet.Attach(entityToUpdate);
             }
-          
+
 
             context.Entry(entityToUpdate).State = EntityState.Modified;
         }

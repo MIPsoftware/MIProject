@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
-using MIPChat.DAL.Domain;
 
 namespace MIPChat.Models
 {
@@ -13,7 +9,7 @@ namespace MIPChat.Models
         [Key]
         public Guid UserId { get; set; }
         /*[EmailAddress]*/
-        [Required(ErrorMessage ="У пользователя должен быть Email")]
+        [Required(ErrorMessage = "У пользователя должен быть Email")]
         /*[Key, Column(Order = 1)]*/
         public string Email { get; set; }
         public string Password { get; set; }

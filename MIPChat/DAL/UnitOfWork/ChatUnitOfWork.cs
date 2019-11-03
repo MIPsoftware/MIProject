@@ -1,9 +1,5 @@
 ﻿using MIPChat.DAL.Repository;
-using MIPChat.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace MIPChat.DAL.UnitOfWork
 {
@@ -18,7 +14,7 @@ namespace MIPChat.DAL.UnitOfWork
                 return this.users ?? new UserRepository(context);
             }
         }
-        
+
         private IChatRepository chats;
         public IChatRepository Chats
         {

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Microsoft.AspNet.SignalR;
+﻿using Microsoft.AspNet.SignalR;
+using System;
 
 namespace MIPChat.Hubs
 {
@@ -10,7 +7,7 @@ namespace MIPChat.Hubs
     {
         public void OnAccountCreation(Guid newUserID)
         {
-            
+
         }
 
         public void OnErrorLoad(Guid userID)
