@@ -15,7 +15,10 @@ namespace MIPChat.Hubs
             Clients.Group(chatID.ToString()).addMessage(messageValue);
         }
 
-
+        public void onChatUpdate(Guid chatId)
+        {
+            Clients.All.OnChatUpdate(chatId);
+        }
 
     }
 }
