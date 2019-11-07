@@ -11,6 +11,8 @@ namespace MIPChat.DAL.UnitOfWork
 
         IMessageRepository Messages { get; }
 
+        IFileRepository Files { get; }
+
         void CommitChanges();
     }
 }

@@ -33,6 +33,17 @@ namespace MIPChat.DAL.UnitOfWork
             }
         }
 
+        private IFileRepository files;
+        public IFileRepository Files
+        {
+            get
+            {
+                return this.files ?? new FileRepository(context);
+            }
+        }
+
+       
+
         private bool disposed = false;
         protected virtual void Dispose(bool disposing)
         {
