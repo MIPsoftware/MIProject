@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using MIPChat.DAL.Domain;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System;
 
 namespace MIPChat.DAL.UnitOfWork
 {
@@ -61,5 +65,14 @@ namespace MIPChat.DAL.UnitOfWork
             return dbSet
                 .Include(chat => chat.Messages);
         }
+
+        public new Chat FindById(Guid Id)
+        {
+            return dbSet
+                .Include(c => c.Messages)
+               .Include(c => c.Users)
+               .FirstOrDefault(u=>u.ChatId == Id); 
+        }
+
     }
 }
