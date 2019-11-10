@@ -29,7 +29,7 @@ namespace MIPChat.Controllers
         [HttpPost]
         public ActionResult GetAllChatsForUser(Guid userId)
         {
-            var chats = messangerData.Chats.FindAll();
+            var chats = messangerData.Users.FindById(userId).Chats;
             return PartialView(chats);
         }
 
@@ -38,7 +38,7 @@ namespace MIPChat.Controllers
         [HttpPost]
         public ActionResult FindChat(Guid ChatID)
         {
-            var chatInst = messangerData.Chats.FindById(ChatID).Messages;
+            var chatInst = messangerData.Chats.FindAllChatsByNameQueryIncludeMessagesAndUsers(messangerData.Chats.FindById(ChatID).Name).First().Messages;
 
             return PartialView(chatInst);
 

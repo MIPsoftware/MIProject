@@ -3,7 +3,7 @@
     ViewBag.Title = "FindChats";
 }
 
-@model IEnumerable <MIPChat.DAL.Domain.Message>
+@model IEnumerable<MIPChat.DAL.Domain.Message>
 
 
 @{
@@ -12,33 +12,36 @@
     {
         foreach (var message in Model.OrderBy(msg => msg.TheTimeOfSending))
         {
-            if (!message.AuthorId.ToString().Equals(Request.Cookies.Get("AuthCookie").Value.Split('=')[2]))
+            if (!message.UserId.ToString().Equals(Request.Cookies.Get("AuthCookie").Value.Split('=')[2]))
             {
 
-            <div id="selected_chat_message" class="d-flex justify-content-start mb-4" chat_id ="@message.ChatId">
-                <div class="img_cont_msg">
-                    <!--TODO Change to user icon-->
-                    <img src="https://cdn.pixabay.com/photo/2016/08/09/21/56/fire-1581888_1280.jpg" class="rounded-circle user_img_msg">
+                <div id="selected_chat_message" class="d-flex justify-content-start mb-4" chat_id="@message.ChatId">
+                    <div class="img_cont_msg">
+                        <!--TODO Change to user icon-->
+                        <img src="https://cdn.pixabay.com/photo/2016/08/09/21/56/fire-1581888_1280.jpg" class="rounded-circle user_img_msg">
+                    </div>
+                    <div class="msg_cotainer">
+                        <span class="h6">@message.User.Name @message.User.Surname :</span>
+                        @message.Content
+
+                        <span class="msg_time">@message.TheTimeOfSending.ToString()</span>
+                    </div>
                 </div>
-                <div class="msg_cotainer">
-                    @message.Content 
-                    
-                    <span class="msg_time">@message.TheTimeOfSending.ToString()</span>
-                </div>
-            </div>
             }
             else
             {
-            <div class="d-flex justify-content-end mb-4">
-                <div class="msg_cotainer_send">
-                    @message.Content
-                    <span class="msg_time_send">@message.TheTimeOfSending.ToString()</span>
+                <div class="d-flex justify-content-end mb-4">
+
+                    <div class="msg_cotainer_send">
+                        <span class="h6">@message.User.Name @message.User.Surname :</span>
+                        @message.Content
+                        <span class="msg_time_send">@message.TheTimeOfSending.ToString()</span>
+                    </div>
+                    <div class="img_cont_msg">
+                        <!--TODO Change to user icon-->
+                        <img src="https://cdn.pixabay.com/photo/2016/08/09/21/56/fire-1581888_1280.jpg" class="rounded-circle user_img_msg">
+                    </div>
                 </div>
-                <div class="img_cont_msg">
-                    <!--TODO Change to user icon-->
-                    <img src="https://cdn.pixabay.com/photo/2016/08/09/21/56/fire-1581888_1280.jpg" class="rounded-circle user_img_msg">
-                </div>
-            </div>
             }
         }
     }
@@ -46,4 +49,4 @@
     {
         <h2>Еще нету никаких сообщени!</h2>
     }
-    }
+}
